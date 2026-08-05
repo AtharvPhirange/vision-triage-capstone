@@ -1,5 +1,4 @@
 package com.example.myapplication;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
@@ -28,11 +27,21 @@ public class VisionBrain {
                     if (result != null && result.faceLandmarks() != null && !result.faceLandmarks().isEmpty()) {
                         List<NormalizedLandmark> faceLandmarks = result.faceLandmarks().get(0);
 
-                        NormalizedLandmark leftIris = faceLandmarks.get(474);
-                        NormalizedLandmark rightIris = faceLandmarks.get(469);
+                        NormalizedLandmark leftEdge = faceLandmarks.get(471);
+                        NormalizedLandmark rightEdge = faceLandmarks.get(469);
 
-                        Log.d("VisionBrain", "Left Iris X: " + leftIris.x() + " Y: " + leftIris.y());
-                        Log.d("VisionBrain", "Right Iris X: " + rightIris.x() + " Y: " + rightIris.y());
+                        float irisDiameter = calculatePupilDiameter(leftEdge.x(), leftEdge.y(), rightEdge.x(), rightEdge.y());
+
+                        NormalizedLandmark eyeOuterCorner = faceLandmarks.get(33);
+                        NormalizedLandmark eyeInnerCorner = faceLandmarks.get(133);
+
+                        float eyeWidth = calculatePupilDiameter(eyeOuterCorner.x(), eyeOuterCorner.y(), eyeInnerCorner.x(), eyeInnerCorner.y());
+
+                        float pupilToEyeRatio = irisDiameter / eyeWidth;
+
+                        Log.d("VisionBrain", "Distance-Proof Ratio: " + pupilToEyeRatio);
+
+                        Log.d("VisionBrain", "Left Iris Diameter: " + irisDiameter);
                     }
                 })
                 .setErrorListener(error -> {
@@ -48,5 +57,9 @@ public class VisionBrain {
             MPImage mpImage = new BitmapImageBuilder(bitmap).build();
             faceLandmarker.detectAsync(mpImage, timestamp);
         }
+    }
+
+    public float calculatePupilDiameter(float x1, float y1, float x2, float y2) {
+        return (float) Math.hypot(x2 - x1, y2 - y1);
     }
 }
