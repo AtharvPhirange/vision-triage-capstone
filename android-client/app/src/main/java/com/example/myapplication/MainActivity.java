@@ -1,5 +1,5 @@
 package com.example.myapplication;
-
+import android.view.WindowManager;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -18,6 +18,8 @@ import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 import com.google.common.util.concurrent.ListenableFuture;
 import java.util.concurrent.ExecutionException;
+import android.os.Handler;
+import android.os.Looper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,6 +51,16 @@ public class MainActivity extends AppCompatActivity {
         } else {
             requestPermissionLauncher.launch(Manifest.permission.CAMERA);
         }
+
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            // Blast the brightness to 100% after 5 seconds
+            blastScreenBrightness();
+
+            // Return it to normal 3 seconds later
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                restoreScreenBrightness();
+            }, 3000);
+        }, 5000);
     }
 
     private void startCamera() {
@@ -67,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         Preview preview = new Preview.Builder().build();
 
         CameraSelector cameraSelector = new CameraSelector.Builder()
-                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                .requireLensFacing(CameraSelector.LENS_FACING_FRONT)
                 .build();
 
         ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
@@ -89,6 +101,17 @@ public class MainActivity extends AppCompatActivity {
 
         Camera camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis);
 
-        camera.getCameraControl().enableTorch(true);
+        camera.getCameraControl().enableTorch(false);
+    }
+    public void blastScreenBrightness() {
+        WindowManager.LayoutParams layout = getWindow().getAttributes();
+        layout.screenBrightness = 1.0f; // 1.0f is 100% max brightness
+        getWindow().setAttributes(layout);
+    }
+
+    public void restoreScreenBrightness() {
+        WindowManager.LayoutParams layout = getWindow().getAttributes();
+        layout.screenBrightness = -1.0f; // -1.0f returns it to the user's system default
+        getWindow().setAttributes(layout);
     }
 }
