@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+    // Add these at the top of MainActivity
+    private TriageEngine triageEngine = new TriageEngine();
+    private float latestRatio = 0.0f; // This remembers the eye's resting state
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,10 +56,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            // Blast the brightness to 100% after 5 seconds
+            visionBrain.triageEngine.startTest(visionBrain.latestRatio);
+
             blastScreenBrightness();
 
-            // Return it to normal 3 seconds later
             new Handler(Looper.getMainLooper()).postDelayed(() -> {
                 restoreScreenBrightness();
             }, 3000);
