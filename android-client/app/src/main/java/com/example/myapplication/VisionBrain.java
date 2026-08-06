@@ -1,4 +1,5 @@
 package com.example.myapplication;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
@@ -11,8 +12,9 @@ import com.google.mediapipe.tasks.components.containers.NormalizedLandmark;
 import java.util.List;
 
 public class VisionBrain {
-
     private FaceLandmarker faceLandmarker;
+    public TriageEngine triageEngine = new TriageEngine();
+    public float latestRatio = 0.0f;
 
     public void initializeAI(Context context) {
         BaseOptions baseOptions = BaseOptions.builder()
@@ -29,18 +31,18 @@ public class VisionBrain {
 
                         NormalizedLandmark leftEdge = faceLandmarks.get(471);
                         NormalizedLandmark rightEdge = faceLandmarks.get(469);
-
                         float irisDiameter = calculatePupilDiameter(leftEdge.x(), leftEdge.y(), rightEdge.x(), rightEdge.y());
 
                         NormalizedLandmark eyeOuterCorner = faceLandmarks.get(33);
                         NormalizedLandmark eyeInnerCorner = faceLandmarks.get(133);
-
                         float eyeWidth = calculatePupilDiameter(eyeOuterCorner.x(), eyeOuterCorner.y(), eyeInnerCorner.x(), eyeInnerCorner.y());
 
                         float pupilToEyeRatio = irisDiameter / eyeWidth;
 
-                        Log.d("VisionBrain", "Distance-Proof Ratio: " + pupilToEyeRatio);
+                        latestRatio = pupilToEyeRatio;
+                        triageEngine.processNewRatio(pupilToEyeRatio);
 
+                        Log.d("VisionBrain", "Distance-Proof Ratio: " + pupilToEyeRatio);
                         Log.d("VisionBrain", "Left Iris Diameter: " + irisDiameter);
                     }
                 })
