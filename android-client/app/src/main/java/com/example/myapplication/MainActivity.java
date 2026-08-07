@@ -1,4 +1,6 @@
 package com.example.myapplication;
+
+import android.util.Size;
 import android.view.WindowManager;
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -16,13 +18,23 @@ import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
+import com.github.mikephil.charting.components.YAxis;
 import com.google.common.util.concurrent.ListenableFuture;
 import java.util.concurrent.ExecutionException;
 import android.os.Handler;
 import android.os.Looper;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import android.graphics.Color;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
+    private LineChart pupilChart;
+    private LineDataSet pupilDataSet;
+    private LineData lineData;
+    private long startTime = 0;
     private PreviewView viewFinder;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private VisionBrain visionBrain;
@@ -36,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-    // Add these at the top of MainActivity
     private TriageEngine triageEngine = new TriageEngine();
-    private float latestRatio = 0.0f; // This remembers the eye's resting state
+    private float latestRatio = 0.0f;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
         visionBrain = new VisionBrain();
         visionBrain.initializeAI(this);
+
+        setupChart();
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             startCamera();
@@ -95,6 +109,10 @@ public class MainActivity extends AppCompatActivity {
 
             visionBrain.detectFace(bitmap, timestamp);
 
+            runOnUiThread(() -> {
+                updateLiveGraph(visionBrain.latestRatio);
+            });
+
             imageProxy.close();
         });
 
@@ -106,15 +124,54 @@ public class MainActivity extends AppCompatActivity {
 
         camera.getCameraControl().enableTorch(false);
     }
+
     public void blastScreenBrightness() {
         WindowManager.LayoutParams layout = getWindow().getAttributes();
-        layout.screenBrightness = 1.0f; // 1.0f is 100% max brightness
+        layout.screenBrightness = 1.0f;
         getWindow().setAttributes(layout);
     }
 
     public void restoreScreenBrightness() {
         WindowManager.LayoutParams layout = getWindow().getAttributes();
-        layout.screenBrightness = -1.0f; // -1.0f returns it to the user's system default
+        layout.screenBrightness = -1.0f;
         getWindow().setAttributes(layout);
+    }
+
+    private void setupChart() {
+        pupilChart = findViewById(R.id.pupilChart);
+
+        YAxis leftAxis = pupilChart.getAxisLeft();
+        leftAxis.setAxisMinimum(0.0f);
+        leftAxis.setAxisMaximum(0.6f);
+
+        YAxis rightAxis = pupilChart.getAxisRight();
+        rightAxis.setEnabled(false);
+
+        pupilChart.setDrawGridBackground(false);
+        pupilChart.getDescription().setEnabled(false);
+        pupilChart.getLegend().setEnabled(false);
+        pupilChart.getXAxis().setDrawLabels(false);
+
+        pupilDataSet = new LineDataSet(new ArrayList<>(), "");
+        pupilDataSet.setColor(Color.parseColor("#00FF00"));
+        pupilDataSet.setDrawCircles(false);
+        pupilDataSet.setDrawValues(false);
+        pupilDataSet.setLineWidth(2.5f);
+        pupilDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+
+        lineData = new LineData(pupilDataSet);
+        pupilChart.setData(lineData);
+        startTime = System.currentTimeMillis();
+    }
+
+    public void updateLiveGraph(float currentRatio) {
+        float timeElapsed = (System.currentTimeMillis() - startTime) / 1000f;
+
+        lineData.addEntry(new Entry(timeElapsed, currentRatio), 0);
+        lineData.notifyDataChanged();
+
+        pupilChart.notifyDataSetChanged();
+        pupilChart.setVisibleXRangeMaximum(10);
+        pupilChart.moveViewToX(lineData.getEntryCount());
     }
 }
