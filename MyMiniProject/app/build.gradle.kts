@@ -42,4 +42,16 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
+    // Room components
+    dependencies {
+        // WorkManager Dependency
+        implementation("androidx.work:work-runtime:2.9.0")
+
+        // Room Database Dependencies (if not added yet)
+        implementation("androidx.room:room-runtime:2.6.1")
+        annotationProcessor("androidx.room:room-compiler:2.6.1")
+    }
+
+    // Gson for JSON conversion
+    implementation("com.google.code.gson:gson:2.10.1")
 }
