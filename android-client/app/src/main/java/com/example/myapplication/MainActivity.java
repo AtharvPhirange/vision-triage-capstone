@@ -1,11 +1,13 @@
 package com.example.myapplication;
 
 import android.util.Size;
+import android.view.View;
 import android.view.WindowManager;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -31,6 +33,7 @@ import android.graphics.Color;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    private TextView diagnosisText;
     private LineChart pupilChart;
     private LineDataSet pupilDataSet;
     private LineData lineData;
@@ -57,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         viewFinder = findViewById(R.id.viewFinder);
+        diagnosisText = findViewById(R.id.diagnosisText);
 
         visionBrain = new VisionBrain();
         visionBrain.initializeAI(this);
@@ -76,10 +80,26 @@ public class MainActivity extends AppCompatActivity {
 
             new Handler(Looper.getMainLooper()).postDelayed(() -> {
                 restoreScreenBrightness();
+
+                float baseline = visionBrain.triageEngine.baselineRatio;
+                float minRatio = visionBrain.triageEngine.minConstrictedRatio;
+
+                String result = visionBrain.triageEngine.getFinalDiagnosis(baseline, minRatio);
+                diagnosisText.setText(result);
+
+                if (result.equals("NORMAL")) {
+                    diagnosisText.setTextColor(android.graphics.Color.parseColor("#00FF00"));
+                } else if (result.equals("SLUGGISH")) {
+                    diagnosisText.setTextColor(android.graphics.Color.parseColor("#FFFF00"));
+                } else {
+                    diagnosisText.setTextColor(android.graphics.Color.parseColor("#FF0000"));
+                }
+
+                diagnosisText.setVisibility(View.VISIBLE);
+
             }, 3000);
         }, 5000);
     }
-
     private void startCamera() {
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
         cameraProviderFuture.addListener(() -> {
