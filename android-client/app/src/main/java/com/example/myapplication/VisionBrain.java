@@ -64,9 +64,6 @@ public class VisionBrain {
                         if (eyeOpenness < 0.12f) {
                             pupilX = -1f;
                             pupilY = -1f;
-                            normalizedIrisDiameter = 0f;
-                            smoothedRatio = 0.0f;
-                            latestRatio = 0.0f;
                         } else {
                             float rawRatio = normalizedIrisDiameter / eyeWidth;
 
@@ -83,7 +80,12 @@ public class VisionBrain {
                             } else {
                                 smoothedRatio = smoothedRatio + ALPHA * (rawRatio - smoothedRatio);
                             }
+
                             latestRatio = smoothedRatio;
+                        }
+
+                        if (latestRatio > 0.0f) {
+                            triageEngine.processNewRatio(latestRatio);
                         }
 
                         triageEngine.processNewRatio(latestRatio);
@@ -120,7 +122,7 @@ public class VisionBrain {
         int centerX = (int) (normalizedX * faceBitmap.getWidth());
         int centerY = (int) (normalizedY * faceBitmap.getHeight());
 
-        int boxSize = 60;
+        int boxSize = 30;
         int startX = Math.max(0, centerX - (boxSize / 2));
         int startY = Math.max(0, centerY - (boxSize / 2));
         int endX = Math.min(faceBitmap.getWidth(), startX + boxSize);
@@ -130,21 +132,44 @@ public class VisionBrain {
             return 0f;
         }
 
-        int darkPixelCount = 0;
-        int threshold = 4;
+        int minLuminance = 255;
+        long totalLuminance = 0;
+        int pixelCount = 0;
 
         for (int x = startX; x < endX; x++) {
             for (int y = startY; y < endY; y++) {
                 int pixel = faceBitmap.getPixel(x, y);
-
                 int r = (pixel >> 16) & 0xff;
                 int g = (pixel >> 8) & 0xff;
                 int b = pixel & 0xff;
-
                 int luminance = (int) (0.299 * r + 0.587 * g + 0.114 * b);
 
-                if (luminance < threshold) {
-                    darkPixelCount++;
+                if (luminance < minLuminance) {
+                    minLuminance = luminance;
+                }
+                totalLuminance += luminance;
+                pixelCount++;
+            }
+        }
+
+        int avgLuminance = (int) (totalLuminance / pixelCount);
+        int dynamicThreshold = minLuminance + ((avgLuminance - minLuminance) / 5);
+
+        int darkPixelCount = 0;
+
+        for (int x = startX; x < endX; x++) {
+            for (int y = startY; y < endY; y++) {
+                int pixel = faceBitmap.getPixel(x, y);
+                int r = (pixel >> 16) & 0xff;
+                int g = (pixel >> 8) & 0xff;
+                int b = pixel & 0xff;
+                int luminance = (int) (0.299 * r + 0.587 * g + 0.114 * b);
+
+                if (luminance <= dynamicThreshold) {
+                    float distanceToCenter = (float) Math.hypot(x - centerX, y - centerY);
+                    if (distanceToCenter <= boxSize / 2f) {
+                        darkPixelCount++;
+                    }
                 }
             }
         }
