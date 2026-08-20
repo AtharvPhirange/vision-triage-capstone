@@ -5,30 +5,37 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Size;
 import android.view.View;
+import androidx.annotation.Nullable;
 
 public class OverlayView extends View {
-    private float pupilX = -1f;
-    private float pupilY = -1f;
-    private float normalizedDiameter = 0f;
-    private Size imageSize = new Size(1, 1);
-    private Paint paint;
 
-    public OverlayView(Context context, AttributeSet attrs) {
+    private Paint reticlePaint;
+    private Paint guidePaint;
+    private boolean isTargetLocked = false;
+
+    public OverlayView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        paint = new Paint();
-        paint.setColor(Color.RED);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(5f);
-        paint.setAntiAlias(true);
+        initPaints();
     }
 
-    public void updatePupilState(float x, float y, float diameter, Size size) {
-        this.pupilX = x;
-        this.pupilY = y;
-        this.normalizedDiameter = diameter;
-        this.imageSize = size;
+    private void initPaints() {
+        reticlePaint = new Paint();
+        reticlePaint.setColor(Color.CYAN);
+        reticlePaint.setStyle(Paint.Style.STROKE);
+        reticlePaint.setStrokeWidth(6f);
+        reticlePaint.setAntiAlias(true);
+
+        guidePaint = new Paint();
+        guidePaint.setColor(Color.argb(100, 255, 255, 255));
+        guidePaint.setStyle(Paint.Style.STROKE);
+        guidePaint.setStrokeWidth(2f);
+        guidePaint.setAntiAlias(true);
+    }
+
+    public void setTargetLocked(boolean locked) {
+        this.isTargetLocked = locked;
+        reticlePaint.setColor(locked ? Color.GREEN : Color.CYAN);
         invalidate();
     }
 
@@ -36,35 +43,13 @@ public class OverlayView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (pupilX > 0 && pupilY > 0 && normalizedDiameter > 0) {
-            float viewWidth = getWidth();
-            float viewHeight = getHeight();
+        float centerX = getWidth() / 2f;
+        float centerY = getHeight() / 2.5f;
+        float radius = Math.min(getWidth(), getHeight()) * 0.22f;
 
-            float imageWidth = imageSize.getWidth();
-            float imageHeight = imageSize.getHeight();
+        canvas.drawCircle(centerX, centerY, radius, reticlePaint);
 
-            if (viewHeight > viewWidth && imageWidth > imageHeight) {
-                imageWidth = imageSize.getHeight();
-                imageHeight = imageSize.getWidth();
-            }
-
-            float scale = Math.max(viewWidth / imageWidth, viewHeight / imageHeight);
-
-            float scaledImageWidth = imageWidth * scale;
-            float scaledImageHeight = imageHeight * scale;
-
-            float offsetX = (viewWidth - scaledImageWidth) / 2f;
-            float offsetY = (viewHeight - scaledImageHeight) / 2f;
-
-            float mirroredX = 1.0f - pupilX;
-
-            float drawX = (mirroredX * scaledImageWidth) + offsetX;
-            float drawY = (pupilY * scaledImageHeight) + offsetY;
-
-            float pixelDiameter = normalizedDiameter * scaledImageWidth;
-            float pixelRadius = pixelDiameter / 2f;
-
-            canvas.drawCircle(drawX, drawY, pixelRadius, paint);
-        }
+        canvas.drawLine(centerX - radius - 30, centerY, centerX + radius + 30, centerY, guidePaint);
+        canvas.drawLine(centerX, centerY - radius - 30, centerX, centerY + radius + 30, guidePaint);
     }
 }
