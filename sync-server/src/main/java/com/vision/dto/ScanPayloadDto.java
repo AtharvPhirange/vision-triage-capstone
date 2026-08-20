@@ -1,16 +1,30 @@
 package com.vision.dto;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.Instant;
 import java.util.List;
 
 public class ScanPayloadDto {
 
+    @NotBlank
     private String deviceId;
+
+    @NotBlank
     private String verdict;
+
     private double minDiameterMm;
     private double maxDiameterMm;
     private long constrictionLatencyMs;
+
+    @NotNull
     private Instant capturedAt;
+
+    @NotEmpty
+    @Valid
     private List<DilationPointDto> dilationCurve;
 
     public String getDeviceId() {
@@ -69,4 +83,3 @@ public class ScanPayloadDto {
         this.dilationCurve = dilationCurve;
     }
 }
-
