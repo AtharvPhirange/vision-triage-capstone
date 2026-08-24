@@ -46,4 +46,22 @@ dependencies {
     implementation("androidx.camera:camera-view:${camerax_version}")
     implementation("com.google.guava:guava:31.1-android")
     implementation("com.google.mediapipe:tasks-vision:0.10.14")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.cardview:cardview:1.0.0")
+    val roomVersion = "2.6.1"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+
+    // WorkManager (Background Sync)
+    val workVersion = "2.9.0"
+    implementation("androidx.work:work-runtime:$workVersion")
+
+    // Retrofit & Network
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+    // UI Components
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.cardview:cardview:1.0.0")
 }

@@ -5,6 +5,9 @@ public class TriageEngine {
     private float minConstrictedRatio = 1.0f;
     private boolean isTesting = false;
 
+    private long latencyMs = 0;
+    private String triageResult = "NORMAL";
+
     public void startTest(float baselineRatio) {
         this.baselineRatio = baselineRatio;
         this.minConstrictedRatio = baselineRatio;
@@ -24,5 +27,21 @@ public class TriageEngine {
             return 0.0f;
         }
         return ((baselineRatio - minConstrictedRatio) / baselineRatio) * 100f;
+    }
+
+    public float getBaselineRatio() {
+        return baselineRatio;
+    }
+
+    public float getMinRatio() {
+        return minConstrictedRatio;
+    }
+
+    public long getLatencyMs() {
+        return latencyMs;
+    }
+
+    public String getTriageResult() {
+        return triageResult;
     }
 }
