@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     public Camera globalCamera;
     private TextView diagnosisText;
+    private TextView warningText;
     private LineChart pupilChart;
     private LineDataSet pupilDataSet;
     private LineData lineData;
@@ -68,11 +69,11 @@ public class MainActivity extends AppCompatActivity {
 
         viewFinder = findViewById(R.id.viewFinder);
         diagnosisText = findViewById(R.id.diagnosisText);
+        warningText = findViewById(R.id.warningText); // Make sure you added this ID to your XML
 
         android.widget.Button switchBtn = findViewById(R.id.flipCameraButton);
         switchBtn.setOnClickListener(v -> switchCamera());
 
-        // Link the new Start button
         android.widget.Button startBtn = findViewById(R.id.startScanButton);
         startBtn.setOnClickListener(v -> startTriageTest());
 
@@ -94,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         startBtn.setAlpha(0.5f);
 
         diagnosisText.setVisibility(View.INVISIBLE);
+        warningText.setVisibility(View.INVISIBLE);
 
         pupilDataSet.clear();
         lineData.notifyDataChanged();
@@ -120,13 +122,25 @@ public class MainActivity extends AppCompatActivity {
                     globalCamera.getCameraControl().enableTorch(false);
                 }
 
+                isGraphActive = false;
+
                 float baseline = visionBrain.triageEngine.baselineRatio;
                 float minRatio = visionBrain.triageEngine.minConstrictedRatio;
 
                 String result = visionBrain.triageEngine.getFinalDiagnosis(baseline, minRatio);
-                diagnosisText.setText(result);
 
-                isGraphActive = false;
+                // Handle the incomplete scan edge case
+                if (result.equals("ERROR_INCOMPLETE")) {
+                    diagnosisText.setText("Scan Failed: Face lost too often. Try again.");
+                    diagnosisText.setTextColor(Color.parseColor("#FF9800")); // Orange warning
+                    diagnosisText.setVisibility(View.VISIBLE);
+
+                    startBtn.setEnabled(true);
+                    startBtn.setAlpha(1.0f);
+                    return;
+                }
+
+                diagnosisText.setText(result);
 
                 if (result.equals("NORMAL")) {
                     diagnosisText.setTextColor(android.graphics.Color.parseColor("#00FF00"));
@@ -144,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
             }, 3000);
         }, 5000);
     }
+
     private void startCamera() {
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
         cameraProviderFuture.addListener(() -> {
@@ -180,8 +195,16 @@ public class MainActivity extends AppCompatActivity {
             visionBrain.detectFace(rotatedBitmap, timestamp);
 
             runOnUiThread(() -> {
-                if (isGraphActive) {
-                    updateLiveGraph(visionBrain.latestRatio);
+                // UI update logic for lost face detection
+                if (visionBrain.latestRatio <= 0.0f) {
+                    if (warningText != null) warningText.setVisibility(View.VISIBLE);
+                } else {
+                    if (warningText != null) warningText.setVisibility(View.INVISIBLE);
+
+                    // Only update the graph if a valid face is detected
+                    if (isGraphActive) {
+                        updateLiveGraph(visionBrain.latestRatio);
+                    }
                 }
             });
 
@@ -189,10 +212,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         preview.setSurfaceProvider(viewFinder.getSurfaceProvider());
-
         cameraProvider.unbindAll();
-
-        cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis);
 
         globalCamera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis);
         globalCamera.getCameraControl().enableTorch(false);
