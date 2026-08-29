@@ -6,6 +6,9 @@ public class TriageEngine {
     private boolean isTesting = false;
     public int validFrameCount = 0;
 
+    private long latencyMs = 0;
+    private String triageResult = "NORMAL";
+
     public void startTest(float baselineRatio) {
         this.baselineRatio = baselineRatio;
         this.minConstrictedRatio = baselineRatio;
@@ -48,5 +51,21 @@ public class TriageEngine {
         } else {
             return "UNRESPONSIVE";
         }
+    }
+
+    public float getBaselineRatio() {
+        return baselineRatio;
+    }
+
+    public float getMinRatio() {
+        return minConstrictedRatio;
+    }
+
+    public long getLatencyMs() {
+        return latencyMs;
+    }
+
+    public String getTriageResult() {
+        return triageResult;
     }
 }
