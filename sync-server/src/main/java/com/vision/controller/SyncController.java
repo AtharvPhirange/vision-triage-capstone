@@ -4,6 +4,7 @@ import com.vision.dto.ScanPayloadDto;
 import com.vision.dto.ScanResponseDto;
 import com.vision.model.ScanRecord;
 import com.vision.service.ScanService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +26,7 @@ public class SyncController {
     }
 
     @PostMapping
-    public ResponseEntity<ScanResponseDto> submitScan(@RequestBody ScanPayloadDto payload) {
+    public ResponseEntity<ScanResponseDto> submitScan(@Valid @RequestBody ScanPayloadDto payload) {
         ScanResponseDto response = scanService.submitScan(payload);
         return ResponseEntity.ok(response);
     }
@@ -36,4 +37,3 @@ public class SyncController {
         return ResponseEntity.ok(history);
     }
 }
-
