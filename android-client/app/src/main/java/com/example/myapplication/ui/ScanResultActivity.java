@@ -1,15 +1,11 @@
 package com.example.myapplication.ui;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -19,119 +15,60 @@ import java.util.List;
 
 public class ScanResultActivity extends AppCompatActivity {
 
-    private TextView tvPatientName;
-    private TextView tvTriageResult;
-    private TextView tvBaseline;
-    private TextView tvMinimum;
-    private TextView tvLatency;
-    private LineChart pupilChart;
+    private LineChart lineChart;
+    private TextView tvPatientNameResult, tvTriageBadge, tvBaselineVal, tvMinVal, tvLatencyVal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_result);
 
-        tvPatientName = findViewById(R.id.tvPatientName);
-        tvTriageResult = findViewById(R.id.tvTriageResult);
-        tvBaseline = findViewById(R.id.tvBaseline);
-        tvMinimum = findViewById(R.id.tvMinimum);
-        tvLatency = findViewById(R.id.tvLatency);
-        pupilChart = findViewById(R.id.pupilChart);
-
-        setupChartStyle();
-        loadIntentData();
-    }
-
-    private void loadIntentData() {
-        Intent intent = getIntent();
-        if (intent != null) {
-            String patientName = intent.getStringExtra("PATIENT_NAME");
-            String triageResult = intent.getStringExtra("TRIAGE_RESULT");
-            double baseline = intent.getDoubleExtra("BASELINE", 0.0);
-            double minimum = intent.getDoubleExtra("MINIMUM", 0.0);
-            long latency = intent.getLongExtra("LATENCY", 0);
-
-            List<Entry> chartPoints = generateMockCurve(baseline, minimum, latency);
-            displayScanData(patientName, triageResult, baseline, minimum, latency, chartPoints);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
         }
+
+        lineChart = findViewById(R.id.lineChart);
+        tvPatientNameResult = findViewById(R.id.tvPatientNameResult);
+        tvTriageBadge = findViewById(R.id.tvTriageBadge);
+        tvBaselineVal = findViewById(R.id.tvBaselineVal);
+        tvMinVal = findViewById(R.id.tvMinVal);
+        tvLatencyVal = findViewById(R.id.tvLatencyVal);
+
+        String name = getIntent().getStringExtra("PATIENT_NAME");
+        String result = getIntent().getStringExtra("TRIAGE_RESULT");
+        float baseline = getIntent().getFloatExtra("BASELINE", 0f);
+        float minimum = getIntent().getFloatExtra("MINIMUM", 0f);
+        long latency = getIntent().getLongExtra("LATENCY", 0L);
+
+        tvPatientNameResult.setText(name != null ? name : "Unknown Patient");
+        tvTriageBadge.setText(result != null ? result : "PENDING");
+        tvBaselineVal.setText(baseline + " mm");
+        tvMinVal.setText(minimum + " mm");
+        tvLatencyVal.setText(latency + " ms");
+
+        setupChart();
     }
 
-    private List<Entry> generateMockCurve(double baseline, double minimum, long latencyMs) {
+    private void setupChart() {
         List<Entry> entries = new ArrayList<>();
-        float latencySec = latencyMs / 1000.0f;
+        entries.add(new Entry(0f, 5.0f));
+        entries.add(new Entry(1f, 4.8f));
+        entries.add(new Entry(2f, 3.2f));
+        entries.add(new Entry(3f, 3.5f));
+        entries.add(new Entry(4f, 4.6f));
+        entries.add(new Entry(5f, 4.9f));
 
-        for (float t = 0; t <= 2.0f; t += 0.05f) {
-            float val;
-            if (t < latencySec) {
-                val = (float) baseline;
-            } else if (t < latencySec + 0.5f) {
-                float progress = (t - latencySec) / 0.5f;
-                val = (float) (baseline - (baseline - minimum) * progress);
-            } else {
-                float progress = (t - (latencySec + 0.5f)) / 1.0f;
-                val = (float) (minimum + (baseline - minimum) * 0.3f * progress);
-            }
-            entries.add(new Entry(t, val));
-        }
-        return entries;
-    }
-
-    private void setupChartStyle() {
-        pupilChart.setBackgroundColor(Color.TRANSPARENT);
-        pupilChart.getDescription().setEnabled(false);
-        pupilChart.setTouchEnabled(true);
-        pupilChart.setDragEnabled(true);
-        pupilChart.setScaleEnabled(true);
-        pupilChart.setPinchZoom(true);
-
-        XAxis xAxis = pupilChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextColor(Color.WHITE);
-        xAxis.setDrawGridLines(false);
-
-        YAxis leftAxis = pupilChart.getAxisLeft();
-        leftAxis.setTextColor(Color.WHITE);
-        leftAxis.setDrawGridLines(true);
-        leftAxis.setGridColor(Color.DKGRAY);
-
-        pupilChart.getAxisRight().setEnabled(false);
-        pupilChart.getLegend().setTextColor(Color.WHITE);
-    }
-
-    public void displayScanData(String patientName, String triageResult, double baseline, double minimum, long latencyMs, List<Entry> timeSeriesPoints) {
-        tvPatientName.setText("Patient: " + (patientName != null ? patientName : "Unknown"));
-        tvTriageResult.setText(triageResult != null ? triageResult : "UNKNOWN");
-        tvBaseline.setText(String.format("%.1f mm", baseline));
-        tvMinimum.setText(String.format("%.1f mm", minimum));
-        tvLatency.setText(latencyMs + " ms");
-
-        if ("ABNORMAL".equalsIgnoreCase(triageResult)) {
-            tvTriageResult.setTextColor(Color.RED);
-        } else {
-            tvTriageResult.setTextColor(Color.GREEN);
-        }
-
-        renderChart(timeSeriesPoints);
-    }
-
-    private void renderChart(List<Entry> entries) {
-        if (entries == null || entries.isEmpty()) {
-            entries = new ArrayList<>();
-        }
-
-        LineDataSet dataSet = new LineDataSet(entries, "Pupil Diameter (mm)");
-        dataSet.setColor(Color.CYAN);
-        dataSet.setLineWidth(2.5f);
-        dataSet.setCircleColor(Color.CYAN);
-        dataSet.setCircleRadius(3f);
-        dataSet.setDrawCircleHole(false);
-        dataSet.setValueTextColor(Color.WHITE);
-        dataSet.setValueTextSize(9f);
-        dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        LineDataSet dataSet = new LineDataSet(entries, "Pupillary Response (mm)");
+        dataSet.setColor(getResources().getColor(android.R.color.holo_green_light));
+        dataSet.setValueTextColor(getResources().getColor(android.R.color.white));
+        dataSet.setLineWidth(3f);
+        dataSet.setCircleRadius(5f);
+        dataSet.setCircleColor(getResources().getColor(android.R.color.holo_green_dark));
 
         LineData lineData = new LineData(dataSet);
-        pupilChart.setData(lineData);
-        pupilChart.animateX(800);
-        pupilChart.invalidate();
+        lineChart.setData(lineData);
+        lineChart.setDescription(null);
+        lineChart.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        lineChart.invalidate();
     }
 }
