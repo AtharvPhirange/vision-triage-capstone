@@ -20,18 +20,15 @@
         android:id="@+id/diagnosisText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="36sp"
+        android:background="#CC000000"
+        android:padding="12dp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        android:fontFamily="monospace"
-        android:textColor="#00FF00"
-        android:background="#B3000000"
-        android:padding="16dp"
         android:visibility="invisible"
-        android:elevation="15dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/startScanButton"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_marginBottom="24dp" />
 
     <TextView
         android:id="@+id/warningText"
@@ -90,12 +87,29 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- History RecyclerView (Set default visibility to GONE) -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewScans"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pupilChart" />
+        android:layout_height="250dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/startScanButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- History Toggle Button -->
+    <Button
+        android:id="@+id/btnViewHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VIEW HISTORY"
+        android:backgroundTint="#333333"
+        android:textColor="#FFFFFF"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/pupilChart"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -48,6 +48,7 @@ import com.example.myapplication.network.SyncScheduler;
 
 public class MainActivity extends AppCompatActivity {
 
+    private boolean isScanning = false;
     public Camera globalCamera;
     private TextView diagnosisText;
     private TextView warningText;
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     public int lensFacing = CameraSelector.LENS_FACING_FRONT;
     public ProcessCameraProvider globalCameraProvider;
 
-    public boolean isGraphActive = false;
+    private boolean isGraphActive = false;
 
     // UI and RecyclerView Elements
     private RecyclerView recyclerViewScans;
@@ -86,13 +87,28 @@ public class MainActivity extends AppCompatActivity {
 
         viewFinder = findViewById(R.id.viewFinder);
         diagnosisText = findViewById(R.id.diagnosisText);
-        warningText = findViewById(R.id.warningText); // Make sure you added this ID to your XML
+        warningText = findViewById(R.id.warningText);
 
         android.widget.Button switchBtn = findViewById(R.id.flipCameraButton);
         switchBtn.setOnClickListener(v -> switchCamera());
 
         android.widget.Button startBtn = findViewById(R.id.startScanButton);
         startBtn.setOnClickListener(v -> startTriageTest());
+
+        // History Toggle Listener
+        View historyRecycler = findViewById(R.id.recyclerViewScans);
+        android.widget.Button historyBtn = findViewById(R.id.btnViewHistory);
+        if (historyBtn != null && historyRecycler != null) {
+            historyBtn.setOnClickListener(v -> {
+                if (historyRecycler.getVisibility() == View.VISIBLE) {
+                    historyRecycler.setVisibility(View.GONE);
+                    historyBtn.setText("VIEW HISTORY");
+                } else {
+                    historyRecycler.setVisibility(View.VISIBLE);
+                    historyBtn.setText("HIDE HISTORY");
+                }
+            });
+        }
 
         visionBrain = new VisionBrain();
         visionBrain.initializeAI(this);
@@ -109,21 +125,33 @@ public class MainActivity extends AppCompatActivity {
 
     public void startTriageTest() {
         android.widget.Button startBtn = findViewById(R.id.startScanButton);
+        View historyRecycler = findViewById(R.id.recyclerViewScans);
+        android.widget.Button historyBtn = findViewById(R.id.btnViewHistory);
+
         startBtn.setEnabled(false);
         startBtn.setAlpha(0.5f);
 
         diagnosisText.setVisibility(View.INVISIBLE);
         warningText.setVisibility(View.INVISIBLE);
 
-        pupilDataSet.clear();
-        lineData.notifyDataChanged();
-        pupilChart.notifyDataSetChanged();
-        pupilChart.invalidate();
+        // Hide history cards during active scan
+        if (historyRecycler != null) {
+            historyRecycler.setVisibility(View.GONE);
+        }
+        if (historyBtn != null) {
+            historyBtn.setText("VIEW HISTORY");
+        }
+
+        // Reset graph and UI completely before starting the NEW scan
+        clearGraph();
+
+        if (visionBrain != null && visionBrain.triageEngine != null) {
+            visionBrain.triageEngine.validFrameCount = 0;
+        }
 
         startTime = System.currentTimeMillis();
         isGraphActive = true;
 
-        // Test cycle: starts test at 5s, blasts brightness, restores & persists at 8s
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             visionBrain.triageEngine.startTest(visionBrain.latestRatio);
 
@@ -141,19 +169,19 @@ public class MainActivity extends AppCompatActivity {
                     globalCamera.getCameraControl().enableTorch(false);
                 }
 
-                isGraphActive = false;
+                isGraphActive = false; // Freezes the graph rendering
 
                 float baseline = visionBrain.triageEngine.baselineRatio;
                 float minRatio = visionBrain.triageEngine.minConstrictedRatio;
 
                 String result = visionBrain.triageEngine.getFinalDiagnosis(baseline, minRatio);
 
-                // Handle the incomplete scan edge case
                 if (result.equals("ERROR_INCOMPLETE")) {
                     diagnosisText.setText("Scan Failed: Face lost too often. Try again.");
-                    diagnosisText.setTextColor(Color.parseColor("#FF9800")); // Orange warning
+                    diagnosisText.setTextColor(android.graphics.Color.parseColor("#FF9800"));
                     diagnosisText.setVisibility(View.VISIBLE);
 
+                    // Stays on screen permanently until next scan
                     startBtn.setEnabled(true);
                     startBtn.setAlpha(1.0f);
                     return;
@@ -171,10 +199,10 @@ public class MainActivity extends AppCompatActivity {
 
                 diagnosisText.setVisibility(View.VISIBLE);
 
+                // Stays on screen permanently until next scan
                 startBtn.setEnabled(true);
                 startBtn.setAlpha(1.0f);
 
-                restoreScreenBrightness();
                 saveScanAndTriggerSync();
             }, 3000);
         }, 5000);
@@ -258,19 +286,26 @@ public class MainActivity extends AppCompatActivity {
             visionBrain.detectFace(rotatedBitmap, timestamp);
 
             runOnUiThread(() -> {
-                // UI update logic for lost face detection
-                if (visionBrain.latestRatio <= 0.0f) {
-                    if (warningText != null) warningText.setVisibility(View.VISIBLE);
-                } else {
-                    if (warningText != null) warningText.setVisibility(View.INVISIBLE);
+                // Only update UI elements when a scan is actively running
+                if (isGraphActive) {
+                    if (visionBrain.latestRatio <= 0.0f) {
+                        if (warningText != null) warningText.setVisibility(View.VISIBLE);
+                    } else {
+                        if (warningText != null) warningText.setVisibility(View.INVISIBLE);
 
-                    // Only update the graph if a valid face is detected
-                    if (isGraphActive) {
+                        // Plot the graph
                         updateLiveGraph(visionBrain.latestRatio);
+
+                        // Feed the frame to the engine so it counts as a valid frame
+                        if (visionBrain.triageEngine != null) {
+                            visionBrain.triageEngine.validFrameCount++;
+                        }
                     }
+                } else {
+                    // Hide warnings when not scanning
+                    if (warningText != null) warningText.setVisibility(View.INVISIBLE);
                 }
             });
-            runOnUiThread(() -> updateLiveGraph(visionBrain.latestRatio));
 
             imageProxy.close();
         });
@@ -342,6 +377,15 @@ public class MainActivity extends AppCompatActivity {
         if (globalCameraProvider != null) {
             globalCameraProvider.unbindAll();
             bindPreview(globalCameraProvider);
+        }
+    }
+
+    private void clearGraph() {
+        if (pupilDataSet != null && lineData != null && pupilChart != null) {
+            pupilDataSet.clear();
+            lineData.notifyDataChanged();
+            pupilChart.notifyDataSetChanged();
+            pupilChart.invalidate();
         }
     }
 }
