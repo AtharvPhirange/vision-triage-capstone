@@ -1,53 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#000000">
 
+    <!-- Camera Preview -->
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent" />
 
-        <com.example.myapplication.OverlayView
-            android:id="@+id/overlayView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </androidx.camera.view.PreviewView>
+    <!-- Overlay View for Custom Reticles / Drawings -->
+    <com.example.myapplication.OverlayView
+        android:id="@+id/overlayView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="5dp" />
 
-    <TextView
-        android:id="@+id/diagnosisText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#CC000000"
-        android:padding="12dp"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@id/startScanButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="24dp" />
-
-    <TextView
-        android:id="@+id/warningText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FACE LOST - REPOSITION"
-        android:textColor="#FF0000"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:fontFamily="monospace"
-        android:background="#B3000000"
-        android:padding="16dp"
-        android:visibility="invisible"
-        android:layout_marginTop="64dp"
-        android:elevation="15dp"
+    <!-- Live Pupil Graph -->
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/pupilChart"
+        android:layout_width="250dp"
+        android:layout_height="150dp"
+        android:layout_margin="16dp"
+        android:elevation="10dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- History Toggle Button -->
+    <Button
+        android:id="@+id/btnViewHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VIEW HISTORY"
+        android:backgroundTint="#333333"
+        android:textColor="#FFFFFF"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:elevation="10dp"
+        app:layout_constraintTop_toBottomOf="@id/pupilChart"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Flip Camera Button -->
     <Button
         android:id="@+id/flipCameraButton"
         android:layout_width="wrap_content"
@@ -62,6 +59,92 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Scan Status Instructions -->
+    <TextView
+        android:id="@+id/tvScanStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Align Eye Within Reticle"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:shadowColor="#000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="4"
+        android:elevation="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="48dp" />
+
+    <!-- Countdown Timer -->
+    <TextView
+        android:id="@+id/tvTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:03"
+        android:textColor="#00FF00"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:shadowColor="#000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="4"
+        android:elevation="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tvScanStatus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- Warning Banner (Face Lost) -->
+    <TextView
+        android:id="@+id/warningText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FACE LOST - REPOSITION"
+        android:textColor="#FF0000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:fontFamily="monospace"
+        android:background="#B3000000"
+        android:padding="16dp"
+        android:visibility="invisible"
+        android:layout_marginTop="64dp"
+        android:elevation="15dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTimer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Diagnosis Result Overlay Text -->
+    <TextView
+        android:id="@+id/diagnosisText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#CC000000"
+        android:textColor="#FFFFFF"
+        android:padding="12dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        android:elevation="15dp"
+        app:layout_constraintBottom_toTopOf="@id/startScanButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="24dp" />
+
+    <!-- History RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewScans"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:visibility="gone"
+        android:elevation="20dp"
+        app:layout_constraintBottom_toTopOf="@id/startScanButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Main Initiate Scan Button -->
     <Button
         android:id="@+id/startScanButton"
         android:layout_width="220dp"
@@ -73,43 +156,9 @@
         android:backgroundTint="#00FF00"
         android:textColor="#000000"
         android:elevation="10dp"
-        android:layout_margin="32dp"
+        android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/pupilChart"
-        android:layout_width="250dp"
-        android:layout_height="150dp"
-        android:layout_margin="16dp"
-        android:elevation="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <!-- History RecyclerView (Set default visibility to GONE) -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewScans"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/startScanButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- History Toggle Button -->
-    <Button
-        android:id="@+id/btnViewHistory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VIEW HISTORY"
-        android:backgroundTint="#333333"
-        android:textColor="#FFFFFF"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@id/pupilChart"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,70 +1,58 @@
 package com.example.myapplication;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Size;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 
 public class OverlayView extends View {
-    private float pupilX = -1f;
-    private float pupilY = -1f;
-    private float normalizedDiameter = 0f;
-    private Size imageSize = new Size(1, 1);
     private Paint paint;
+    private boolean isLocked = false;
+    private float currentRadius = 350f;
+    private final float defaultRadius = 350f;
+    private final float lockedRadius = 280f;
 
     public OverlayView(Context context, AttributeSet attrs) {
         super(context, attrs);
         paint = new Paint();
-        paint.setColor(Color.RED);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(5f);
+        paint.setStrokeWidth(10f);
         paint.setAntiAlias(true);
     }
 
-    public void updatePupilState(float x, float y, float diameter, Size size) {
-        this.pupilX = x;
-        this.pupilY = y;
-        this.normalizedDiameter = diameter;
-        this.imageSize = size;
-        invalidate();
+    public void setTargetLocked(boolean locked) {
+        this.isLocked = locked;
+
+        ValueAnimator animator = ValueAnimator.ofFloat(
+                currentRadius,
+                locked ? lockedRadius : defaultRadius
+        );
+        animator.setDuration(400);
+        animator.setInterpolator(new OvershootInterpolator());
+        animator.addUpdateListener(animation -> {
+            currentRadius = (float) animation.getAnimatedValue();
+            invalidate();
+        });
+        animator.start();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        int cx = getWidth() / 2;
+        int cy = getHeight() / 2;
 
-        if (pupilX > 0 && pupilY > 0 && normalizedDiameter > 0) {
-            float viewWidth = getWidth();
-            float viewHeight = getHeight();
+        paint.setColor(isLocked ? Color.GREEN : Color.CYAN);
 
-            float imageWidth = imageSize.getWidth();
-            float imageHeight = imageSize.getHeight();
+        canvas.drawCircle(cx, cy, currentRadius, paint);
 
-            if (viewHeight > viewWidth && imageWidth > imageHeight) {
-                imageWidth = imageSize.getHeight();
-                imageHeight = imageSize.getWidth();
-            }
-
-            float scale = Math.max(viewWidth / imageWidth, viewHeight / imageHeight);
-
-            float scaledImageWidth = imageWidth * scale;
-            float scaledImageHeight = imageHeight * scale;
-
-            float offsetX = (viewWidth - scaledImageWidth) / 2f;
-            float offsetY = (viewHeight - scaledImageHeight) / 2f;
-
-            float mirroredX = 1.0f - pupilX;
-
-            float drawX = (mirroredX * scaledImageWidth) + offsetX;
-            float drawY = (pupilY * scaledImageHeight) + offsetY;
-
-            float pixelDiameter = normalizedDiameter * scaledImageWidth;
-            float pixelRadius = pixelDiameter / 2f;
-
-            canvas.drawCircle(drawX, drawY, pixelRadius, paint);
-        }
+        canvas.drawLine(cx, cy - currentRadius - 40, cx, cy - currentRadius + 10, paint);
+        canvas.drawLine(cx, cy + currentRadius - 10, cx, cy + currentRadius + 40, paint);
+        canvas.drawLine(cx - currentRadius - 40, cy, cx - currentRadius + 10, cy, paint);
+        canvas.drawLine(cx + currentRadius - 10, cy, cx + currentRadius + 40, cy, paint);
     }
 }

@@ -1,36 +1,37 @@
 package com.example.myapplication;
 
-import android.util.Size;
-import android.view.View;
-import android.view.WindowManager;
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.camera.core.Camera;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -45,6 +46,7 @@ import com.example.myapplication.db.AppDatabase;
 import com.example.myapplication.db.ScanDataMapper;
 import com.example.myapplication.db.ScanRecord;
 import com.example.myapplication.network.SyncScheduler;
+import com.example.myapplication.ui.ScanHistoryActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,8 +60,9 @@ public class MainActivity extends AppCompatActivity {
     private LineDataSet pupilDataSet;
     private LineData lineData;
     private long startTime = 0;
+
+    private static final int CAMERA_PERMISSION_CODE = 1001;
     private PreviewView viewFinder;
-    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private VisionBrain visionBrain;
 
     public int lensFacing = CameraSelector.LENS_FACING_FRONT;
@@ -70,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
     // UI and RecyclerView Elements
     private RecyclerView recyclerViewScans;
     private ScanRecordAdapter scanAdapter;
+
+    private OverlayView overlayView;
+    private TextView tvTimer;
+    private Button btnStartScan;
 
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -85,19 +92,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
         viewFinder = findViewById(R.id.viewFinder);
         diagnosisText = findViewById(R.id.diagnosisText);
         warningText = findViewById(R.id.warningText);
+        overlayView = findViewById(R.id.overlayView);
+        tvTimer = findViewById(R.id.tvTimer);
+        btnStartScan = findViewById(R.id.startScanButton);
 
-        android.widget.Button switchBtn = findViewById(R.id.flipCameraButton);
+        Button switchBtn = findViewById(R.id.flipCameraButton);
         switchBtn.setOnClickListener(v -> switchCamera());
 
-        android.widget.Button startBtn = findViewById(R.id.startScanButton);
-        startBtn.setOnClickListener(v -> startTriageTest());
+        btnStartScan.setOnClickListener(v -> startTriageTest());
 
         // History Toggle Listener
         View historyRecycler = findViewById(R.id.recyclerViewScans);
-        android.widget.Button historyBtn = findViewById(R.id.btnViewHistory);
+        Button historyBtn = findViewById(R.id.btnViewHistory);
         if (historyBtn != null && historyRecycler != null) {
             historyBtn.setOnClickListener(v -> {
                 if (historyRecycler.getVisibility() == View.VISIBLE) {
@@ -112,24 +125,24 @@ public class MainActivity extends AppCompatActivity {
 
         visionBrain = new VisionBrain();
         visionBrain.initializeAI(this);
+        tvTimer.setText("00:03");
 
         setupChart();
         setupHistoryRecyclerView();
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+        if (allPermissionsGranted()) {
             startCamera();
         } else {
-            requestPermissionLauncher.launch(Manifest.permission.CAMERA);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
         }
     }
 
     public void startTriageTest() {
-        android.widget.Button startBtn = findViewById(R.id.startScanButton);
-        View historyRecycler = findViewById(R.id.recyclerViewScans);
-        android.widget.Button historyBtn = findViewById(R.id.btnViewHistory);
+        btnStartScan.setEnabled(false);
+        btnStartScan.setAlpha(0.5f);
 
-        startBtn.setEnabled(false);
-        startBtn.setAlpha(0.5f);
+        View historyRecycler = findViewById(R.id.recyclerViewScans);
+        Button historyBtn = findViewById(R.id.btnViewHistory);
 
         diagnosisText.setVisibility(View.INVISIBLE);
         warningText.setVisibility(View.INVISIBLE);
@@ -142,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
             historyBtn.setText("VIEW HISTORY");
         }
 
-        // Reset graph and UI completely before starting the NEW scan
+        // Reset graph and UI completely before starting the new scan
         clearGraph();
 
         if (visionBrain != null && visionBrain.triageEngine != null) {
@@ -151,18 +164,28 @@ public class MainActivity extends AppCompatActivity {
 
         startTime = System.currentTimeMillis();
         isGraphActive = true;
+        overlayView.setTargetLocked(true);
+        tvTimer.setText("00:03");
 
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            visionBrain.triageEngine.startTest(visionBrain.latestRatio);
+        // Trigger stimulus (Flashlight or Screen Brightness)
+        if (lensFacing == CameraSelector.LENS_FACING_FRONT) {
+            blastScreenBrightness();
+        } else if (globalCamera != null) {
+            globalCamera.getCameraControl().enableTorch(true);
+        }
 
-            if (lensFacing == CameraSelector.LENS_FACING_FRONT) {
-                blastScreenBrightness();
-            } else if (globalCamera != null) {
-                globalCamera.getCameraControl().enableTorch(true);
+        // 3-second scan sequence timer
+        new CountDownTimer(3000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                int secondsLeft = (int) Math.ceil(millisUntilFinished / 1000.0);
+                tvTimer.setText("00:0" + secondsLeft);
             }
 
-            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            public void onFinish() {
+                tvTimer.setText("00:00");
+                overlayView.setTargetLocked(false);
 
+                // Restore lighting
                 if (lensFacing == CameraSelector.LENS_FACING_FRONT) {
                     restoreScreenBrightness();
                 } else if (globalCamera != null) {
@@ -178,50 +201,78 @@ public class MainActivity extends AppCompatActivity {
 
                 if (result.equals("ERROR_INCOMPLETE")) {
                     diagnosisText.setText("Scan Failed: Face lost too often. Try again.");
-                    diagnosisText.setTextColor(android.graphics.Color.parseColor("#FF9800"));
-                    diagnosisText.setVisibility(View.VISIBLE);
-
-                    // Stays on screen permanently until next scan
-                    startBtn.setEnabled(true);
-                    startBtn.setAlpha(1.0f);
-                    return;
-                }
-
-                diagnosisText.setText(result);
-
-                if (result.equals("NORMAL")) {
-                    diagnosisText.setTextColor(android.graphics.Color.parseColor("#00FF00"));
-                } else if (result.equals("SLUGGISH")) {
-                    diagnosisText.setTextColor(android.graphics.Color.parseColor("#FFFF00"));
+                    diagnosisText.setTextColor(Color.parseColor("#FF9800"));
                 } else {
-                    diagnosisText.setTextColor(android.graphics.Color.parseColor("#FF0000"));
+                    diagnosisText.setText(result);
+                    if (result.equals("NORMAL")) {
+                        diagnosisText.setTextColor(Color.parseColor("#00FF00"));
+                    } else if (result.equals("SLUGGISH")) {
+                        diagnosisText.setTextColor(Color.parseColor("#FFFF00"));
+                    } else {
+                        diagnosisText.setTextColor(Color.parseColor("#FF0000"));
+                    }
+                    saveScanAndTriggerSync();
                 }
 
                 diagnosisText.setVisibility(View.VISIBLE);
+                btnStartScan.setEnabled(true);
+                btnStartScan.setAlpha(1.0f);
+            }
+        }.start();
+    }
 
-                // Stays on screen permanently until next scan
-                startBtn.setEnabled(true);
-                startBtn.setAlpha(1.0f);
+    private void setupChart() {
+        pupilChart = findViewById(R.id.pupilChart);
+        if (pupilChart != null) {
+            pupilChart.getDescription().setEnabled(false);
+            pupilChart.setTouchEnabled(true);
+            pupilChart.setDragEnabled(true);
+            pupilChart.setScaleEnabled(true);
+            pupilChart.setPinchZoom(true);
+            pupilChart.setBackgroundColor(Color.TRANSPARENT);
 
-                saveScanAndTriggerSync();
-            }, 3000);
-        }, 5000);
+            lineData = new LineData();
+            pupilChart.setData(lineData);
+
+            pupilDataSet = new LineDataSet(new ArrayList<>(), "Pupil Ratio");
+            pupilDataSet.setColor(Color.GREEN);
+            pupilDataSet.setLineWidth(2f);
+            pupilDataSet.setDrawCircles(false);
+            pupilDataSet.setDrawValues(false);
+            pupilDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+
+            lineData.addDataSet(pupilDataSet);
+        }
+    }
+
+    private void updateLiveGraph(float ratio) {
+        if (pupilChart == null || pupilDataSet == null || lineData == null) return;
+
+        long elapsed = System.currentTimeMillis() - startTime;
+        float timeSeconds = elapsed / 1000f;
+
+        lineData.addEntry(new Entry(timeSeconds, ratio), 0);
+        lineData.notifyDataChanged();
+        pupilChart.notifyDataSetChanged();
+        pupilChart.setVisibleXRangeMaximum(8f);
+        pupilChart.moveViewToX(lineData.getEntryCount());
     }
 
     private void setupHistoryRecyclerView() {
         recyclerViewScans = findViewById(R.id.recyclerViewScans);
-        recyclerViewScans.setLayoutManager(new LinearLayoutManager(this));
-        scanAdapter = new ScanRecordAdapter();
-        recyclerViewScans.setAdapter(scanAdapter);
+        if (recyclerViewScans != null) {
+            recyclerViewScans.setLayoutManager(new LinearLayoutManager(this));
+            scanAdapter = new ScanRecordAdapter();
+            recyclerViewScans.setAdapter(scanAdapter);
 
-        // Reactive LiveData observer: Room automatically notifies adapter when isSynced changes
-        AppDatabase.getInstance(this).scanRecordDao().getObservableRecordsByPatient("Patient-01")
-                .observe(this, records -> {
-                    if (records != null) {
-                        Log.d(TAG, "History observer triggered with " + records.size() + " records");
-                        scanAdapter.setScanList(records);
-                    }
-                });
+            AppDatabase.getInstance(this).scanRecordDao().getObservableRecordsByPatient("Patient-01")
+                    .observe(this, records -> {
+                        if (records != null) {
+                            Log.d(TAG, "History observer triggered with " + records.size() + " records");
+                            scanAdapter.setScanList(records);
+                        }
+                    });
+        }
     }
 
     private void saveScanAndTriggerSync() {
@@ -244,14 +295,13 @@ public class MainActivity extends AppCompatActivity {
             AppDatabase db = AppDatabase.getInstance(getApplicationContext());
             db.scanRecordDao().insert(record);
             Log.d(TAG, "Inserted new scan record: " + record.getScanId());
-
-            // Enqueue WorkManager sync immediately
             SyncScheduler.scheduleSync(getApplicationContext());
         });
     }
 
     private void startCamera() {
-        cameraProviderFuture = ProcessCameraProvider.getInstance(this);
+        ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(this);
+
         cameraProviderFuture.addListener(() -> {
             try {
                 ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
@@ -279,30 +329,24 @@ public class MainActivity extends AppCompatActivity {
 
             android.graphics.Matrix matrix = new android.graphics.Matrix();
             matrix.postRotate(imageProxy.getImageInfo().getRotationDegrees());
-            Bitmap rotatedBitmap = android.graphics.Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 
             long timestamp = imageProxy.getImageInfo().getTimestamp();
-
             visionBrain.detectFace(rotatedBitmap, timestamp);
 
             runOnUiThread(() -> {
-                // Only update UI elements when a scan is actively running
                 if (isGraphActive) {
                     if (visionBrain.latestRatio <= 0.0f) {
                         if (warningText != null) warningText.setVisibility(View.VISIBLE);
                     } else {
                         if (warningText != null) warningText.setVisibility(View.INVISIBLE);
-
-                        // Plot the graph
                         updateLiveGraph(visionBrain.latestRatio);
 
-                        // Feed the frame to the engine so it counts as a valid frame
                         if (visionBrain.triageEngine != null) {
                             visionBrain.triageEngine.validFrameCount++;
                         }
                     }
                 } else {
-                    // Hide warnings when not scanning
                     if (warningText != null) warningText.setVisibility(View.INVISIBLE);
                 }
             });
@@ -325,46 +369,25 @@ public class MainActivity extends AppCompatActivity {
 
     public void restoreScreenBrightness() {
         WindowManager.LayoutParams layout = getWindow().getAttributes();
-        layout.screenBrightness = -1.0f;
+        layout.screenBrightness = -1.0f; // Reset to system default
         getWindow().setAttributes(layout);
     }
 
-    private void setupChart() {
-        pupilChart = findViewById(R.id.pupilChart);
-
-        YAxis leftAxis = pupilChart.getAxisLeft();
-        leftAxis.setAxisMinimum(0.0f);
-        leftAxis.setAxisMaximum(0.6f);
-
-        YAxis rightAxis = pupilChart.getAxisRight();
-        rightAxis.setEnabled(false);
-
-        pupilChart.setDrawGridBackground(false);
-        pupilChart.getDescription().setEnabled(false);
-        pupilChart.getLegend().setEnabled(false);
-        pupilChart.getXAxis().setDrawLabels(false);
-
-        pupilDataSet = new LineDataSet(new ArrayList<>(), "");
-        pupilDataSet.setColor(Color.parseColor("#00FF00"));
-        pupilDataSet.setDrawCircles(false);
-        pupilDataSet.setDrawValues(false);
-        pupilDataSet.setLineWidth(2.5f);
-        pupilDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-
-        lineData = new LineData(pupilDataSet);
-        pupilChart.setData(lineData);
-        startTime = System.currentTimeMillis();
+    private boolean allPermissionsGranted() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
     }
 
-    public void updateLiveGraph(float currentRatio) {
-        float timeElapsed = (System.currentTimeMillis() - startTime) / 1000f;
-
-        lineData.addEntry(new Entry(timeElapsed, currentRatio), 0);
-        lineData.notifyDataChanged();
-
-        pupilChart.notifyDataSetChanged();
-        pupilChart.setVisibleXRangeMaximum(10);
-        pupilChart.moveViewToX(lineData.getEntryCount());
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_PERMISSION_CODE) {
+            if (allPermissionsGranted()) {
+                startCamera();
+            } else {
+                Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
     }
 
     public void switchCamera() {
