@@ -1,71 +1,100 @@
 package com.example.myapplication;
 
-import android.graphics.Color;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.myapplication.db.ScanRecord;
-import java.util.ArrayList;
+
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
-public class ScanRecordAdapter extends RecyclerView.Adapter<ScanRecordAdapter.ScanViewHolder> {
+public class ScanRecordAdapter extends RecyclerView.Adapter<ScanRecordAdapter.ViewHolder> {
 
-    private List<ScanRecord> scanList = new ArrayList<>();
+    public interface OnItemClickListener {
+        void onItemClick(ScanRecord record);
+    }
+
+    private final List<ScanRecord> recordList;
+    private final OnItemClickListener listener;
+
+    public ScanRecordAdapter(List<ScanRecord> recordList, OnItemClickListener listener) {
+        this.recordList = recordList;
+        this.listener = listener;
+    }
 
     @NonNull
     @Override
-    public ScanViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_scan_record, parent, false);
-        return new ScanViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ScanViewHolder holder, int position) {
-        ScanRecord record = scanList.get(position);
-        holder.bind(record);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        ScanRecord record = recordList.get(position);
+
+        if (holder.tvResult != null) {
+            holder.tvResult.setText(record.getTriageResult());
+        }
+
+        if (holder.tvTimestamp != null) {
+            String dateStr = DateFormat.format("dd MMM yyyy, hh:mm a", new Date(record.getScanTimestamp())).toString();
+            holder.tvTimestamp.setText(dateStr);
+        }
+
+        if (holder.tvBaseline != null) {
+            holder.tvBaseline.setText(String.format(Locale.getDefault(), "%.2f", record.getBaselinePupilSize()));
+        }
+
+        if (holder.tvMinRatio != null) {
+            holder.tvMinRatio.setText(String.format(Locale.getDefault(), "%.2f", record.getMinimumPupilSize()));
+        }
+
+        if (holder.tvLatency != null) {
+            holder.tvLatency.setText(record.getConstrictionLatencyMs() + "ms");
+        }
+
+        // Entire card click opens the graph dialog
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(record);
+            }
+        });
+
+        // Dedicated PDF button trigger
+        if (holder.tvPdfBtn != null) {
+            holder.tvPdfBtn.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onItemClick(record);
+                }
+            });
+        }
     }
 
     @Override
     public int getItemCount() {
-        return scanList.size();
+        return recordList != null ? recordList.size() : 0;
     }
 
-    public void setScanList(List<ScanRecord> scanList) {
-        this.scanList = scanList;
-        notifyDataSetChanged();
-    }
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView tvResult, tvPdfBtn, tvTimestamp, tvBaseline, tvMinRatio, tvLatency;
 
-    static class ScanViewHolder extends RecyclerView.ViewHolder {
-        TextView tvPatientName, tvSyncStatus, tvTriageResult, tvScanMetrics;
-
-        public ScanViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvPatientName = itemView.findViewById(R.id.tvPatientName);
-            tvSyncStatus = itemView.findViewById(R.id.tvSyncStatus);
-            tvTriageResult = itemView.findViewById(R.id.tvTriageResult);
-            tvScanMetrics = itemView.findViewById(R.id.tvScanMetrics);
-        }
-
-        public void bind(ScanRecord record) {
-            tvPatientName.setText(record.getPatientName());
-            tvTriageResult.setText("Result: " + record.getTriageResult());
-
-            tvScanMetrics.setText(String.format("Base: %.2f | Min: %.2f | Latency: %dms",
-                    record.getBaselinePupilSize(),
-                    record.getMinimumPupilSize(),
-                    record.getConstrictionLatencyMs()));
-
-            if (record.isSynced()) {
-                tvSyncStatus.setText("● SYNCED");
-                tvSyncStatus.setTextColor(Color.parseColor("#2E7D32"));
-            } else {
-                tvSyncStatus.setText("○ PENDING");
-                tvSyncStatus.setTextColor(Color.parseColor("#E65100"));
-            }
+            tvResult = itemView.findViewById(R.id.tvResult);
+            tvPdfBtn = itemView.findViewById(R.id.tvPdfBtn);
+            tvTimestamp = itemView.findViewById(R.id.tvTimestamp);
+            tvBaseline = itemView.findViewById(R.id.tvBaseline);
+            tvMinRatio = itemView.findViewById(R.id.tvMinRatio);
+            tvLatency = itemView.findViewById(R.id.tvLatency);
         }
     }
 }

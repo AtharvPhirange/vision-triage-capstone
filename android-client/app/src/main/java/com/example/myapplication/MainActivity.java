@@ -1,18 +1,16 @@
 package com.example.myapplication;
 
-import android.util.Size;
-import android.view.View;
-import android.view.WindowManager;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.TextView;
-import android.os.Handler;
-import android.os.Looper;
+import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -26,8 +24,6 @@ import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.YAxis;
@@ -36,47 +32,49 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.google.common.util.concurrent.ListenableFuture;
 
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
-
-// Database and Sync Imports
 import com.example.myapplication.db.AppDatabase;
 import com.example.myapplication.db.ScanDataMapper;
 import com.example.myapplication.db.ScanRecord;
 import com.example.myapplication.network.SyncScheduler;
 
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+
 public class MainActivity extends AppCompatActivity {
 
-    private boolean isScanning = false;
-    public Camera globalCamera;
-    private TextView diagnosisText;
-    private TextView warningText;
     private static final String TAG = "MainActivity";
+    public Camera globalCamera;
+    public int lensFacing = CameraSelector.LENS_FACING_FRONT;
+    public ProcessCameraProvider globalCameraProvider;
+    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
 
+    // UI Elements mapped to new XML
+    private PreviewView viewFinder;
+    private TextView tvStatus;
+    private TextView tvTimer;
+    private Button btnScan;
+    private Button btnFlipLens;
     private LineChart pupilChart;
+
+    // Chart Data
     private LineDataSet pupilDataSet;
     private LineData lineData;
     private long startTime = 0;
-    private PreviewView viewFinder;
-    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
-    private VisionBrain visionBrain;
-
-    public int lensFacing = CameraSelector.LENS_FACING_FRONT;
-    public ProcessCameraProvider globalCameraProvider;
-
     private boolean isGraphActive = false;
 
-    // UI and RecyclerView Elements
-    private RecyclerView recyclerViewScans;
-    private ScanRecordAdapter scanAdapter;
+    // Core AI
+    private VisionBrain visionBrain;
+
+    // Dynamic Patient ID
+    private String currentPatientId = "Patient-01"; // Default fallback
 
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                 if (isGranted) {
                     startCamera();
                 } else {
-                    Toast.makeText(this, "Permission Required", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Camera Permission Required", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -85,37 +83,33 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        viewFinder = findViewById(R.id.viewFinder);
-        diagnosisText = findViewById(R.id.diagnosisText);
-        warningText = findViewById(R.id.warningText);
-
-        android.widget.Button switchBtn = findViewById(R.id.flipCameraButton);
-        switchBtn.setOnClickListener(v -> switchCamera());
-
-        android.widget.Button startBtn = findViewById(R.id.startScanButton);
-        startBtn.setOnClickListener(v -> startTriageTest());
-
-        // History Toggle Listener
-        View historyRecycler = findViewById(R.id.recyclerViewScans);
-        android.widget.Button historyBtn = findViewById(R.id.btnViewHistory);
-        if (historyBtn != null && historyRecycler != null) {
-            historyBtn.setOnClickListener(v -> {
-                if (historyRecycler.getVisibility() == View.VISIBLE) {
-                    historyRecycler.setVisibility(View.GONE);
-                    historyBtn.setText("VIEW HISTORY");
-                } else {
-                    historyRecycler.setVisibility(View.VISIBLE);
-                    historyBtn.setText("HIDE HISTORY");
-                }
-            });
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
         }
 
+        // Catch the dynamic Patient ID passed from HomeActivity
+        if (getIntent() != null && getIntent().hasExtra("PATIENT_ID")) {
+            currentPatientId = getIntent().getStringExtra("PATIENT_ID");
+        }
+
+        // Initialize UI Elements
+        viewFinder = findViewById(R.id.viewFinder);
+        tvStatus = findViewById(R.id.tvStatus);
+        tvTimer = findViewById(R.id.tvTimer);
+        btnScan = findViewById(R.id.btnScan);
+        btnFlipLens = findViewById(R.id.btnFlipLens);
+
+        // Click Listeners
+        btnFlipLens.setOnClickListener(v -> switchCamera());
+        btnScan.setOnClickListener(v -> startTriageTest());
+
+        // Initialize AI
         visionBrain = new VisionBrain();
         visionBrain.initializeAI(this);
 
         setupChart();
-        setupHistoryRecyclerView();
 
+        // Check Permissions
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             startCamera();
         } else {
@@ -124,130 +118,96 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startTriageTest() {
-        android.widget.Button startBtn = findViewById(R.id.startScanButton);
-        View historyRecycler = findViewById(R.id.recyclerViewScans);
-        android.widget.Button historyBtn = findViewById(R.id.btnViewHistory);
+        btnScan.setEnabled(false);
+        btnScan.setAlpha(0.5f);
+        tvTimer.setVisibility(View.VISIBLE);
+        tvStatus.setText("Scanning...");
+        tvStatus.setTextColor(Color.WHITE);
 
-        startBtn.setEnabled(false);
-        startBtn.setAlpha(0.5f);
-
-        diagnosisText.setVisibility(View.INVISIBLE);
-        warningText.setVisibility(View.INVISIBLE);
-
-        // Hide history cards during active scan
-        if (historyRecycler != null) {
-            historyRecycler.setVisibility(View.GONE);
-        }
-        if (historyBtn != null) {
-            historyBtn.setText("VIEW HISTORY");
-        }
-
-        // Reset graph and UI completely before starting the NEW scan
         clearGraph();
 
-        if (visionBrain != null && visionBrain.triageEngine != null) {
-            visionBrain.triageEngine.validFrameCount = 0;
+        if (visionBrain != null) {
+            visionBrain.resetSmoothing(); // Clear old graph data
+            if (visionBrain.triageEngine != null) {
+                visionBrain.triageEngine.validFrameCount = 0;
+                visionBrain.triageEngine.startTest(visionBrain.latestRatio);
+            }
         }
 
         startTime = System.currentTimeMillis();
         isGraphActive = true;
 
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            visionBrain.triageEngine.startTest(visionBrain.latestRatio);
+        new CountDownTimer(3000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                long secondsLeft = millisUntilFinished / 1000 + 1;
+                tvTimer.setText("00:0" + secondsLeft);
+            }
+            public void onFinish() {
+                tvTimer.setVisibility(View.GONE);
+                isGraphActive = false;
+            }
+        }.start();
 
+        android.os.Handler handler = new android.os.Handler(android.os.Looper.getMainLooper());
+
+        // STIMULUS PHASE
+        handler.postDelayed(() -> {
             if (lensFacing == CameraSelector.LENS_FACING_FRONT) {
                 blastScreenBrightness();
             } else if (globalCamera != null) {
-                globalCamera.getCameraControl().enableTorch(true);
+                try {
+                    globalCamera.getCameraControl().enableTorch(true);
+                    Log.d(TAG, "Hardware override: Forced Flash ON");
+                } catch (Exception e) {
+                    Log.e(TAG, "Torch failed to fire", e);
+                }
+            }
+        }, 1000);
+
+        // RECOVERY PHASE
+        handler.postDelayed(() -> {
+            if (lensFacing == CameraSelector.LENS_FACING_FRONT) {
+                restoreScreenBrightness();
+            } else if (globalCamera != null) {
+                try {
+                    globalCamera.getCameraControl().enableTorch(false);
+                    Log.d(TAG, "Hardware override: Forced Flash OFF");
+                } catch (Exception e) {}
+            }
+        }, 2000);
+
+        // FINISH PHASE
+        handler.postDelayed(() -> {
+            if (lensFacing == CameraSelector.LENS_FACING_FRONT) {
+                restoreScreenBrightness();
+            } else if (globalCamera != null) {
+                try {
+                    globalCamera.getCameraControl().enableTorch(false);
+                } catch (Exception e) {}
             }
 
-            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            float baseline = visionBrain.triageEngine.baselineRatio;
+            float minRatio = visionBrain.triageEngine.minConstrictedRatio;
+            String result = visionBrain.triageEngine.getFinalDiagnosis(baseline, minRatio);
 
-                if (lensFacing == CameraSelector.LENS_FACING_FRONT) {
-                    restoreScreenBrightness();
-                } else if (globalCamera != null) {
-                    globalCamera.getCameraControl().enableTorch(false);
-                }
+            tvStatus.setText(result);
 
-                isGraphActive = false; // Freezes the graph rendering
+            if (result.equals("NORMAL")) {
+                tvStatus.setTextColor(android.graphics.Color.parseColor("#00FF00"));
+            } else if (result.equals("SLUGGISH")) {
+                tvStatus.setTextColor(android.graphics.Color.parseColor("#FFFF00"));
+            } else {
+                tvStatus.setTextColor(android.graphics.Color.parseColor("#FF0000"));
+            }
 
-                float baseline = visionBrain.triageEngine.baselineRatio;
-                float minRatio = visionBrain.triageEngine.minConstrictedRatio;
+            btnScan.setEnabled(true);
+            btnScan.setAlpha(1.0f);
+            btnScan.setText("SCAN AGAIN");
 
-                String result = visionBrain.triageEngine.getFinalDiagnosis(baseline, minRatio);
-
-                if (result.equals("ERROR_INCOMPLETE")) {
-                    diagnosisText.setText("Scan Failed: Face lost too often. Try again.");
-                    diagnosisText.setTextColor(android.graphics.Color.parseColor("#FF9800"));
-                    diagnosisText.setVisibility(View.VISIBLE);
-
-                    // Stays on screen permanently until next scan
-                    startBtn.setEnabled(true);
-                    startBtn.setAlpha(1.0f);
-                    return;
-                }
-
-                diagnosisText.setText(result);
-
-                if (result.equals("NORMAL")) {
-                    diagnosisText.setTextColor(android.graphics.Color.parseColor("#00FF00"));
-                } else if (result.equals("SLUGGISH")) {
-                    diagnosisText.setTextColor(android.graphics.Color.parseColor("#FFFF00"));
-                } else {
-                    diagnosisText.setTextColor(android.graphics.Color.parseColor("#FF0000"));
-                }
-
-                diagnosisText.setVisibility(View.VISIBLE);
-
-                // Stays on screen permanently until next scan
-                startBtn.setEnabled(true);
-                startBtn.setAlpha(1.0f);
-
+            if (!result.contains("ERROR")) {
                 saveScanAndTriggerSync();
-            }, 3000);
-        }, 5000);
-    }
-
-    private void setupHistoryRecyclerView() {
-        recyclerViewScans = findViewById(R.id.recyclerViewScans);
-        recyclerViewScans.setLayoutManager(new LinearLayoutManager(this));
-        scanAdapter = new ScanRecordAdapter();
-        recyclerViewScans.setAdapter(scanAdapter);
-
-        // Reactive LiveData observer: Room automatically notifies adapter when isSynced changes
-        AppDatabase.getInstance(this).scanRecordDao().getObservableRecordsByPatient("Patient-01")
-                .observe(this, records -> {
-                    if (records != null) {
-                        Log.d(TAG, "History observer triggered with " + records.size() + " records");
-                        scanAdapter.setScanList(records);
-                    }
-                });
-    }
-
-    private void saveScanAndTriggerSync() {
-        double baselinePupil = visionBrain.triageEngine.getBaselineRatio();
-        double minPupil = visionBrain.triageEngine.getMinRatio();
-        long latencyMs = visionBrain.triageEngine.getLatencyMs();
-        String triageResult = visionBrain.triageEngine.getTriageResult() != null
-                ? visionBrain.triageEngine.getTriageResult()
-                : "NORMAL";
-
-        ScanRecord record = ScanDataMapper.createRecord(
-                "Patient-01",
-                baselinePupil,
-                minPupil,
-                latencyMs,
-                triageResult
-        );
-
-        Executors.newSingleThreadExecutor().execute(() -> {
-            AppDatabase db = AppDatabase.getInstance(getApplicationContext());
-            db.scanRecordDao().insert(record);
-            Log.d(TAG, "Inserted new scan record: " + record.getScanId());
-
-            // Enqueue WorkManager sync immediately
-            SyncScheduler.scheduleSync(getApplicationContext());
-        });
+            }
+        }, 3000);
     }
 
     private void startCamera() {
@@ -282,28 +242,22 @@ public class MainActivity extends AppCompatActivity {
             Bitmap rotatedBitmap = android.graphics.Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 
             long timestamp = imageProxy.getImageInfo().getTimestamp();
-
             visionBrain.detectFace(rotatedBitmap, timestamp);
 
             runOnUiThread(() -> {
-                // Only update UI elements when a scan is actively running
                 if (isGraphActive) {
                     if (visionBrain.latestRatio <= 0.0f) {
-                        if (warningText != null) warningText.setVisibility(View.VISIBLE);
+                        tvStatus.setText("Face Lost! Align Eyes.");
+                        tvStatus.setTextColor(Color.parseColor("#FF9800"));
                     } else {
-                        if (warningText != null) warningText.setVisibility(View.INVISIBLE);
-
-                        // Plot the graph
+                        tvStatus.setText("Scanning...");
+                        tvStatus.setTextColor(Color.WHITE);
                         updateLiveGraph(visionBrain.latestRatio);
 
-                        // Feed the frame to the engine so it counts as a valid frame
                         if (visionBrain.triageEngine != null) {
                             visionBrain.triageEngine.validFrameCount++;
                         }
                     }
-                } else {
-                    // Hide warnings when not scanning
-                    if (warningText != null) warningText.setVisibility(View.INVISIBLE);
                 }
             });
 
@@ -317,24 +271,13 @@ public class MainActivity extends AppCompatActivity {
         globalCamera.getCameraControl().enableTorch(false);
     }
 
-    public void blastScreenBrightness() {
-        WindowManager.LayoutParams layout = getWindow().getAttributes();
-        layout.screenBrightness = 1.0f;
-        getWindow().setAttributes(layout);
-    }
-
-    public void restoreScreenBrightness() {
-        WindowManager.LayoutParams layout = getWindow().getAttributes();
-        layout.screenBrightness = -1.0f;
-        getWindow().setAttributes(layout);
-    }
-
     private void setupChart() {
         pupilChart = findViewById(R.id.pupilChart);
 
         YAxis leftAxis = pupilChart.getAxisLeft();
         leftAxis.setAxisMinimum(0.0f);
         leftAxis.setAxisMaximum(0.6f);
+        leftAxis.setTextColor(Color.WHITE);
 
         YAxis rightAxis = pupilChart.getAxisRight();
         rightAxis.setEnabled(false);
@@ -358,21 +301,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void updateLiveGraph(float currentRatio) {
         float timeElapsed = (System.currentTimeMillis() - startTime) / 1000f;
-
         lineData.addEntry(new Entry(timeElapsed, currentRatio), 0);
         lineData.notifyDataChanged();
-
         pupilChart.notifyDataSetChanged();
         pupilChart.setVisibleXRangeMaximum(10);
         pupilChart.moveViewToX(lineData.getEntryCount());
     }
 
     public void switchCamera() {
-        if (lensFacing == CameraSelector.LENS_FACING_FRONT) {
-            lensFacing = CameraSelector.LENS_FACING_BACK;
-        } else {
-            lensFacing = CameraSelector.LENS_FACING_FRONT;
-        }
+        lensFacing = (lensFacing == CameraSelector.LENS_FACING_FRONT)
+                ? CameraSelector.LENS_FACING_BACK
+                : CameraSelector.LENS_FACING_FRONT;
 
         if (globalCameraProvider != null) {
             globalCameraProvider.unbindAll();
@@ -387,5 +326,42 @@ public class MainActivity extends AppCompatActivity {
             pupilChart.notifyDataSetChanged();
             pupilChart.invalidate();
         }
+    }
+
+    public void blastScreenBrightness() {
+        WindowManager.LayoutParams layout = getWindow().getAttributes();
+        layout.screenBrightness = 1.0f;
+        getWindow().setAttributes(layout);
+    }
+
+    public void restoreScreenBrightness() {
+        WindowManager.LayoutParams layout = getWindow().getAttributes();
+        layout.screenBrightness = -1.0f;
+        getWindow().setAttributes(layout);
+    }
+
+    private void saveScanAndTriggerSync() {
+        double baselinePupil = visionBrain.triageEngine.getBaselineRatio();
+        double minPupil = visionBrain.triageEngine.getMinRatio();
+        long latencyMs = visionBrain.triageEngine.getLatencyMs();
+        String triageResult = visionBrain.triageEngine.getTriageResult() != null
+                ? visionBrain.triageEngine.getTriageResult()
+                : "NORMAL";
+
+        // Now uses the dynamic Patient ID typed into the dashboard!
+        ScanRecord record = ScanDataMapper.createRecord(
+                currentPatientId,
+                baselinePupil,
+                minPupil,
+                latencyMs,
+                triageResult
+        );
+
+        Executors.newSingleThreadExecutor().execute(() -> {
+            AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+            db.scanRecordDao().insert(record);
+            Log.d(TAG, "Inserted new scan record for " + currentPatientId);
+            SyncScheduler.scheduleSync(getApplicationContext());
+        });
     }
 }

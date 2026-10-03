@@ -6,12 +6,13 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {ScanRecord.class}, version = 2, exportSchema = false)
+@Database(entities = {ScanRecord.class, Patient.class}, version = 3, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase INSTANCE;
 
     public abstract ScanRecordDao scanRecordDao();
+    public abstract PatientDao patientDao(); // Added Patient DAO
 
     public static AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {

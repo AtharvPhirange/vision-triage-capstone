@@ -10,6 +10,8 @@ import com.google.mediapipe.tasks.vision.core.RunningMode;
 import com.google.mediapipe.tasks.vision.facelandmarker.FaceLandmarker;
 import com.google.mediapipe.tasks.components.containers.NormalizedLandmark;
 import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class VisionBrain {
     public Bitmap currentBitmap = null;
@@ -20,7 +22,12 @@ public class VisionBrain {
     public TriageEngine triageEngine = new TriageEngine();
     public float latestRatio = 0.0f;
     private float smoothedRatio = 0.0f;
-    private static final float ALPHA = 0.15f;
+    private static final float ALPHA = 0.15f; // Smoothing factor
+
+    // Rolling Average Queue Variables
+    private static final int SMOOTHING_WINDOW = 5;
+    private final Queue<Float> pupilHistory = new LinkedList<>();
+    private float currentSum = 0f;
 
     public void initializeAI(Context context) {
         BaseOptions baseOptions = BaseOptions.builder()
@@ -56,11 +63,11 @@ public class VisionBrain {
                         if (currentBitmap != null) {
                             float rawPupilRadius = calculateTruePupilRadius(currentBitmap, pupilX, pupilY);
                             normalizedIrisDiameter = (rawPupilRadius * 2) / currentBitmap.getWidth();
-
                         } else {
                             normalizedIrisDiameter = 0f;
                         }
 
+                        // Blink detection ignores the frame
                         if (eyeOpenness < 0.12f) {
                             pupilX = -1f;
                             pupilY = -1f;
@@ -75,20 +82,20 @@ public class VisionBrain {
                                 rawRatio = smoothedRatio;
                             }
 
+                            // Added the missing multiplication (*) operator
                             if (smoothedRatio == 0.0f) {
                                 smoothedRatio = rawRatio;
                             } else {
                                 smoothedRatio = smoothedRatio + ALPHA * (rawRatio - smoothedRatio);
                             }
 
-                            latestRatio = smoothedRatio;
+                            // Pass the EMA smoothed ratio through our new rolling average filter
+                            latestRatio = getSmoothedPupilSize(smoothedRatio);
                         }
 
                         if (latestRatio > 0.0f) {
                             triageEngine.processNewRatio(latestRatio);
                         }
-
-                        triageEngine.processNewRatio(latestRatio);
 
                     } else {
                         pupilX = -1f;
@@ -142,6 +149,8 @@ public class VisionBrain {
                 int r = (pixel >> 16) & 0xff;
                 int g = (pixel >> 8) & 0xff;
                 int b = pixel & 0xff;
+
+                // Added missing multiplication (*) operators
                 int luminance = (int) (0.299 * r + 0.587 * g + 0.114 * b);
 
                 if (luminance < minLuminance) {
@@ -163,6 +172,8 @@ public class VisionBrain {
                 int r = (pixel >> 16) & 0xff;
                 int g = (pixel >> 8) & 0xff;
                 int b = pixel & 0xff;
+
+                // Added missing multiplication (*) operators
                 int luminance = (int) (0.299 * r + 0.587 * g + 0.114 * b);
 
                 if (luminance <= dynamicThreshold) {
@@ -175,5 +186,26 @@ public class VisionBrain {
         }
 
         return (float) Math.sqrt(darkPixelCount / Math.PI);
+    } // End of calculateTruePupilRadius
+
+    // --- Moved these methods OUTSIDE of calculateTruePupilRadius ---
+
+    public float getSmoothedPupilSize(float rawSize) {
+        pupilHistory.add(rawSize);
+        currentSum += rawSize;
+
+        // If our queue gets larger than our window, remove the oldest frame
+        if (pupilHistory.size() > SMOOTHING_WINDOW) {
+            float oldestSize = pupilHistory.poll();
+            currentSum -= oldestSize;
+        }
+
+        // Return the stabilized average
+        return currentSum / pupilHistory.size();
+    }
+
+    public void resetSmoothing() {
+        pupilHistory.clear();
+        currentSum = 0f;
     }
 }

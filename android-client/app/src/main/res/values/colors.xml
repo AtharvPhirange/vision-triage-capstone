@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Primary Medical Blue (Matches your reference screenshots) -->
+    <color name="clinical_blue">#003893</color>
+    <color name="clinical_blue_light">#E6F0FA</color>
+
+    <!-- Backgrounds -->
+    <color name="page_background">#FFFFFF</color>
+    <color name="card_background">#FFFFFF</color>
+    <color name="card_stroke">#E0E0E0</color>
+
+    <!-- Typography -->
+    <color name="text_primary">#222222</color>
+    <color name="text_secondary">#757575</color>
+    <color name="text_hint">#9E9E9E</color>
+
+    <!-- Status Accents -->
+    <color name="success_green">#00875A</color>
+    <color name="error_red">#DE350B</color>
 </resources>

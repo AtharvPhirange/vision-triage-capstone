@@ -1,56 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="12dp"
-    android:layout_marginVertical="6dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="3dp">
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="8dp"
+    app:cardBackgroundColor="@color/card_background"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="16dp">
 
-        <RelativeLayout
+        <!-- Triage Result Badge with Smooth Corners -->
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NORMAL"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="6dp"
+            android:background="@drawable/bg_rounded_badge"
+            android:textColor="@color/clinical_blue"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <!-- Dedicated Export PDF Button with Smooth Corners -->
+        <TextView
+            android:id="@+id/tvPdfBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EXPORT PDF"
+            android:textStyle="bold"
+            android:textSize="11sp"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="6dp"
+            android:background="@drawable/bg_rounded_badge"
+            android:textColor="@color/clinical_blue"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- Timestamp -->
+        <TextView
+            android:id="@+id/tvTimestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Timestamp"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/tvResult"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <!-- Divider -->
+        <View
+            android:id="@+id/divider"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="1dp"
+            android:background="@color/card_stroke"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/tvTimestamp"/>
 
-            <TextView
-                android:id="@+id/tvPatientName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Patient-01"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvSyncStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:text="SYNCED"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/tvTriageResult"
-            android:layout_width="wrap_content"
+        <!-- Metrics -->
+        <LinearLayout
+            android:id="@+id/layoutMetrics"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Result: NORMAL"
-            android:textSize="14sp" />
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/divider">
 
-        <TextView
-            android:id="@+id/tvScanMetrics"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:text="Baseline: 0.00 | Min: 0.00 | Latency: 0ms"
-            android:textColor="#666666"
-            android:textSize="12sp" />
-    </LinearLayout>
+            <!-- Baseline -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Baseline"
+                    android:textColor="@color/text_hint"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/tvBaseline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0.00"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+            <!-- Constriction -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Constriction"
+                    android:textColor="@color/text_hint"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/tvMinRatio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0.00"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+            <!-- Latency -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Latency"
+                    android:textColor="@color/text_hint"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/tvLatency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0ms"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

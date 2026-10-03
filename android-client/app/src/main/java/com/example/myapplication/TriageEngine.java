@@ -34,23 +34,28 @@ public class TriageEngine {
 
     public String getFinalDiagnosis(float baselineRatio, float minimumRatio) {
         if (baselineRatio <= 0) {
-            return "ERROR";
+            this.triageResult = "ERROR";
+            return this.triageResult;
         }
 
-        // Require at least 150 valid frames (approx 5 seconds of clean data) to prevent false diagnoses
-        if (validFrameCount < 150) {
-            return "ERROR_INCOMPLETE";
+        // Lowered threshold to 40 valid frames to accommodate the 3-second scan
+        if (validFrameCount < 40) {
+            this.triageResult = "ERROR_INCOMPLETE";
+            return this.triageResult;
         }
 
         float dropPercentage = ((baselineRatio - minimumRatio) / baselineRatio) * 100;
 
+        // Update the internal variable so getTriageResult() returns the correct value
         if (dropPercentage >= 30) {
-            return "NORMAL";
+            this.triageResult = "NORMAL";
         } else if (dropPercentage >= 10) {
-            return "SLUGGISH";
+            this.triageResult = "SLUGGISH";
         } else {
-            return "UNRESPONSIVE";
+            this.triageResult = "UNRESPONSIVE";
         }
+
+        return this.triageResult;
     }
 
     public float getBaselineRatio() {

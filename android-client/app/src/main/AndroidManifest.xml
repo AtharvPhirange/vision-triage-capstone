@@ -16,14 +16,47 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
+
+        <!-- The new entry point of your app (Onboarding Carousel) -->
         <activity
-            android:name=".MainActivity"
+            android:name=".OnboardingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Login Module -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+
+        <!-- Home Dashboard -->
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+
+        <!-- Scanner Module -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
+        <!-- History Module -->
+        <activity
+            android:name=".ScanHistoryActivity"
+            android:exported="false" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>
