@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "835869975220",
+    "project_id": "vision-triage-mobile-platform",
+    "storage_bucket": "vision-triage-mobile-platform.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:835869975220:android:73f5adb4ec4aca85c0ede1",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "835869975220-jkm1sn1etl4g0qt2gdg7uht9og1ouu15.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "943eac6c3dea7303e3f8380767a9074d62f98124"
+          }
+        },
+        {
+          "client_id": "835869975220-2227sn8983q9ug1ue6mlft4o0bekks3m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA29LBUkm1OoI3VXrQeKpkp1l1B8AECKXo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "835869975220-2227sn8983q9ug1ue6mlft4o0bekks3m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,20 +3,33 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
 
+import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthOptions;
+import com.google.firebase.auth.PhoneAuthProvider;
+
+import java.util.concurrent.TimeUnit;
+
 public class LoginActivity extends AppCompatActivity {
 
     private String selectedRole = "TECHNICIAN";
     private AppCompatButton btnRoleTech, btnRolePatient;
+
+    // Firebase Auth Variables
+    private FirebaseAuth mAuth;
+    private String mVerificationId;
+    private PhoneAuthProvider.ForceResendingToken mResendToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +40,14 @@ public class LoginActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+
         btnRoleTech = findViewById(R.id.btnRoleTech);
         btnRolePatient = findViewById(R.id.btnRolePatient);
         CardView cardMobileLogin = findViewById(R.id.cardMobileLogin);
+
+        updateRoleUI();
 
         if (btnRoleTech != null) {
             btnRoleTech.setOnClickListener(v -> {
@@ -70,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
         if ("TECHNICIAN".equals(selectedRole)) {
             showMobileVerificationDialog();
         } else {
-            // Patient direct entry
+            Toast.makeText(this, "Logging in as Patient", Toast.LENGTH_SHORT).show();
             proceedToDashboard();
         }
     }
@@ -78,56 +96,102 @@ public class LoginActivity extends AppCompatActivity {
     private void showMobileVerificationDialog() {
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(50, 40, 50, 10);
+        layout.setPadding(60, 40, 60, 10);
 
         final EditText etPhone = new EditText(this);
-        etPhone.setHint("Enter Authorized Mobile Number");
+        etPhone.setHint("e.g. 9876543210");
         etPhone.setInputType(InputType.TYPE_CLASS_PHONE);
         layout.addView(etPhone);
 
         new AlertDialog.Builder(this)
                 .setTitle("Technician Mobile Auth")
-                .setMessage("Enter registered phone number to receive secure OTP")
+                .setMessage("Enter registered 10-digit phone number:")
                 .setView(layout)
                 .setPositiveButton("Send OTP", (dialog, which) -> {
                     String phone = etPhone.getText().toString().trim();
-                    if (phone.length() < 10) {
-                        Toast.makeText(this, "Enter a valid 10-digit mobile number", Toast.LENGTH_SHORT).show();
+                    if (phone.length() != 10) {
+                        Toast.makeText(this, "Please enter a valid 10-digit number", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    showOtpChallengeDialog(phone);
+                    // Append country code (adjust +91 if outside India)
+                    sendRealSmsOtp("+91" + phone);
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
+    }
+
+    // --- REAL FIREBASE SMS LOGIC ---
+    private void sendRealSmsOtp(String fullPhoneNumber) {
+        Toast.makeText(this, "Requesting network SMS...", Toast.LENGTH_SHORT).show();
+
+        PhoneAuthOptions options =
+                PhoneAuthOptions.newBuilder(mAuth)
+                        .setPhoneNumber(fullPhoneNumber)
+                        .setTimeout(60L, TimeUnit.SECONDS)
+                        .setActivity(this)
+                        .setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                            @Override
+                            public void onVerificationCompleted(@NonNull PhoneAuthCredential credential) {
+                                // Auto-retrieval success (Android reads the SMS automatically)
+                                signInWithPhoneAuthCredential(credential);
+                            }
+
+                            @Override
+                            public void onVerificationFailed(@NonNull FirebaseException e) {
+                                Toast.makeText(LoginActivity.this, "Network Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+
+                            @Override
+                            public void onCodeSent(@NonNull String verificationId,
+                                                   @NonNull PhoneAuthProvider.ForceResendingToken token) {
+                                // SMS successfully dispatched to carrier
+                                mVerificationId = verificationId;
+                                mResendToken = token;
+                                showOtpChallengeDialog(fullPhoneNumber);
+                            }
+                        })
+                        .build();
+        PhoneAuthProvider.verifyPhoneNumber(options);
     }
 
     private void showOtpChallengeDialog(String phone) {
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(50, 40, 50, 10);
+        layout.setPadding(60, 40, 60, 10);
 
         final EditText etOtp = new EditText(this);
-        etOtp.setHint("Enter 6-Digit Verification Code");
+        etOtp.setHint("Enter 6-digit Network OTP");
         etOtp.setInputType(InputType.TYPE_CLASS_NUMBER);
         layout.addView(etOtp);
 
         new AlertDialog.Builder(this)
                 .setTitle("Verify Security OTP")
-                .setMessage("Code sent to +91 " + phone)
+                .setMessage("Code sent to " + phone)
                 .setView(layout)
-                .setPositiveButton("Verify & Login", (dialog, which) -> {
-                    String otp = etOtp.getText().toString().trim();
-                    if (otp.length() == 6 || "123456".equals(otp)) { // Demo override code 123456
-                        Toast.makeText(this, "Technician Identity Verified", Toast.LENGTH_SHORT).show();
-                        proceedToDashboard();
+                .setPositiveButton("Verify", (dialog, which) -> {
+                    String otp = etOtp.getText().toString().replaceAll("\\s+", "").trim();
+                    if (otp.length() == 6) {
+                        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, otp);
+                        signInWithPhoneAuthCredential(credential);
                     } else {
-                        Toast.makeText(this, "Invalid OTP code. Access denied.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "OTP must be exactly 6 digits.", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
     }
 
+    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(LoginActivity.this, "Technician Identity Verified", Toast.LENGTH_SHORT).show();
+                        proceedToDashboard();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Authentication Failed. Incorrect OTP.", Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
     private void proceedToDashboard() {
         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
         intent.putExtra("USER_ROLE", selectedRole);
