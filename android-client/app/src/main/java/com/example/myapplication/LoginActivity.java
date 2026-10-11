@@ -26,7 +26,6 @@ public class LoginActivity extends AppCompatActivity {
     private String selectedRole = "TECHNICIAN";
     private AppCompatButton btnRoleTech, btnRolePatient;
 
-    // Firebase Auth Variables
     private FirebaseAuth mAuth;
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
@@ -40,8 +39,13 @@ public class LoginActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+
+        // Session Management: Skip login if the user is already authenticated
+        if (mAuth.getCurrentUser() != null) {
+            proceedToDashboard();
+            return;
+        }
 
         btnRoleTech = findViewById(R.id.btnRoleTech);
         btnRolePatient = findViewById(R.id.btnRolePatient);
@@ -72,12 +76,12 @@ public class LoginActivity extends AppCompatActivity {
         if (btnRoleTech == null || btnRolePatient == null) return;
 
         if ("TECHNICIAN".equals(selectedRole)) {
-            btnRoleTech.setBackgroundResource(R.drawable.bg_toggle_active);
+            btnRoleTech.setBackgroundColor(android.graphics.Color.parseColor("#003893"));
             btnRoleTech.setTextColor(android.graphics.Color.WHITE);
             btnRolePatient.setBackgroundColor(android.graphics.Color.TRANSPARENT);
             btnRolePatient.setTextColor(android.graphics.Color.parseColor("#003893"));
         } else {
-            btnRolePatient.setBackgroundResource(R.drawable.bg_toggle_active);
+            btnRolePatient.setBackgroundColor(android.graphics.Color.parseColor("#003893"));
             btnRolePatient.setTextColor(android.graphics.Color.WHITE);
             btnRoleTech.setBackgroundColor(android.graphics.Color.TRANSPARENT);
             btnRoleTech.setTextColor(android.graphics.Color.parseColor("#003893"));
@@ -113,14 +117,12 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(this, "Please enter a valid 10-digit number", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    // Append country code (adjust +91 if outside India)
                     sendRealSmsOtp("+91" + phone);
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
     }
 
-    // --- REAL FIREBASE SMS LOGIC ---
     private void sendRealSmsOtp(String fullPhoneNumber) {
         Toast.makeText(this, "Requesting network SMS...", Toast.LENGTH_SHORT).show();
 
@@ -132,7 +134,6 @@ public class LoginActivity extends AppCompatActivity {
                         .setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                             @Override
                             public void onVerificationCompleted(@NonNull PhoneAuthCredential credential) {
-                                // Auto-retrieval success (Android reads the SMS automatically)
                                 signInWithPhoneAuthCredential(credential);
                             }
 
@@ -144,7 +145,6 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onCodeSent(@NonNull String verificationId,
                                                    @NonNull PhoneAuthProvider.ForceResendingToken token) {
-                                // SMS successfully dispatched to carrier
                                 mVerificationId = verificationId;
                                 mResendToken = token;
                                 showOtpChallengeDialog(fullPhoneNumber);
@@ -185,16 +185,18 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(LoginActivity.this, "Technician Identity Verified", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Identity Verified", Toast.LENGTH_SHORT).show();
                         proceedToDashboard();
                     } else {
                         Toast.makeText(LoginActivity.this, "Authentication Failed. Incorrect OTP.", Toast.LENGTH_LONG).show();
                     }
                 });
     }
+
     private void proceedToDashboard() {
         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
         intent.putExtra("USER_ROLE", selectedRole);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }

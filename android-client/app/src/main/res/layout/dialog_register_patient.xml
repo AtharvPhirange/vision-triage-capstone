@@ -1,44 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="320dp"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="24dp">
+    android:layout_gravity="center"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="8dp"
+    app:cardBackgroundColor="#FFFFFF">
 
-    <EditText
-        android:id="@+id/etRegPatientId"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="Patient ID (e.g. PAT-101)"
-        android:textSize="14sp"
-        android:inputType="text"
-        android:layout_marginBottom="12dp"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <EditText
-        android:id="@+id/etRegFullName"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="Full Name"
-        android:textSize="14sp"
-        android:inputType="textPersonName"
-        android:layout_marginBottom="12dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Register New Patient"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#003893"
+            android:gravity="center"
+            android:layout_marginBottom="28dp"/>
 
-    <EditText
-        android:id="@+id/etRegAge"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="Age"
-        android:textSize="14sp"
-        android:inputType="number"
-        android:layout_marginBottom="12dp"/>
+        <!-- 1. Patient ID Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Patient ID"
+            android:textStyle="bold"
+            android:textColor="#424242"
+            android:textSize="14sp"
+            android:layout_marginBottom="6dp"/>
 
-    <EditText
-        android:id="@+id/etRegContact"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="Contact Number"
-        android:textSize="14sp"
-        android:inputType="phone"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            app:hintEnabled="false"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-</LinearLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPatientId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="e.g., PAT-101"
+                android:textColor="#212121"
+                android:textColorHint="#9E9E9E"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- 2. Full Name Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Full Name"
+            android:textStyle="bold"
+            android:textColor="#424242"
+            android:textSize="14sp"
+            android:layout_marginBottom="6dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            app:hintEnabled="false"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etFullName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter full name"
+                android:textColor="#212121"
+                android:textColorHint="#9E9E9E"
+                android:inputType="textPersonName" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- 3. Age Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Age"
+            android:textStyle="bold"
+            android:textColor="#424242"
+            android:textSize="14sp"
+            android:layout_marginBottom="6dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            app:hintEnabled="false"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter age"
+                android:textColor="#212121"
+                android:textColorHint="#9E9E9E"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Action Buttons -->
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Save Profile"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#003893"
+            app:cornerRadius="8dp" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="#757575"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_marginTop="8dp"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

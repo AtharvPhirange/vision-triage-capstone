@@ -2,13 +2,12 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 public class OnboardingActivity extends AppCompatActivity {
@@ -16,7 +15,6 @@ public class OnboardingActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private LinearLayout layoutDots;
     private OnboardingAdapter adapter;
-    private TextView[] dots;
     private Button btnNext;
     private TextView btnSkip;
 
@@ -64,22 +62,41 @@ public class OnboardingActivity extends AppCompatActivity {
     }
 
     private void setupIndicators(int position) {
-        dots = new TextView[adapter.getItemCount()];
         layoutDots.removeAllViews();
+        int count = adapter.getItemCount();
 
-        for (int i = 0; i < dots.length; i++) {
-            dots[i] = new TextView(this);
-            dots[i].setText(Html.fromHtml("&#8226;")); // Bullet character
-            dots[i].setTextSize(35);
-            dots[i].setTextColor(ContextCompat.getColor(this,
-                    i == position ? R.color.clinical_blue : R.color.card_stroke));
-            layoutDots.addView(dots[i]);
+        // Convert dp measurements to exact screen pixels dynamically using the multiplication operator (*)
+        float density = getResources().getDisplayMetrics().density;
+        int activeWidth = (int) (20 * density);
+        int inactiveWidth = (int) (6 * density);
+        int height = (int) (6 * density);
+        int margin = (int) (6 * density);
+
+        for (int i = 0; i < count; i++) {
+            View indicator = new View(this);
+
+            // If it is the current page, stretch the width to make the pill shape. Otherwise, keep it a dot.
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    i == position ? activeWidth : inactiveWidth, height);
+
+            // Add spacing between indicators (except for the very last one)
+            if (i != count - 1) {
+                params.setMargins(0, 0, margin, 0);
+            }
+
+            indicator.setLayoutParams(params);
+
+            // Apply the exact XML drawable shapes we created earlier
+            indicator.setBackgroundResource(
+                    i == position ? R.drawable.bg_indicator_active : R.drawable.bg_indicator_inactive
+            );
+
+            layoutDots.addView(indicator);
         }
     }
 
     private void navigateToHome() {
-        // Changed destination from HomeActivity to LoginActivity
-        Intent intent = new Intent(OnboardingActivity.this, LoginActivity.class);
+        Intent intent = new Intent(OnboardingActivity.this, AuthSignInActivity.class);
         startActivity(intent);
         finish();
     }

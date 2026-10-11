@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class OnboardingAdapter extends RecyclerView.Adapter<OnboardingAdapter.OnboardingViewHolder> {
 
-    // Using built-in Android icons as placeholders until you add your own vectors
+    // Updated with exact file names from your drawable folder
     private final int[] images = {
-            android.R.drawable.ic_menu_camera,
-            android.R.drawable.ic_menu_recent_history,
-            android.R.drawable.ic_menu_manage
+            R.drawable.ic_onboarding_pupil,   // Slide 1 (Digital Pupillometer)
+            R.drawable.ic_onboarding_history,  // Slide 2 (Health History)
+            R.drawable.ic_onboarding_secure    // Slide 3 (Secure & Local Data)
     };
 
+    // Aligned with your app titles and descriptions
     private final String[] titles = {
             "Digital Pupillometer",
             "Access Your Health History",
@@ -49,16 +50,16 @@ public class OnboardingAdapter extends RecyclerView.Adapter<OnboardingAdapter.On
         return titles.length;
     }
 
-    static class OnboardingViewHolder extends RecyclerView.ViewHolder {
+    public static class OnboardingViewHolder extends RecyclerView.ViewHolder {
         ImageView imageSlide;
         TextView tvSlideTitle;
         TextView tvSlideDescription;
 
         public OnboardingViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageSlide = itemView.findViewById(R.id.imageSlide);
-            tvSlideTitle = itemView.findViewById(R.id.tvSlideTitle);
-            tvSlideDescription = itemView.findViewById(R.id.tvSlideDescription);
+            imageSlide = itemView.findViewById(R.id.imgIllustration);
+            tvSlideTitle = itemView.findViewById(R.id.tvTitle);
+            tvSlideDescription = itemView.findViewById(R.id.tvSubtitle);
         }
     }
 }
