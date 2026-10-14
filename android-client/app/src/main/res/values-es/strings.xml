@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Vision Triage</string>
+    <string name="dashboard_welcome_title">Bienvenido a\nVision Triage</string>
+    <string name="dashboard_welcome_subtitle">Plataforma Avanzada de Diagnóstico Ocular</string>
+    <string name="patient_portal_title">Portal del Paciente</string>
+    <string name="patient_portal_desc">Seleccione perfil o realice un autoescaneo</string>
+    <string name="patient_portal_hub_desc">Historial médico, escaneos y triaje autoservicio.</string>
+    <string name="patient_portal_action">Acceder al Portal</string>
+    <string name="btn_view_scan_history">Ver Historial de Escaneos</string>
+    <string name="btn_book_consultation">Reservar Consulta</string>
+    <string name="technician_portal_title">Portal del Técnico</string>
+    <string name="technician_portal_hub_desc">Captura de escaneo pupilométrico y calibración.</string>
+    <string name="btn_initiate_scan">Iniciar Escaneo</string>
+    <string name="btn_patient_intake">Registro Rápido de Paciente</string>
+    <string name="btn_device_calibration">Calibración del Dispositivo</string>
+    <string name="btn_sync_queue">Cola de Sincronización</string>
+    <string name="consultant_portal_title">Portal del Consultor</string>
+    <string name="consultant_portal_hub_desc">Colas de diagnóstico, análisis PLR y escalamiento clínico.</string>
+    <string name="btn_review_queue">Revisar Cola de Prioridad</string>
+    <string name="btn_high_risk_cases">Casos de Alto Riesgo</string>
+    <string name="btn_verify_reports">Verificar Informes</string>
+
+    <string name="onboarding_slide1_title">Pupilómetro Digital</string>
+    <string name="onboarding_slide1_desc">Analice los reflejos pupilares a la luz al instante utilizando visión por computadora móvil avanzada.</string>
+    <string name="onboarding_slide2_title">Diagnóstico de Precisión</string>
+    <string name="onboarding_slide2_desc">Curvas PLR precisas, medición de latencia y clasificación de triaje neurológico automatizado.</string>
+    <string name="onboarding_slide3_title">Colaboración Clínica</string>
+    <string name="onboarding_slide3_desc">Sincronización perfecta entre pacientes, técnicos clínicos y médicos especialistas.</string>
+
+    <string name="scanner_banner_align_eye">Alinee el ojo en el encuadre y manténgalo quieto</string>
+    <string name="btn_flip_camera">Cambiar Cámara</string>
+    <string name="btn_start_triage_scan">Iniciar Escaneo de Triaje</string>
+
+    <string name="label_active_patient_profile">Perfil del Paciente Activo</string>
+    <string name="btn_change">Cambiar</string>
+    <string name="btn_view_patient_history">Ver Historial Médico del Paciente</string>
+    <string name="btn_register_new_patient">+ Registrar Nuevo Perfil de Paciente</string>
+    <string name="toast_opening_patient_portal">Abriendo Portal del Paciente…</string>
+
+    <string name="dialog_delete_patient_title">¿Eliminar Perfil de Paciente?</string>
+    <string name="dialog_delete_patient_desc">Esto eliminará permanentemente este perfil de paciente, todos los datos de escaneo y los informes PDF almacenados.</string>
+    <string name="dialog_delete_scan_title">¿Eliminar Registro de Escaneo?</string>
+    <string name="dialog_delete_scan_desc">Esto eliminará permanentemente este registro de escaneo y su informe PDF.</string>
+    <string name="btn_delete">Eliminar</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="no_patient_selected">Ningún Perfil Activo Seleccionado</string>
+
+    <string name="register_patient_title">Registrar Nuevo Paciente</string>
+    <string name="label_patient_id">ID de Paciente / UHID</string>
+    <string name="label_full_name">Nombre Completo</string>
+    <string name="label_age">Edad</string>
+    <string name="label_gender">Género</string>
+    <string name="label_male">Masculino</string>
+    <string name="label_female">Femenino</string>
+    <string name="label_other">Otro</string>
+    <string name="label_phone_number">Número de Teléfono</string>
+    <string name="label_aadhaar_number">Aadhaar / ID Nacional</string>
+    <string name="label_residential_address">Dirección Residencial</string>
+    <string name="btn_fetch_location">Obtener Ubicación</string>
+    <string name="label_location_acquired">Ubicación Obtenida</string>
+    <string name="label_location_not_acquired">Ubicación: No Obtenida</string>
+    <string name="label_medical_history">Notas de Historial Médico / Ocular</string>
+    <string name="btn_save_profile">Guardar Perfil</string>
+    <string name="error_invalid_aadhaar">Aadhaar debe ser un número de 12 dígitos</string>
+    <string name="error_required_field">Por favor complete todos los campos requeridos</string>
+
+    <string name="permissions_title">Permisos Clínicos Requeridos</string>
+    <string name="permissions_subtitle">Habilite cámara, ubicación y almacenamiento para diagnóstico</string>
+    <string name="perm_camera_title">Acceso a la Cámara (Obligatorio)</string>
+    <string name="perm_camera_desc">Utilizado para captura de escaneo PLR y seguimiento de pupila.</string>
+    <string name="perm_location_title">Acceso a la Ubicación</string>
+    <string name="perm_location_desc">Utilizado para autocompletar la dirección residencial del paciente.</string>
+    <string name="perm_storage_title">Acceso al Almacenamiento</string>
+    <string name="perm_storage_desc">Utilizado para guardar informes PDF de diagnóstico.</string>
+    <string name="btn_grant_permissions">Otorgar Permisos Clínicos</string>
+    <string name="profile_sheet_title">Perfil de Usuario y Detalles</string>
+    <string name="btn_sign_out">Cambiar Cuenta / Cerrar Sesión</string>
+    <string name="btn_offline_access">Portal de Personal Fuera de Línea</string>
+    <string name="offline_register_title">Registro de Personal Fuera de Línea</string>
+    <string name="offline_login_title">Inicio de Sesión PIN Fuera de Línea</string>
+    <string name="label_staff_id">ID de Personal (ej. TECH-402)</string>
+    <string name="label_offline_pin">PIN de Seguridad de 4 D形gitos</string>
+    <string name="btn_login_pin">Iniciar Sesión con PIN</string>
+    <string name="toast_address_autofilled">Dirección autocompletada por GPS</string>
+
+    <string name="btn_edit_profile">Editar Detalles del Perfil</string>
+    <string name="edit_profile_title">Editar Información del Perfil</string>
+    <string name="label_facility_name">Instalación Clínica / Departamento</string>
+    <string name="toast_profile_updated">Detalles del Perfil Actualizados</string>
+    <string name="toast_registration_success_login">Registro de personal exitoso. Inicie sesión con su ID y PIN.</string>
+
+    <string name="menu_guide_subtitle_modern">Flujos interactivos, escalas PLR y guías de triaje</string>
+    <string name="menu_issue_subtitle_modern">Envíe artefactos de escaneo, problemas de brillo y registros</string>
+    <string name="menu_pairing_subtitle_modern">Calibre FPS de cámara, sensor y hardware BLE</string>
+    <string name="menu_help_subtitle_modern">Marcador de triaje de emergencia y consulta de especialista</string>
+    <string name="menu_privacy_subtitle_modern">Protección de datos HIPAA, ABDM y AES-256 local</string>
+    <string name="menu_preferences_subtitle_modern">Ajustes de sincronización fuera de línea, cuadrícula y idiomas</string>
+    <string name="menu_signout_subtitle_modern">Cambiar perfil activo o desconectar sesión</string>
+
+    <string name="badge_clinical_insight">CONSEJO OFTALMOLÓGICO CLÍNICO</string>
+    <string name="tip_title">Consejo Clínico de Hoy</string>
+    <string name="btn_another_tip">Otro Consejo</string>
+    <string name="btn_got_it_tip">Entendido</string>
+
+    <string-array name="clinical_eye_tips">
+        <item>Consuma vegetales de hoja verde ricos en luteína y zeaxantina para proteger el pigmento macular.</item>
+        <item>Siga la regla 20-20-20: cada 20 minutos, mire a 20 pies de distancia durante 20 segundos.</item>
+        <item>Coloque las pantallas 15-20 grados por debajo del nivel de los ojos para evitar la resequedad ocular.</item>
+        <item>Asegure una iluminación ambiental de alto contraste para evitar el esfuerzo pupilar al leer.</item>
+        <item>Utilice gafas con protección UV400 para prevenir el desarrollo temprano de cataratas.</item>
+    </string-array>
+
+    <string name="nav_home">Inicio</string>
+    <string name="nav_discover">Descubrir</string>
+    <string name="nav_fitness">Bienestar</string>
+    <string name="nav_my_health">Mi Salud</string>
+
+    <string name="discover_title">Centros de Atención Oftalmológica</string>
+    <string name="discover_subtitle">Cálculo de distancia GPS en tiempo real y navegación</string>
+    <string name="btn_get_directions">Obtener Indicaciones</string>
+
+    <string name="fitness_title">Salud Ocular y Ejercicios Visuales</string>
+    <string name="fitness_subtitle">Prevenga la fatiga visual digital con ejercicios clínicos</string>
+    <string name="btn_watch_video">Ver Video</string>
+
+    <string name="btn_shuffle_tip">Otro Consejo</string>
+    <string name="btn_dismiss_tip">Entendido</string>
+
+    <string name="report_issue_title">Informar Problema de Diagnóstico</string>
+    <string name="btn_submit_report">Enviar Informe</string>
+
+    <string name="pairing_title">Emparejamiento de Escáner</string>
+    <string name="btn_test_flash">Probar Sincronización de Flash</string>
+
+    <string name="helpline_title">Ayuda y Línea Clínica</string>
+    <string name="btn_call_emergency">Llamar a Línea de Emergencia</string>
+
+    <string name="privacy_title">Privacidad y Cumplimiento de Datos</string>
+    <string name="btn_clear_cache">Borrar Caché Local</string>
+
+    <string name="preferences_title">Preferencias de la Aplicación</string>
+
+    <string name="login_title">Vision Triage</string>
+    <string name="login_subtitle">Portal de Diagnóstico Ocular e Inteligencia Clínica</string>
+    <string name="login_trust_badge">ACCESO BIOMÉTRICO SEGURO</string>
+    <string name="login_trust_desc">Acceso cifrado conforme a ABDM / HIPAA</string>
+    <string name="btn_google_sign_in">Iniciar sesión con Google</string>
+    <string name="btn_offline_field_mode">Continuar en Modo Fuera de Línea</string>
+    <string name="toast_auth_success">Autenticación Exitosa</string>
+    <string name="toast_auth_failed">Error de autenticación. Intente de nuevo.</string>
+
+    <string name="intake_title">Ingreso de Paciente Técnico</string>
+    <string name="intake_subtitle">Registre síntomas clínicos y signos vitales</string>
+    <string name="label_symptom_checklist">Lista de Verificación de Síntomas</string>
+    <string name="symptom_head_trauma">Traumatismo Craneal Agudo</string>
+    <string name="symptom_anisocoria">Anisocoria (Pupilas Desiguales)</string>
+    <string name="symptom_severe_headache">Dolor de Cabeza Intenso / Migraña</string>
+    <string name="symptom_altered_mental">Estado Mental Alterado / GCS &lt; 15</string>
+    <string name="symptom_photophobia">Fotofobia / Visión Borrosa</string>
+    <string name="label_vitals">Signos Vitales (Ritmo Cardíaco y Presión)</string>
+    <string name="hint_heart_rate">Ritmo Cardíaco (BPM)</string>
+    <string name="hint_bp">Presión Arterial (ej. 120/80)</string>
+    <string name="btn_proceed_to_scan">Proceder al Escaneo PLR</string>
+    <string name="sync_queue_title">Cola de Carga Fuera de Línea</string>
+    <string name="sync_queue_subtitle">Sincronice registros locales con la nube</string>
+    <string name="btn_sync_now">Sincronizar Ahora</string>
+    <string name="status_pending_sync">SINCRONIZACIÓN PENDIENTE</string>
+    <string name="status_synced">SINCRONIZADO</string>
+    <string name="consultant_queue_title">Cola Prioritaria del Consultor</string>
+    <string name="consultant_queue_subtitle">Escaneos ordenados por urgencia clínica</string>
+    <string name="btn_review_case">Abrir Diagnóstico</string>
+    <string name="plr_analysis_title">Análisis de Curva de Dilatación PLR</string>
+    <string name="plr_analysis_subtitle">Revisión de onda de 8 segundos</string>
+    <string name="label_ai_verdict">Veredicto IA Automatizado: </string>
+    <string name="label_specialist_override">Anulación de Diagnóstico Especialista</string>
+    <string name="override_concur">Coincidir con Veredicto IA</string>
+    <string name="override_normal">Anular: Normal</string>
+    <string name="override_sluggish">Anular: Lento</string>
+    <string name="override_unresponsive">Anular: Sin Respuesta</string>
+    <string name="label_clinical_notes">Notas Clínicas del Especialista</string>
+    <string name="hint_clinical_notes">Ingrese diagnóstico diferencial e instrucciones...</string>
+    <string name="label_digital_signoff">Firma Especialista: Dr. A. Sharma (Reg #MMC-84920)</string>
+    <string name="btn_refer_urgent">Derivar para Cirugía / Traumatología Urgente</string>
+    <string name="btn_schedule_video">Programar Seguimiento de Teleoftalmología</string>
+    <string name="btn_discharge_patient">Alta / Seguimiento de Rutina</string>
+
+    <string name="menu_clinical_user_guide">Guía del Usuario Clínico</string>
+    <string name="menu_report_diagnostic_issue">Informar Problema de Diagnóstico</string>
+    <string name="menu_device_scanner_pairing">Emparejamiento de Escáner</string>
+    <string name="menu_help_clinical_helpline">Ayuda y Línea Clínica</string>
+    <string name="menu_data_privacy_compliance">Privacidad y Cumplimiento de Datos</string>
+    <string name="menu_app_preferences">Preferencias de la Aplicación</string>
+    <string name="menu_switch_role_sign_out">Cambiar Rol / Cerrar Sesión</string>
+    <string name="menu_section_clinical_utilities">UTILIDADES CLÍNICAS</string>
+    <string name="menu_section_support_preferences">SOPORTE Y PREFERENCIAS</string>
+
+    <string name="section_clinical_utilities">UTILIDADES CLÍNICAS</string>
+    <string name="menu_clinical_guide">Guía del Usuario Clínico</string>
+    <string name="menu_report_issue">Informar Problema de Diagnóstico</string>
+    <string name="menu_device_pairing">Emparejamiento de Escáner</string>
+    <string name="section_support_settings">SOPORTE Y CONFIGURACIÓN</string>
+    <string name="section_support_preferences">SOPORTE Y PREFERENCIAS</string>
+    <string name="menu_helpline">Ayuda y Línea Clínica</string>
+    <string name="menu_data_privacy">Privacidad y Cumplimiento de Datos</string>
+    <string name="menu_preferences">Preferencias de la Aplicación</string>
+    <string name="menu_sign_out">Cambiar Rol / Cerrar Sesión</string>
+
+    <string name="guide_header_title">Guía del Usuario Clínico</string>
+    <string name="guide_header_subtitle">Operación paso a paso y flujo de diagnóstico</string>
+    <string name="guide_title">Guía del Usuario Clínico</string>
+    <string name="guide_subtitle">Operación paso a paso y flujo de diagnóstico</string>
+    <string name="guide_step1_badge">PASO 1 - VISIÓN GENERAL</string>
+    <string name="guide_step1_title">Descripción de App y Portales</string>
+    <string name="guide_step1_desc">Vision Triage conecta a pacientes, técnicos y consultores en un flujo unificado. Seleccione su rol en el panel principal.</string>
+    <string name="guide_step1_bullet1">• Flujo de Roles (Paciente / Técnico / Médico)</string>
+    <string name="guide_step1_bullet2">• Seguridad Local HIPAA y ABDM</string>
+    <string name="guide_step1_item4_title">Datos Seguros y Locales</string>
+    <string name="guide_step1_item4_desc">Sus datos de salud nunca salen de su dispositivo sin su consentimiento explícito.</string>
+
+    <string name="guide_step2_badge">PASO 2</string>
+    <string name="guide_step2_title">Cómo Escanear</string>
+    <string name="guide_step2_desc">Coloque la cámara a 25-30 cm del ojo del paciente. Garantice iluminación uniforme y bloquee la retícula en la pupila.</string>
+    <string name="guide_step2_bullet1">• Bloqueo de Objetivo a 25–30 cm</string>
+    <string name="guide_step2_bullet2">• Alineación de Retícula en Pupila</string>
+    <string name="guide_step2_item1_title">Bloqueo de Distancia</string>
+    <string name="guide_step2_item1_desc">Mantenga una distancia constante de 25-30 cm del ojo del paciente.</string>
+    <string name="guide_step2_item2_title">Objetivo Estético</string>
+    <string name="guide_step2_item2_desc">Alinee la retícula precisamente en el centro pupilar.</string>
+    <string name="guide_step2_item3_title">Control de Iluminación</string>
+    <string name="guide_step2_item3_desc">Asegure iluminación uniforme sin reflejos deslumbrantes.</string>
+    <string name="guide_step2_item4_title">Bloqueo de Detección</string>
+    <string name="guide_step2_item4_desc">Asegure que la confianza de seguimiento IA sea superior al 95%.</string>
+
+    <string name="guide_step3_badge">PASO 3</string>
+    <string name="guide_step3_title">Capturar PLR</string>
+    <string name="guide_step3_desc">Ejecute el escaneo automatizado de 5 segundos. Mantenga las manos firmes hasta alcanzar más del 95% de confianza IA.</string>
+    <string name="guide_step3_bullet1">• Barrido Automatizado de 5s</string>
+    <string name="guide_step3_bullet2">• Umbral de Confianza IA 95%+</string>
+    <string name="guide_step3_item1_title">Registro Basal</string>
+    <string name="guide_step3_item1_desc">Captura el diámetro pupilar en reposo durante el primer segundo.</string>
+    <string name="guide_step3_item2_title">Estimulación Lumínica</string>
+    <string name="guide_step3_item2_desc">Emite pulso de luz controlado para observar la velocidad de constricción.</string>
+    <string name="guide_step3_item3_title">Rastreo de Recuperación</string>
+    <string name="guide_step3_item3_desc">Mide velocidad de redilatación y curvas de latencia.</string>
+    <string name="guide_step3_item4_title">Verificación de Calidad</string>
+    <string name="guide_step3_item4_desc">Guarda el registro cuando alcanza el umbral de 95%+ de confianza.</string>
+
+    <string name="guide_step4_badge">PASO 4</string>
+    <string name="guide_step4_title">Verificar Estado</string>
+    <string name="guide_step4_desc">Clasificación inmediata: Verde (Normal), Ámbar (Observación) o Rojo (Urgente). Vea gráficos de latencia en historial.</string>
+    <string name="guide_step4_bullet1">• Clasificación de Riesgo Tricolor</string>
+    <string name="guide_step4_bullet2">• Gráficos de Latencia Kinemática</string>
+    <string name="guide_step4_item1_title">Verde (Normal)</string>
+    <string name="guide_step4_item1_desc">Respuesta pupilar simétrica con velocidad normal.</string>
+    <string name="guide_step4_item2_title">Ámbar (Observación)</string>
+    <string name="guide_step4_item2_desc">Reflejo perezoso o ligera asimetría que requiere seguimiento.</string>
+    <string name="guide_step4_item3_title">Rojo (Urgente)</string>
+    <string name="guide_step4_item3_desc">Pupila fija, dilatada o no reactiva que requiere escalamiento.</string>
+    <string name="guide_step4_item4_title">Gráficos de Latencia</string>
+    <string name="guide_step4_item4_desc">Acceda a formas de onda de latencia PLR en Historial Médico.</string>
+
+    <string name="guide_step5_badge">PASO 5</string>
+    <string name="guide_step5_title">Revisión del Consultor</string>
+    <string name="guide_step5_desc">Escale casos de alto riesgo directamente a la cola del consultor en un toque para verificación teleoftalmológica.</string>
+    <string name="guide_step5_bullet1">• Escalamiento de Cola en 1 Toque</string>
+    <string name="guide_step5_bullet2">• Verificación Teleoftalmológica</string>
+    <string name="guide_step5_item1_title">Marcar Alto Riesgo</string>
+    <string name="guide_step5_item1_desc">Casos rojos entran automáticamente en la cola de revisión.</string>
+    <string name="guide_step5_item2_title">Análisis de Onda</string>
+    <string name="guide_step5_item2_desc">Consultores revisan gráficos PLR de alta frecuencia.</string>
+    <string name="guide_step5_item3_title">Etiqueta de Verificación</string>
+    <string name="guide_step5_item3_desc">Añada notas clínicas y firme informes de diagnóstico.</string>
+    <string name="guide_step5_item4_title">Envío a Paciente</string>
+    <string name="guide_step5_item4_desc">Envíe el resumen de triaje directamente al perfil del paciente.</string>
+
+    <string name="guide_btn_got_it">Entendido, Volver al Panel</string>
+    <string name="btn_got_it">Entendido, Volver al Panel</string>
+    <string name="content_desc_overview_icon">Icono de Visión General</string>
+    <string name="content_desc_close">Cerrar Diálogo</string>
+    <string name="btn_close_text">Cerrar Guía</string>
+    <string name="btn_practice_scan">Práctica de Escaneo</string>
+    <string name="num_1">1</string>
+    <string name="num_2">2</string>
+    <string name="num_3">3</string>
+    <string name="num_4">4</string>
+    <string name="btn_prev">Anterior</string>
+    <string name="btn_next_slide">Siguiente</string>
+    <string name="btn_finish_guide">Finalizar</string>
+    <string name="step_counter_format">Paso %1$d de %2$d</string>
+</resources>

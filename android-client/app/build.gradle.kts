@@ -65,6 +65,17 @@ dependencies {
     implementation("androidx.room:room-runtime:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
 
+    // Credential Manager API & Google ID
+    implementation("androidx.credentials:credentials:1.3.0")
+    implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+    implementation("com.airbnb.android:lottie:6.4.0")
+
+    // Glide Image Loading
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
+
     // WorkManager (Background Sync)
     val workVersion = "2.9.0"
     implementation("androidx.work:work-runtime:$workVersion")

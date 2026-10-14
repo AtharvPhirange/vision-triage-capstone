@@ -98,8 +98,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         if (enteredOtp.equals(generatedOtp)) {
             Toast.makeText(this, "Verification Successful! Redirecting...", Toast.LENGTH_LONG).show();
 
-            // Auto Sign-in & Portal Navigation
-            Intent intent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
+            // Auto Sign-in & Home Dashboard Navigation
+            Intent intent = new Intent(ForgotPasswordActivity.this, HomeActivity.class);
             // Clear the backstack so the user cannot navigate back to the OTP screen
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_bottom_sheet_32"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- Top Drag Handle -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="12dp"
+        android:background="#CBD5E1" />
+
+    <!-- Header Navigation Controls -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp">
+
+        <!-- Scaled-Up Step Counter Pill Badge -->
+        <TextView
+            android:id="@+id/tvStepCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_pill_badge"
+            android:letterSpacing="0.05"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="7dp"
+            android:textColor="#0284C7"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Step 1 of 5" />
+
+        <!-- Upright Close Button -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btnCloseCard"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:cardBackgroundColor="#F1F5F9"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="0dp">
+
+            <ImageView
+                android:id="@+id/btnClose"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:contentDescription="@string/content_desc_close"
+                android:focusable="true"
+                android:padding="10dp"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                app:tint="#1E293B" />
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:background="#E2E8F0" />
+
+    <!-- Center ViewPager2 Container -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPagerGuide"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="12dp"
+        android:background="#E2E8F0" />
+
+    <!-- Bottom Controls Panel (Previous, Page Indicator Dots, Next/Finish) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <!-- Previous Slide Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPrevSlide"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="54dp"
+            android:text="@string/btn_prev"
+            android:textAllCaps="false"
+            android:textColor="#64748B"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="27dp"
+            app:strokeColor="#CBD5E1"
+            app:strokeWidth="1.5dp" />
+
+        <!-- 5-Dot Indicator Layout -->
+        <LinearLayout
+            android:id="@+id/containerDots"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/dot0"
+                android:layout_width="18dp"
+                android:layout_height="9dp"
+                android:layout_marginHorizontal="3dp"
+                android:background="@drawable/bg_pill_badge"
+                android:backgroundTint="#003893" />
+
+            <View
+                android:id="@+id/dot1"
+                android:layout_width="9dp"
+                android:layout_height="9dp"
+                android:layout_marginHorizontal="3dp"
+                android:background="@drawable/bg_bubble_circle"
+                android:backgroundTint="#CBD5E1" />
+
+            <View
+                android:id="@+id/dot2"
+                android:layout_width="9dp"
+                android:layout_height="9dp"
+                android:layout_marginHorizontal="3dp"
+                android:background="@drawable/bg_bubble_circle"
+                android:backgroundTint="#CBD5E1" />
+
+            <View
+                android:id="@+id/dot3"
+                android:layout_width="9dp"
+                android:layout_height="9dp"
+                android:layout_marginHorizontal="3dp"
+                android:background="@drawable/bg_bubble_circle"
+                android:backgroundTint="#CBD5E1" />
+
+            <View
+                android:id="@+id/dot4"
+                android:layout_width="9dp"
+                android:layout_height="9dp"
+                android:layout_marginHorizontal="3dp"
+                android:background="@drawable/bg_bubble_circle"
+                android:backgroundTint="#CBD5E1" />
+        </LinearLayout>
+
+        <!-- Next / Finish Slide Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnNextSlide"
+            android:layout_width="wrap_content"
+            android:layout_height="54dp"
+            android:text="@string/btn_next_slide"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:backgroundTint="#003893"
+            app:cornerRadius="27dp" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -18,10 +20,7 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
 
-        <!-- The new entry point of your app (Onboarding Carousel) -->
-        <activity
-            android:name=".PatientPortalActivity"
-            android:exported="false" />
+        <!-- Onboarding Carousel (App Launcher Entry Point) -->
         <activity
             android:name=".OnboardingActivity"
             android:exported="true">
@@ -32,7 +31,63 @@
             </intent-filter>
         </activity>
 
-        <!-- New Authentication Flow -->
+        <!-- Language Selection Screen -->
+        <activity
+            android:name=".LanguageSelectionActivity"
+            android:exported="false" />
+
+        <!-- Permissions Onboarding Activity -->
+        <activity
+            android:name=".PermissionsActivity"
+            android:exported="false" />
+
+        <!-- Home Dashboard -->
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+
+        <!-- Bottom Navigation & Utility Activities -->
+        <activity
+            android:name=".DiscoverClinicsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EyeFitnessActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DevicePairingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AppPreferencesActivity"
+            android:exported="false" />
+
+        <!-- Technician Module Activities -->
+        <activity
+            android:name=".TechnicianIntakeActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".SyncQueueActivity"
+            android:exported="false" />
+
+        <!-- Consultant Module Activities -->
+        <activity
+            android:name=".ConsultantPriorityQueueActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PlrAnalysisActivity"
+            android:exported="false" />
+
+        <!-- Clinical User Guide Activity -->
+        <activity
+            android:name=".UserGuideActivity"
+            android:exported="false" />
+
+        <!-- Patient Portal Activity -->
+        <activity
+            android:name=".PatientPortalActivity"
+            android:exported="false" />
+
+        <!-- Authentication Flow -->
         <activity
             android:name=".AuthSignInActivity"
             android:exported="false"
@@ -42,14 +97,9 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
-        <!-- Login Module -->
+        <!-- Legacy Login Module (Bypassed) -->
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
-
-        <!-- Home Dashboard -->
-        <activity
-            android:name=".HomeActivity"
             android:exported="false" />
 
         <!-- Scanner Module -->

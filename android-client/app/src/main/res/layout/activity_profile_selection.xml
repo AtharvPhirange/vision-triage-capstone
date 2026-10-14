@@ -1,26 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#F5F5F5">
+    android:background="@color/page_background"
+    android:padding="20dp"
+    tools:context=".ProfileSelectionActivity">
 
+    <!-- Top Navigation / Back Button -->
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_circle_light_blue"
+        android:clickable="true"
+        android:contentDescription="@string/content_desc_go_back"
+        android:focusable="true"
+        android:padding="12dp"
+        android:src="@drawable/ic_back_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="#003893" />
+
+    <!-- Screen Title -->
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Select Patient Profile"
-        android:textSize="22sp"
-        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:text="@string/select_patient_profile_title"
         android:textColor="#003893"
-        android:padding="20dp"
-        android:background="#FFFFFF"
-        android:elevation="4dp"/>
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnBack" />
 
-    <!-- This is the RecyclerView your Java code is looking for -->
+    <!-- Screen Subtitle -->
+    <TextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="@string/select_patient_profile_subtitle"
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <!-- Empty State Text (Displayed when no patient profiles exist) -->
+    <TextView
+        android:id="@+id/tvEmptyState"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="24dp"
+        android:text="@string/no_patient_profiles_found"
+        android:textColor="@color/text_secondary"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
+        tools:visibility="visible" />
+
+    <!-- Profiles RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvProfiles"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="8dp"
-        android:clipToPadding="false"/>
-</LinearLayout>
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
+        tools:listitem="@layout/item_profile" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

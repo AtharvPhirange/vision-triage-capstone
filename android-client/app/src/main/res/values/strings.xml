@@ -1,3 +1,327 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Vision Triage</string>
+    <string name="technician_portal_title">Technician Portal</string>
+    <string name="technician_portal_subtitle">Enter your registered mobile number and PIN to log in</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="technician_pin">Technician PIN</string>
+    <string name="continue_button">Continue</string>
+    <string name="content_desc_go_back">Go Back</string>
+    <string name="content_desc_tech_illustration">Technician Portal Illustration</string>
+    <string name="select_patient_profile_title">Select Patient Profile</string>
+    <string name="select_patient_profile_subtitle">Choose a patient profile to view medical history or conduct a scan</string>
+    <string name="no_patient_profiles_found">No patient profiles found.\nPlease register a profile first.</string>
+    <string name="profile_icon_desc">Profile Icon</string>
+    <string name="chevron_symbol">&gt;</string>
+    <string name="dashboard_greeting">Hi Sai!</string>
+    <string name="dashboard_role_verified">Technician Verified</string>
+    <string name="dashboard_switch_account">🔄 Switch Account</string>
+    <string name="dashboard_welcome_title">Welcome to\nVision Triage</string>
+    <string name="dashboard_welcome_subtitle">Advanced Ocular Diagnostics Platform</string>
+    <string name="patient_portal_title">Patient Portal</string>
+    <string name="patient_portal_desc">Select profile or perform self-scan</string>
+    <string name="patient_portal_action">Access Portal</string>
+    <string name="patient_portal_hub_desc">Medical records, scan history &amp; self-service triage.</string>
+    <string name="btn_view_scan_history">View Scan History</string>
+    <string name="btn_book_consultation">Book Consultation</string>
+    <string name="technician_portal_desc">Initiate pupillometry scans and update clinical analytics.</string>
+    <string name="technician_portal_action">Initiate Scan</string>
+    <string name="technician_portal_hub_desc">Pupillometry scan capture &amp; device calibration.</string>
+    <string name="btn_initiate_scan">Initiate Pupillometry Scan</string>
+    <string name="btn_patient_intake">Quick Patient Intake</string>
+    <string name="btn_device_calibration">Device Calibration</string>
+    <string name="btn_sync_queue">Offline Upload Queue</string>
+    <string name="consultant_portal_title">Consultant Portal</string>
+    <string name="consultant_portal_desc">Review diagnostic queues and verify triage escalations.</string>
+    <string name="consultant_portal_action">Review Queue</string>
+    <string name="consultant_portal_hub_desc">Diagnostic queues, PLR analytics &amp; clinical escalations.</string>
+    <string name="btn_review_queue">Review Priority Queue</string>
+    <string name="btn_high_risk_cases">High-Risk Escalations</string>
+    <string name="btn_verify_reports">Verify Diagnostic Reports</string>
+    <string name="content_desc_notifications">Notifications</string>
+    <string name="content_desc_settings">Settings</string>
+    <string name="content_desc_verified_status">Verified Status</string>
+    <string name="content_desc_fab_scan">Initiate Hardware Scan</string>
+    <string name="onboarding_title_1">Digital Pupillometer</string>
+    <string name="onboarding_desc_1">Analyze pupillary light reflexes instantly using advanced mobile computer vision.</string>
+    <string name="onboarding_title_2">Access Your Health History</string>
+    <string name="onboarding_desc_2">All your diagnostic scans and triage results are available in seconds.</string>
+    <string name="onboarding_title_3">Secure &amp; Local Data</string>
+    <string name="onboarding_desc_3">Your health data never leaves your device without your explicit consent.</string>
+
+    <string name="onboarding_slide1_title">Digital Pupillometer</string>
+    <string name="onboarding_slide1_desc">Analyze pupillary light reflexes instantly using advanced mobile computer vision.</string>
+    <string name="onboarding_slide2_title">Precision Diagnostics</string>
+    <string name="onboarding_slide2_desc">Accurate PLR curves, latency measurement, and automated neuro-triage classification.</string>
+    <string name="onboarding_slide3_title">Clinical Collaboration</string>
+    <string name="onboarding_slide3_desc">Seamless synchronization between patients, clinic technicians, and consultant doctors.</string>
+
+    <string name="scanner_banner_align_eye">Align Eye in Frame &amp; Hold Steady</string>
+    <string name="btn_flip_camera">Flip Camera</string>
+    <string name="btn_start_triage_scan">Start Triage Scan</string>
+
+    <string name="label_active_patient_profile">Active Patient Profile</string>
+    <string name="btn_change">Change</string>
+    <string name="btn_view_patient_history">View Patient Medical History</string>
+    <string name="btn_register_new_patient">+ Register New Patient Profile</string>
+    <string name="toast_opening_patient_portal">Opening Patient Portal…</string>
+
+    <string name="dialog_delete_patient_title">Delete Patient Profile?</string>
+    <string name="dialog_delete_patient_desc">This will permanently delete this patient profile, all associated scan data, and cached PDF reports.</string>
+    <string name="dialog_delete_scan_title">Delete Scan Record?</string>
+    <string name="dialog_delete_scan_desc">This will permanently delete this scan record and its PDF report file.</string>
+    <string name="btn_delete">Delete</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="no_patient_selected">No Active Profile Selected</string>
+
+    <string name="register_patient_title">Register New Patient</string>
+    <string name="label_patient_id">Patient ID / UHID</string>
+    <string name="label_full_name">Full Name</string>
+    <string name="label_age">Age</string>
+    <string name="label_gender">Gender</string>
+    <string name="label_male">Male</string>
+    <string name="label_female">Female</string>
+    <string name="label_other">Other</string>
+    <string name="label_phone_number">Phone Number</string>
+    <string name="label_aadhaar_number">Aadhaar / National ID</string>
+    <string name="label_residential_address">Residential Address</string>
+    <string name="btn_fetch_location">Fetch Location</string>
+    <string name="label_location_acquired">Location Acquired</string>
+    <string name="label_location_not_acquired">Location: Not Acquired</string>
+    <string name="label_medical_history">Medical / Ocular History Notes</string>
+    <string name="btn_save_profile">Save Profile</string>
+    <string name="error_invalid_aadhaar">Aadhaar must be a 12-digit number</string>
+    <string name="error_required_field">Please fill in all required fields</string>
+
+    <string name="permissions_title">Clinical Permissions Required</string>
+    <string name="permissions_subtitle">Enable camera, location, and storage for full diagnostic operation</string>
+    <string name="perm_camera_title">Camera Access (Mandatory)</string>
+    <string name="perm_camera_desc">Used for high-frequency 8-second pupillometry PLR capture and crosshair pupil tracking.</string>
+    <string name="perm_location_title">Location Access</string>
+    <string name="perm_location_desc">Used for reverse-geocoding patient residential address and geotagging field triage camps.</string>
+    <string name="perm_storage_title">Storage Access</string>
+    <string name="perm_storage_desc">Used for caching diagnostic PDF reports and local telemetry.</string>
+    <string name="btn_grant_permissions">Grant Clinical Permissions</string>
+    <string name="profile_sheet_title">User Profile &amp; Session Details</string>
+    <string name="btn_sign_out">Switch Account / Sign Out</string>
+    <string name="btn_offline_access">Offline Field Staff Portal</string>
+    <string name="offline_register_title">Offline Staff Registration</string>
+    <string name="offline_login_title">Offline Staff PIN Login</string>
+    <string name="label_staff_id">Staff ID (e.g. TECH-402)</string>
+    <string name="label_offline_pin">4-Digit Security PIN</string>
+    <string name="btn_login_pin">Login with PIN</string>
+    <string name="toast_address_autofilled">Address auto-filled via GPS</string>
+
+    <string name="btn_edit_profile">Edit Profile Details</string>
+    <string name="edit_profile_title">Edit Profile Information</string>
+    <string name="label_facility_name">Clinical Facility / Department</string>
+    <string name="toast_profile_updated">Profile Details Updated</string>
+    <string name="toast_registration_success_login">Staff registration successful. Please log in using your Staff ID and PIN.</string>
+
+    <string name="menu_guide_subtitle_modern">Interactive workflows, PLR scales &amp; triage guides</string>
+    <string name="menu_issue_subtitle_modern">Submit scan artifacts, glare issues &amp; logs</string>
+    <string name="menu_pairing_subtitle_modern">Calibrate camera FPS, sensor &amp; BLE hardware</string>
+    <string name="menu_help_subtitle_modern">Emergency triage dialer &amp; specialist consultation</string>
+    <string name="menu_privacy_subtitle_modern">HIPAA, ABDM &amp; local AES-256 data protection</string>
+    <string name="menu_preferences_subtitle_modern">Offline sync toggles, camera grid &amp; languages</string>
+    <string name="menu_signout_subtitle_modern">Change active profile or disconnect session</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_discover">Discover</string>
+    <string name="nav_fitness">Fitness</string>
+    <string name="nav_my_health">My Health</string>
+
+    <string name="discover_title">Nearby Eye Care Centers</string>
+    <string name="discover_subtitle">Real-time GPS distance calculation &amp; Google Maps navigation</string>
+    <string name="btn_get_directions">Get Directions</string>
+
+    <string name="fitness_title">Ocular Health &amp; Eye Exercises</string>
+    <string name="fitness_subtitle">Prevent digital eye strain &amp; CVS with clinical exercises</string>
+    <string name="btn_watch_video">Watch Video</string>
+
+    <string name="badge_clinical_insight">CLINICAL OPHTHALMOLOGY INSIGHT</string>
+    <string name="tip_title">Today\'s Clinical Insight</string>
+    <string name="btn_shuffle_tip">Another Tip</string>
+    <string name="btn_dismiss_tip">Got It</string>
+    <string name="btn_another_tip">Another Tip</string>
+    <string name="btn_got_it_tip">Got It</string>
+
+    <string-array name="clinical_eye_tips">
+        <item>Incorporate dark leafy greens rich in lutein and zeaxanthin to protect macular pigment density.</item>
+        <item>Practice the 20-20-20 rule: Every 20 minutes, look at an object 20 feet away for at least 20 seconds.</item>
+        <item>Keep digital screens at eye level or slightly below (15-20 degrees) to decrease tear film evaporation.</item>
+        <item>Ensure high-contrast ambient lighting to avoid pupillary strain while reading or viewing displays.</item>
+        <item>Always wear UV400-certified protective eyewear during daylight hours to guard against cataracts.</item>
+    </string-array>
+
+    <string name="report_issue_title">Report Diagnostic Issue</string>
+    <string name="btn_submit_report">Submit Report</string>
+
+    <string name="pairing_title">Device &amp; Scanner Pairing</string>
+    <string name="btn_test_flash">Test Camera Flash Sync</string>
+
+    <string name="helpline_title">Help &amp; Clinical Helpline</string>
+    <string name="btn_call_emergency">Call Emergency Helpline</string>
+
+    <string name="privacy_title">Data Privacy &amp; Compliance</string>
+    <string name="btn_clear_cache">Clear Local Cache</string>
+
+    <string name="preferences_title">App Preferences</string>
+
+    <string name="login_title">Vision Triage</string>
+    <string name="login_subtitle">Edge-AI Ocular Diagnostics &amp; Clinical Portal</string>
+    <string name="login_trust_badge">SECURE BIOMETRIC ACCESS</string>
+    <string name="login_trust_desc">ABDM / HIPAA compliant encrypted access</string>
+    <string name="btn_google_sign_in">Sign in with Google</string>
+    <string name="btn_offline_field_mode">Continue in Offline Field Mode</string>
+    <string name="toast_auth_success">Authentication Successful</string>
+    <string name="toast_auth_failed">Authentication failed. Please try again.</string>
+    <string name="default_web_client_id">849201938201-vt-app.apps.googleusercontent.com</string>
+
+    <string name="intake_title">Technician Patient Intake</string>
+    <string name="intake_subtitle">Record clinical symptoms &amp; vitals prior to scanning</string>
+    <string name="label_symptom_checklist">Rapid Clinical Symptom Checklist</string>
+    <string name="symptom_head_trauma">Acute Head Trauma / Concussion</string>
+    <string name="symptom_anisocoria">Anisocoria (Unequal Pupils)</string>
+    <string name="symptom_severe_headache">Severe Headache / Migraine</string>
+    <string name="symptom_altered_mental">Altered Mental Status / GCS &lt; 15</string>
+    <string name="symptom_photophobia">Photophobia / Blurry Vision</string>
+    <string name="label_vitals">Vitals (Heart Rate &amp; Blood Pressure)</string>
+    <string name="hint_heart_rate">Heart Rate (BPM)</string>
+    <string name="hint_bp">Blood Pressure (e.g. 120/80)</string>
+    <string name="btn_proceed_to_scan">Proceed to PLR Scan</string>
+    <string name="sync_queue_title">Offline Upload Queue</string>
+    <string name="sync_queue_subtitle">Batch synchronize local scan records to cloud</string>
+    <string name="btn_sync_now">Sync Now</string>
+    <string name="status_pending_sync">PENDING SYNC</string>
+    <string name="status_synced">SYNCED</string>
+    <string name="consultant_queue_title">Consultant Priority Queue</string>
+    <string name="consultant_queue_subtitle">Incoming PLR scans sorted by clinical urgency</string>
+    <string name="btn_review_case">Open Diagnostics</string>
+    <string name="plr_analysis_title">Dilation Curve &amp; PLR Analysis</string>
+    <string name="plr_analysis_subtitle">High-resolution 8-second waveform review</string>
+    <string name="label_ai_verdict">Automated AI Verdict: </string>
+    <string name="label_specialist_override">Specialist Diagnostic Override</string>
+    <string name="override_concur">Concur with AI Verdict</string>
+    <string name="override_normal">Override: Normal</string>
+    <string name="override_sluggish">Override: Sluggish</string>
+    <string name="override_unresponsive">Override: Unresponsive</string>
+    <string name="label_clinical_notes">Specialist Clinical Notes</string>
+    <string name="hint_clinical_notes">Enter differential diagnosis &amp; management instructions...</string>
+    <string name="label_digital_signoff">Specialist Sign-Off: Dr. A. Sharma (Reg #MMC-84920)</string>
+    <string name="btn_refer_urgent">Refer for Urgent Surgery / Trauma Care</string>
+    <string name="btn_schedule_video">Schedule Tele-Ophthalmology Follow-up</string>
+    <string name="btn_discharge_patient">Discharge / Routine Follow-up</string>
+
+    <string name="btn_done">Done</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_skip">Skip</string>
+    <string name="btn_get_started">Get Started</string>
+    <string name="content_desc_onboarding_slide">Onboarding Slide Illustration</string>
+    <string name="menu_app_title">Vision Triage</string>
+    <string name="menu_app_version">v1.0.4 - Clinical Build</string>
+    <string name="menu_active_session">Active Session</string>
+
+    <string name="menu_clinical_user_guide">Clinical User Guide</string>
+    <string name="menu_report_diagnostic_issue">Report Diagnostic Issue</string>
+    <string name="menu_device_scanner_pairing">Device &amp; Scanner Pairing</string>
+    <string name="menu_help_clinical_helpline">Help &amp; Clinical Helpline</string>
+    <string name="menu_data_privacy_compliance">Data Privacy &amp; Compliance</string>
+    <string name="menu_app_preferences">App Preferences</string>
+    <string name="menu_switch_role_sign_out">Switch Role / Sign Out</string>
+    <string name="menu_section_clinical_utilities">CLINICAL UTILITIES</string>
+    <string name="menu_section_support_preferences">SUPPORT &amp; PREFERENCES</string>
+
+    <string name="section_clinical_utilities">CLINICAL UTILITIES</string>
+    <string name="menu_clinical_guide">Clinical User Guide</string>
+    <string name="menu_report_issue">Report Diagnostic Issue</string>
+    <string name="menu_device_pairing">Device &amp; Scanner Pairing</string>
+    <string name="section_support_settings">SUPPORT &amp; SETTINGS</string>
+    <string name="section_support_preferences">SUPPORT &amp; PREFERENCES</string>
+    <string name="menu_helpline">Help &amp; Clinical Helpline</string>
+    <string name="menu_data_privacy">Data Privacy &amp; Compliance</string>
+    <string name="menu_preferences">App Preferences</string>
+    <string name="menu_sign_out">Switch Role / Sign Out</string>
+
+    <string name="guide_header_title">Clinical User Guide</string>
+    <string name="guide_header_subtitle">Step-by-step operation &amp; diagnostic workflow</string>
+    <string name="guide_title">Clinical User Guide</string>
+    <string name="guide_subtitle">Step-by-step operation &amp; diagnostic workflow</string>
+    <string name="guide_step1_badge">STEP 1 - OVERVIEW</string>
+    <string name="guide_step1_title">App Overview &amp; Portals</string>
+    <string name="guide_step1_desc">Vision Triage connects Patients, Technicians, and Consultants in a single unified pipeline. Select your role from the dashboard to access dedicated features.</string>
+    <string name="guide_step1_bullet1">• Role Pipeline (Patient / Tech / Doctor)</string>
+    <string name="guide_step1_bullet2">• Local HIPAA &amp; ABDM Security</string>
+    <string name="guide_step1_item4_title">Secure &amp; Local Data</string>
+    <string name="guide_step1_item4_desc">Your health data never leaves your device without your explicit consent.</string>
+
+    <string name="guide_step2_badge">STEP 2</string>
+    <string name="guide_step2_title">How to Scan</string>
+    <string name="guide_step2_desc">Position camera 25-30 cm from patient\'s eye. Ensure uniform ambient lighting and lock crosshairs on the pupil center before initiating light stimulation.</string>
+    <string name="guide_step2_bullet1">• 25–30 cm Target Lock</string>
+    <string name="guide_step2_bullet2">• Pupil Center Crosshair Alignment</string>
+    <string name="guide_step2_item1_title">Distance Lock</string>
+    <string name="guide_step2_item1_desc">Maintain a steady 25-30 cm gap from the patient\'s eye.</string>
+    <string name="guide_step2_item2_title">Aesthetic Target</string>
+    <string name="guide_step2_item2_desc">Align crosshairs precisely on the pupil center.</string>
+    <string name="guide_step2_item3_title">Lighting Control</string>
+    <string name="guide_step2_item3_desc">Ensure uniform ambient lighting without harsh glare.</string>
+    <string name="guide_step2_item4_title">Detection Lock</string>
+    <string name="guide_step2_item4_desc">Ensure live AI tracking confidence stays above 95%.</string>
+
+    <string name="guide_step3_badge">STEP 3</string>
+    <string name="guide_step3_title">Capture PLR</string>
+    <string name="guide_step3_desc">Run the 5-second automated pupillary light reflex sweep. Keep hands steady until the AI confidence score reaches 95%+.</string>
+    <string name="guide_step3_bullet1">• 5s Automated Reflex Sweep</string>
+    <string name="guide_step3_bullet2">• 95%+ AI Confidence Threshold</string>
+    <string name="guide_step3_item1_title">Baseline Record</string>
+    <string name="guide_step3_item1_desc">Captures resting pupil diameter during the initial 1-second phase.</string>
+    <string name="guide_step3_item2_title">Light Stimulation</string>
+    <string name="guide_step3_item2_desc">Fires controlled flash pulse to observe constriction velocity.</string>
+    <string name="guide_step3_item3_title">Recovery Tracking</string>
+    <string name="guide_step3_item3_desc">Measures redilation speed and latency response curves.</string>
+    <string name="guide_step3_item4_title">Quality Verification</string>
+    <string name="guide_step3_item4_desc">Saves record once confidence reaches 95%+ threshold.</string>
+
+    <string name="guide_step4_badge">STEP 4</string>
+    <string name="guide_step4_title">Check Status</string>
+    <string name="guide_step4_desc">Instant triage classification: Green (Normal), Amber (Observation), or Red (Urgent Escalation). View full PLR latency graphs under history.</string>
+    <string name="guide_step4_bullet1">• Tri-Color Risk Classification</string>
+    <string name="guide_step4_bullet2">• Kinematic Latency Graphs</string>
+    <string name="guide_step4_item1_title">Green (Normal)</string>
+    <string name="guide_step4_item1_desc">Symmetric pupil response with normal constriction speed.</string>
+    <string name="guide_step4_item2_title">Amber (Observation)</string>
+    <string name="guide_step4_item2_desc">Sluggish reflex or minor asymmetry requiring follow-up.</string>
+    <string name="guide_step4_item3_title">Red (Urgent)</string>
+    <string name="guide_step4_item3_desc">Fixed, dilated, or non-reactive pupil requiring escalation.</string>
+    <string name="guide_step4_item4_title">Latency Graphs</string>
+    <string name="guide_step4_item4_desc">Access detailed PLR latency waveforms under Medical History.</string>
+
+    <string name="guide_step5_badge">STEP 5</string>
+    <string name="guide_step5_title">Consultant Review</string>
+    <string name="guide_step5_desc">Escalate high-risk cases directly to the Consultant Priority Queue with one tap for tele-ophthalmology verification.</string>
+    <string name="guide_step5_bullet1">• 1-Tap Queue Escalation</string>
+    <string name="guide_step5_bullet2">• Tele-Ophthalmology Verification</string>
+    <string name="guide_step5_item1_title">Flag High-Risk</string>
+    <string name="guide_step5_item1_desc">High-risk red cases automatically enter the review queue.</string>
+    <string name="guide_step5_item2_title">Waveform Analysis</string>
+    <string name="guide_step5_item2_desc">Consultants review high-frequency PLR graphs and ratios.</string>
+    <string name="guide_step5_item3_title">Verification Tag</string>
+    <string name="guide_step5_item3_desc">Add clinical notes and sign off diagnostic reports.</string>
+    <string name="guide_step5_item4_title">Patient Dispatch</string>
+    <string name="guide_step5_item4_desc">Send verified triage summary directly to patient profile.</string>
+
+    <string name="guide_btn_got_it">Got It, Back to Dashboard</string>
+    <string name="btn_got_it">Got It, Back to Dashboard</string>
+    <string name="content_desc_overview_icon">Overview Icon</string>
+    <string name="content_desc_close">Close Dialog</string>
+    <string name="btn_close_text">Close Guide</string>
+    <string name="btn_practice_scan">Practice Scan</string>
+    <string name="num_1">1</string>
+    <string name="num_2">2</string>
+    <string name="num_3">3</string>
+    <string name="num_4">4</string>
+    <string name="btn_prev">Previous</string>
+    <string name="btn_next_slide">Next</string>
+    <string name="btn_finish_guide">Finish Guide</string>
+    <string name="step_counter_format">Step %1$d of %2$d</string>
 </resources>

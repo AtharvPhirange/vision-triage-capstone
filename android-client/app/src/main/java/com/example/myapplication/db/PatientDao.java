@@ -19,4 +19,7 @@ public interface PatientDao {
 
     @Query("SELECT * FROM patients WHERE patientId = :patientId")
     Patient getPatientById(String patientId);
+
+    @Query("DELETE FROM patients WHERE patientId = :patientId")
+    void deletePatientById(String patientId);
 }

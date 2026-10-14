@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottom_sheet_32"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <!-- Drag Handle -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:background="#CBD5E1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/profile_sheet_title"
+        android:textColor="#0F172A"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- User Avatar & Profile Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:cardBackgroundColor="#F8FAFC"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:strokeColor="#E2E8F0"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgSheetAvatar"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:padding="3dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_account_circle"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                app:strokeColor="#0284C7"
+                app:strokeWidth="2dp" />
+
+            <TextView
+                android:id="@+id/tvSheetRoleBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_pill_badge"
+                android:backgroundTint="#0284C7"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                tools:text="TECHNICIAN" />
+
+            <TextView
+                android:id="@+id/tvSheetUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="#0F172A"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="Sai Kumar" />
+
+            <TextView
+                android:id="@+id/tvSheetUserEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="#64748B"
+                android:textSize="13sp"
+                tools:text="sai.kumar@visiontriage.org" />
+
+            <TextView
+                android:id="@+id/tvSheetAuthProvider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/bg_pill_badge"
+                android:backgroundTint="#F1F5F9"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="3dp"
+                android:textColor="#475569"
+                android:textSize="11sp"
+                tools:text="Signed in via Google" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Edit Profile CTA Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnEditProfile"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/btn_edit_profile"
+        android:textAllCaps="false"
+        android:textColor="#0284C7"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:cornerRadius="24dp"
+        app:strokeColor="#0284C7"
+        app:strokeWidth="1.5dp" />
+
+    <!-- Local Metrics Container -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="#F8FAFC"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:strokeColor="#E2E8F0"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Local Scans"
+                    android:textColor="#64748B"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tvTotalLocalScans"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="#0F172A"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="12 Scans" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="#F8FAFC"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:strokeColor="#E2E8F0"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sync Queue"
+                    android:textColor="#64748B"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tvPendingQueueCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="#0F172A"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="0 Pending" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+    <!-- Sign Out CTA -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSignOut"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="@string/btn_sign_out"
+        android:textAllCaps="false"
+        android:textColor="#DC2626"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:cornerRadius="26dp"
+        app:strokeColor="#FCA5A5"
+        app:strokeWidth="1.5dp" />
+
+</LinearLayout>

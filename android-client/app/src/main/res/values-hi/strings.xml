@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">विजन ट्राइएज</string>
+    <string name="dashboard_welcome_title">विजन ट्राइएज में\nआपका स्वागत है</string>
+    <string name="dashboard_welcome_subtitle">उन्नत ओकुलर डायग्नोस्टिक्स प्लेटफॉर्म</string>
+    <string name="patient_portal_title">मरीज़ पोर्टल</string>
+    <string name="patient_portal_desc">प्रोफ़ाइल चुनें या स्वयं स्कैन करें</string>
+    <string name="patient_portal_hub_desc">चिकित्सा रिकॉर्ड, स्कैन इतिहास और ट्राइएज रिपोर्ट।</string>
+    <string name="patient_portal_action">पोर्टल तक पहुँचें</string>
+    <string name="btn_view_scan_history">स्कैन इतिहास देखें</string>
+    <string name="btn_book_consultation">परामर्श बुक करें</string>
+    <string name="technician_portal_title">तकनीशियन पोर्टल</string>
+    <string name="technician_portal_hub_desc">प्यूपिलोमेट्री स्कैन कैप्चर और डिवाइस अंशांकन।</string>
+    <string name="btn_initiate_scan">स्कैन शुरू करें</string>
+    <string name="btn_patient_intake">त्वरित रोगी इनटेक</string>
+    <string name="btn_device_calibration">उपकरण अंशांकन</string>
+    <string name="btn_sync_queue">ऑफ़लाइन सिंक कतार</string>
+    <string name="consultant_portal_title">सलाहकार पोर्टल</string>
+    <string name="consultant_portal_hub_desc">नैदानिक कतारें, पीएलआर विश्लेषण और नैदानिक एस्केलेशन।</string>
+    <string name="btn_review_queue">समीक्षा कतार</string>
+    <string name="btn_high_risk_cases">उच्च जोखिम वाले मामले</string>
+    <string name="btn_verify_reports">रिपोर्ट सत्यापित करें</string>
+
+    <string name="onboarding_slide1_title">डिजिटल प्यूपिलोमीटर</string>
+    <string name="onboarding_slide1_desc">उन्नत मोबाइल कंप्यूटर विज़न का उपयोग करके पुतली की प्रकाश प्रतिक्रियाओं का तुरंत विश्लेषण करें।</string>
+    <string name="onboarding_slide2_title">सटीक निदान</string>
+    <string name="onboarding_slide2_desc">सटीक पीएलआर वक्र, लेटेंसी माप और स्वचालित न्यूरो-ट्रायज वर्गीकरण।</string>
+    <string name="onboarding_slide3_title">क्लिनिकल सहयोग</string>
+    <string name="onboarding_slide3_desc">मरीजों, क्लिनिक तकनीशियनों और विशेषज्ञ डॉक्टरों के बीच निर्बाध समन्वय।</string>
+
+    <string name="scanner_banner_align_eye">आंख को फ्रेम में संरेखित करें और स्थिर रखें</string>
+    <string name="btn_flip_camera">कैमरा बदलें</string>
+    <string name="btn_start_triage_scan">ट्रायज स्कैन शुरू करें</string>
+
+    <string name="label_active_patient_profile">सक्रिय मरीज प्रोफ़ाइल</string>
+    <string name="btn_change">बदलें</string>
+    <string name="btn_view_patient_history">मरीज का मेडिकल इतिहास देखें</string>
+    <string name="btn_register_new_patient">+ नया मरीज प्रोफ़ाइल पंजीकृत करें</string>
+    <string name="toast_opening_patient_portal">मरीज पोर्टल खोला जा रहा है…</string>
+
+    <string name="dialog_delete_patient_title">मरीज प्रोफ़ाइल हटाएं?</string>
+    <string name="dialog_delete_patient_desc">यह इस मरीज प्रोफ़ाइल, सभी स्कैन डेटा और सहेजी गई पीडीएफ रिपोर्टों को स्थायी रूप से हटा देगा।</string>
+    <string name="dialog_delete_scan_title">स्कैन रिकॉर्ड हटाएं?</string>
+    <string name="dialog_delete_scan_desc">यह इस स्कैन रिकॉर्ड और इसकी पीडीएफ रिपोर्ट फ़ाइल को स्थायी रूप से हटा देगा।</string>
+    <string name="btn_delete">हटाएं</string>
+    <string name="btn_cancel">रद्द करें</string>
+    <string name="no_patient_selected">कोई सक्रिय प्रोफ़ाइल चयनित नहीं है</string>
+
+    <string name="register_patient_title">नया मरीज पंजीकृत करें</string>
+    <string name="label_patient_id">मरीज आईडी / यूएचआईडी</string>
+    <string name="label_full_name">पूरा नाम</string>
+    <string name="label_age">आयु</string>
+    <string name="label_gender">लिंग</string>
+    <string name="label_male">पुरुष</string>
+    <string name="label_female">महिला</string>
+    <string name="label_other">अन्य</string>
+    <string name="label_phone_number">फोन नंबर</string>
+    <string name="label_aadhaar_number">आधार / राष्ट्रीय आईडी</string>
+    <string name="label_residential_address">आवासीय पता</string>
+    <string name="btn_fetch_location">स्थान प्राप्त करें</string>
+    <string name="label_location_acquired">स्थान प्राप्त हुआ</string>
+    <string name="label_location_not_acquired">स्थान: प्राप्त नहीं हुआ</string>
+    <string name="label_medical_history">मेडिकल / नेत्र इतिहास नोट्स</string>
+    <string name="btn_save_profile">प्रोफ़ाइल सहेजें</string>
+    <string name="error_invalid_aadhaar">आधार 12 अंकों की संख्या होनी चाहिए</string>
+    <string name="error_required_field">कृपया सभी आवश्यक फ़ील्ड भरें</string>
+
+    <string name="permissions_title">क्लिनिकल अनुमतियां आवश्यक हैं</string>
+    <string name="permissions_subtitle">पूर्ण निदान संचालन के लिए कैमरा, स्थान और संग्रहण सक्षम करें</string>
+    <string name="perm_camera_title">कैमरा एक्सेस (अनिवार्य)</string>
+    <string name="perm_camera_desc">8-सेकंड की प्यूपिलोमेट्री पीएलआर कैप्चर और प्यूपिल ट्रैकिंग के लिए उपयोग किया जाता है।</string>
+    <string name="perm_location_title">स्थान एक्सेस</string>
+    <string name="perm_location_desc">मरीज का पता स्वचालित रूप से भरने और जिओटैगिंग के लिए उपयोग किया जाता है।</string>
+    <string name="perm_storage_title">संग्रहण एक्सेस</string>
+    <string name="perm_storage_desc">पीडीएफ रिपोर्ट और स्थानीय डेटा सहेजने के लिए उपयोग किया जाता है।</string>
+    <string name="btn_grant_permissions">अनुमतियां प्रदान करें</string>
+    <string name="profile_sheet_title">उपयोगकर्ता प्रोफ़ाइल और विवरण</string>
+    <string name="btn_sign_out">साइन आउट / खाता बदलें</string>
+    <string name="btn_offline_access">ऑफ़लाइन फ़ील्ड स्टाफ पोर्टल</string>
+    <string name="offline_register_title">ऑफ़लाइन स्टाफ पंजीकरण</string>
+    <string name="offline_login_title">ऑफ़लाइन स्टाफ पिन लॉगिन</string>
+    <string name="label_staff_id">स्टाफ आईडी (जैसे TECH-402)</string>
+    <string name="label_offline_pin">4-अंकों का सुरक्षा पिन</string>
+    <string name="btn_login_pin">पिन से लॉगिन करें</string>
+    <string name="toast_address_autofilled">जीपीएस से पता स्वतः भरा गया</string>
+
+    <string name="btn_edit_profile">प्रोफ़ाइल विवरण संपादित करें</string>
+    <string name="edit_profile_title">प्रोफ़ाइल जानकारी संपादित करें</string>
+    <string name="label_facility_name">क्लिनिकल सुविधा / विभाग</string>
+    <string name="toast_profile_updated">प्रोफ़ाइल विवरण अपडेट किया गया</string>
+    <string name="toast_registration_success_login">स्टाफ पंजीकरण सफल रहा। कृपया अपनी स्टाफ आईडी और पिन का उपयोग करके लॉगिन करें।</string>
+
+    <string name="menu_guide_subtitle_modern">इंटरएक्टिव वर्कफ़्लो, पीएलआर स्केल और ट्राइएज गाइड</string>
+    <string name="menu_issue_subtitle_modern">स्कैन आर्टिफ़ैक्ट्स, चमक संबंधी समस्याएं और लॉग जमा करें</string>
+    <string name="menu_pairing_subtitle_modern">कैमरा एफपीएस, सेंसर और बीएलई हार्डवेयर अंशांकित करें</string>
+    <string name="menu_help_subtitle_modern">आपातकालीन ट्राइएज डायलर और विशेषज्ञ परामर्श</string>
+    <string name="menu_privacy_subtitle_modern">HIPAA, ABDM और स्थानीय AES-256 डेटा सुरक्षा</string>
+    <string name="menu_preferences_subtitle_modern">ऑफ़लाइन सिंक टॉगल, कैमरा ग्रिड और भाषाएं</string>
+    <string name="menu_signout_subtitle_modern">सक्रिय प्रोफ़ाइल बदलें या सत्र समाप्त करें</string>
+
+    <string name="badge_clinical_insight">क्लिनिकल नेत्र विज्ञान अंतर्दृष्टि</string>
+    <string name="tip_title">आज का क्लिनिकल सुझाव</string>
+    <string name="btn_another_tip">अन्य सुझाव</string>
+    <string name="btn_got_it_tip">समझ गया</string>
+
+    <string-array name="clinical_eye_tips">
+        <item>मैकुलर पिगमेंट घनत्व की सुरक्षा के लिए ल्यूटिन और ज़ेक्सैंथिन से भरपूर हरी पत्तेदार सब्जियां शामिल करें।</item>
+        <item>20-20-20 नियम अपनाएं: हर 20 मिनट में, 20 सेकंड के लिए 20 फीट दूर किसी वस्तु को देखें।</item>
+        <item>आंखों के आंसुओं के वाष्पीकरण को रोकने के लिए स्क्रीन को आंखों के स्तर से 15-20 डिग्री नीचे रखें।</item>
+        <item>स्क्रीन देखते समय पुतली के तनाव से बचने के लिए कमरे में उचित रोशनी सुनिश्चित करें।</item>
+        <item>मोतियाबिंद के खतरे से बचने के लिए बाहर जाते समय हमेशा UV400 प्रमाणित धूप का चश्मा पहनें।</item>
+    </string-array>
+
+    <string name="nav_home">होम</string>
+    <string name="nav_discover">खोजें</string>
+    <string name="nav_fitness">फिटनेस</string>
+    <string name="nav_my_health">मेरा स्वास्थ्य</string>
+
+    <string name="discover_title">निकटतम नेत्र देखभाल केंद्र</string>
+    <string name="discover_subtitle">वास्तविक समय जीपीएस दूरी गणना और गूगल मैप्स नेविगेशन</string>
+    <string name="btn_get_directions">दिशा-निर्देश प्राप्त करें</string>
+
+    <string name="fitness_title">नेत्र स्वास्थ्य एवं व्यायाम</string>
+    <string name="fitness_subtitle">क्लिनिकल व्यायामों से डिजिटल आंखों के तनाव से बचें</string>
+    <string name="btn_watch_video">वीडियो देखें</string>
+
+    <string name="btn_shuffle_tip">अन्य सुझाव</string>
+    <string name="btn_dismiss_tip">समझ गया</string>
+
+    <string name="report_issue_title">निदान समस्या की रिपोर्ट करें</string>
+    <string name="btn_submit_report">रिपोर्ट जमा करें</string>
+
+    <string name="pairing_title">उपकरण और स्कैनर पेयरिंग</string>
+    <string name="btn_test_flash">कैमरा फ्लैश सिंक का परीक्षण करें</string>
+
+    <string name="helpline_title">सहायता और क्लिनिकल हेल्पलाइन</string>
+    <string name="btn_call_emergency">आपातकालीन हेल्पलाइन पर कॉल करें</string>
+
+    <string name="privacy_title">डेटा गोपनीयता और अनुपालन</string>
+    <string name="btn_clear_cache">स्थानीय कैश साफ़ करें</string>
+
+    <string name="preferences_title">ऐप प्राथमिकताएं</string>
+
+    <string name="login_title">विजन ट्राइएज</string>
+    <string name="login_subtitle">उन्नत ओकुलर डायग्नोस्टिक्स एवं क्लिनिकल पोर्टल</string>
+    <string name="login_trust_badge">सुरक्षित बायोमेट्रिक एक्सेस</string>
+    <string name="login_trust_desc">ABDM / HIPAA अनुपालन एनक्रिप्टेड पहुंच</string>
+    <string name="btn_google_sign_in">Google से साइन इन करें</string>
+    <string name="btn_offline_field_mode">ऑफ़लाइन फ़ील्ड मोड जारी रखें</string>
+    <string name="toast_auth_success">प्रमाणीकरण सफल हुआ</string>
+    <string name="toast_auth_failed">प्रमाणीकरण विफल। कृपया पुनः प्रयास करें।</string>
+
+    <string name="intake_title">तकनीशियन रोगी इनटेक</string>
+    <string name="intake_subtitle">स्कैन से पहले क्लिनिकल लक्षण और वाइटल्स रिकॉर्ड करें</string>
+    <string name="label_symptom_checklist">रैपिड क्लिनिकल लक्षण चेकलिस्ट</string>
+    <string name="symptom_head_trauma">गंभीर सिर की चोट / कंसीजन</string>
+    <string name="symptom_anisocoria">एनिसोकोरिया (असममित पुतलियां)</string>
+    <string name="symptom_severe_headache">गंभीर सिरदर्द / माइग्रेन</string>
+    <string name="symptom_altered_mental">परिवर्तित मानसिक स्थिति / जीसीएस &lt; 15</string>
+    <string name="symptom_photophobia">फोटोफोबिया / धुंधली दृष्टि</string>
+    <string name="label_vitals">वाइटल्स (हृदय गति और रक्तचाप)</string>
+    <string name="hint_heart_rate">हृदय गति (BPM)</string>
+    <string name="hint_bp">रक्तचाप (जैसे 120/80)</string>
+    <string name="btn_proceed_to_scan">पीएलआर स्कैन पर आगे बढ़ें</string>
+    <string name="sync_queue_title">ऑफ़लाइन अपलोड कतार</string>
+    <string name="sync_queue_subtitle">स्थानीय स्कैन रिकॉर्ड को क्लाउड से बैच सिंक करें</string>
+    <string name="btn_sync_now">अभी सिंक करें</string>
+    <string name="status_pending_sync">लंबित सिंक</string>
+    <string name="status_synced">सिंक किया गया</string>
+    <string name="consultant_queue_title">सलाहकार प्राथमिकता कतार</string>
+    <string name="consultant_queue_subtitle">नैदानिक तात्कालिकता के अनुसार क्रमबद्ध आने वाले स्कैन</string>
+    <string name="btn_review_case">डायग्नोस्टिक्स खोलें</string>
+    <string name="plr_analysis_title">डायलेशन वक्र और पीएलआर विश्लेषण</string>
+    <string name="plr_analysis_subtitle">उच्च-रिज़ॉल्यूशन 8-सेकंड तरंग रूप समीक्षा</string>
+    <string name="label_ai_verdict">स्वचालित एआई निर्णय: </string>
+    <string name="label_specialist_override">विशेषज्ञ नैदानिक ओवरराइड</string>
+    <string name="override_concur">एआई निर्णय से सहमत</string>
+    <string name="override_normal">ओवरराइड: सामान्य</string>
+    <string name="override_sluggish">ओवरराइड: सुस्त</string>
+    <string name="override_unresponsive">ओवरराइड: अप्रतिक्रियाशील</string>
+    <string name="label_clinical_notes">विशेषज्ञ क्लिनिकल नोट्स</string>
+    <string name="hint_clinical_notes">अंतर-निदान और प्रबंधन निर्देश दर्ज करें...</string>
+    <string name="label_digital_signoff">विशेषज्ञ हस्ताक्षर: डॉ. ए. शर्मा (पंजीयन #MMC-84920)</string>
+    <string name="btn_refer_urgent">तत्काल सर्जरी / ट्रॉमा केयर के लिए रिफ़र करें</string>
+    <string name="btn_schedule_video">टेली-नेत्र विज्ञान अनुवर्ती शेड्यूल करें</string>
+    <string name="btn_discharge_patient">डिस्चार्ज / नियमित अनुवर्ती</string>
+
+    <string name="menu_clinical_user_guide">क्लिनिकल उपयोगकर्ता गाइड</string>
+    <string name="menu_report_diagnostic_issue">निदान समस्या की रिपोर्ट करें</string>
+    <string name="menu_device_scanner_pairing">उपकरण और स्कैनर पेयरिंग</string>
+    <string name="menu_help_clinical_helpline">सहायता और क्लिनिकल हेल्पलाइन</string>
+    <string name="menu_data_privacy_compliance">डेटा गोपनीयता और अनुपालन</string>
+    <string name="menu_app_preferences">ऐप प्राथमिकताएं</string>
+    <string name="menu_switch_role_sign_out">भूमिका बदलें / साइन आउट</string>
+    <string name="menu_section_clinical_utilities">क्लिनिकल उपयोगिताएं</string>
+    <string name="menu_section_support_preferences">सहायता और प्राथमिकताएं</string>
+
+    <string name="section_clinical_utilities">क्लिनिकल उपयोगिताएं</string>
+    <string name="menu_clinical_guide">क्लिनिकल उपयोगकर्ता गाइड</string>
+    <string name="menu_report_issue">निदान समस्या की रिपोर्ट करें</string>
+    <string name="menu_device_pairing">उपकरण और स्कैनर पेयरिंग</string>
+    <string name="section_support_settings">सहायता और सेटिंग्स</string>
+    <string name="section_support_preferences">सहायता और प्राथमिकताएं</string>
+    <string name="menu_helpline">सहायता और क्लिनिकल हेल्पलाइन</string>
+    <string name="menu_data_privacy">डेटा गोपनीयता और अनुपालन</string>
+    <string name="menu_preferences">ऐप प्राथमिकताएं</string>
+    <string name="menu_sign_out">भूमिका बदलें / साइन आउट</string>
+
+    <string name="guide_header_title">क्लिनिकल उपयोगकर्ता गाइड</string>
+    <string name="guide_header_subtitle">चरण-दर-चरण संचालन और निदान प्रक्रिया</string>
+    <string name="guide_title">क्लिनिकल उपयोगकर्ता गाइड</string>
+    <string name="guide_subtitle">चरण-दर-चरण संचालन और निदान प्रक्रिया</string>
+    <string name="guide_step1_badge">चरण 1 - अवलोकन</string>
+    <string name="guide_step1_title">ऐप अवलोकन और पोर्टल्स</string>
+    <string name="guide_step1_desc">विजन ट्राइएज मरीजों, तकनीशियनों और सलाहकारों को एक एकीकृत पाइपलाइन में जोड़ता है। समर्पित सुविधाओं तक पहुँचने के लिए डैशबोर्ड से अपनी भूमिका चुनें।</string>
+    <string name="guide_step1_bullet1">&#8226; भूमिका पाइपलाइन (मरीज / टेक / डॉक्टर)</string>
+    <string name="guide_step1_bullet2">&#8226; स्थानीय HIPAA और ABDM सुरक्षा</string>
+    <string name="guide_step1_item4_title">सुरक्षित एवं स्थानीय डेटा</string>
+    <string name="guide_step1_item4_desc">आपका स्वास्थ्य डेटा आपकी स्पष्ट सहमति के बिना आपके डिवाइस से कभी बाहर नहीं जाता।</string>
+
+    <string name="guide_step2_badge">चरण 2</string>
+    <string name="guide_step2_title">स्कैन कैसे करें</string>
+    <string name="guide_step2_desc">कैमरे को मरीज की आंख से 25-30 सेमी दूर रखें। समान प्रकाश व्यवस्था सुनिश्चित करें और प्रकाश उत्तेजना शुरू करने से पहले पुतली केंद्र पर क्रॉसहेयर लॉक करें।</string>
+    <string name="guide_step2_bullet1">&#8226; 25&#8211;30 सेमी लक्ष्य लॉक</string>
+    <string name="guide_step2_bullet2">&#8226; पुतली केंद्र संरेखण</string>
+    <string name="guide_step2_item1_title">दूरी लॉक</string>
+    <string name="guide_step2_item1_desc">मरीज की आंख से 25-30 सेमी की स्थिर दूरी बनाए रखें।</string>
+    <string name="guide_step2_item2_title">लक्ष्य संरेखण</string>
+    <string name="guide_step2_item2_desc">पुतली के केंद्र पर क्रॉसहेयर को सटीक रूप से मिलाएं।</string>
+    <string name="guide_step2_item3_title">प्रकाश नियंत्रण</string>
+    <string name="guide_step2_item3_desc">तेज चमक के बिना समान परिवेश प्रकाश व्यवस्था सुनिश्चित करें।</string>
+    <string name="guide_step2_item4_title">डिटेक्शन लॉक</string>
+    <string name="guide_step2_item4_desc">सुनिश्चित करें कि एआई ट्रैकिंग सटीकता 95%+ से ऊपर रहे।</string>
+
+    <string name="guide_step3_badge">चरण 3</string>
+    <string name="guide_step3_title">पीएलआर कैप्चर करें</string>
+    <string name="guide_step3_desc">5-सेकंड का स्वचालित प्यूपिलरी लाइट रिफ्लेक्स स्वीप चलाएं। जब तक एआई विश्वास स्कोर 95%+ तक न पहुंच जाए, हाथ स्थिर रखें।</string>
+    <string name="guide_step3_bullet1">&#8226; 5 से० स्वचालित रिफ्लेक्स स्वीप</string>
+    <string name="guide_step3_bullet2">&#8226; 95%+ एआई विश्वास सीमा</string>
+    <string name="guide_step3_item1_title">बेसलाइन रिकॉर्ड</string>
+    <string name="guide_step3_item1_desc">शुरुआती 1-सेकंड चरण के दौरान पुतली का व्यास कैप्चर करता है।</string>
+    <string name="guide_step3_item2_title">प्रकाश उत्तेजना</string>
+    <string name="guide_step3_item2_desc">आकुंचन गति का निरीक्षण करने के लिए फ़्लैश पल्स चलाता है।</string>
+    <string name="guide_step3_item3_title">रिकवरी ट्रैकिंग</string>
+    <string name="guide_step3_item3_desc">पुनः फैलाव गति और लेटेंसी प्रतिक्रिया वक्र मापता है।</string>
+    <string name="guide_step3_item4_title">गुणवत्ता सत्यापन</string>
+    <string name="guide_step3_item4_desc">विश्वास स्कोर 95%+ तक पहुंचने पर रिकॉर्ड सहेजता है।</string>
+
+    <string name="guide_step4_badge">चरण 4</string>
+    <string name="guide_step4_title">स्थिति जांचें</string>
+    <string name="guide_step4_desc">त्वरित ट्राइएज वर्गीकरण: हरा (सामान्य), अंबर (अवलोकन), या लाल (तत्काल एस्केलेशन)। इतिहास के तहत पूर्ण पीएलआर लेटेंसी ग्राफ देखें।</string>
+    <string name="guide_step4_bullet1">&#8226; त्रि-रंग जोखिम वर्गीकरण</string>
+    <string name="guide_step4_bullet2">&#8226; काइनेमैटिक लेटेंसी ग्राफ</string>
+    <string name="guide_step4_item1_title">हरा (सामान्य)</string>
+    <string name="guide_step4_item1_desc">सामान्य आकुंचन गति के साथ सममित पुतली प्रतिक्रिया।</string>
+    <string name="guide_step4_item2_title">अंबर (अवलोकन)</string>
+    <string name="guide_step4_item2_desc">धीमी प्रतिक्रिया या मामूली असमानता जिसे जांच की आवश्यकता है।</string>
+    <string name="guide_step4_item3_title">लाल (तत्काल)</string>
+    <string name="guide_step4_item3_desc">अप्रतिसादी या स्थिर पुतली जिसे तत्काल एस्केलेशन की आवश्यकता है।</string>
+    <string name="guide_step4_item4_title">लेटेंसी ग्राफ</string>
+    <string name="guide_step4_item4_desc">मेडिकल इतिहास के तहत विस्तृत पीएलआर लेटेंसी तरंग रूप देखें।</string>
+
+    <string name="guide_step5_badge">चरण 5</string>
+    <string name="guide_step5_title">कंसल्टेंट समीक्षा</string>
+    <string name="guide_step5_desc">टेली-नेत्र विज्ञान सत्यापन के लिए एक टैप में उच्च जोखिम वाले मामलों को सीधे सलाहकार प्राथमिकता कतार में भेजें।</string>
+    <string name="guide_step5_bullet1">&#8226; 1-टैप कतार एस्केलेशन</string>
+    <string name="guide_step5_bullet2">&#8226; टेली-नेत्र विज्ञान सत्यापन</string>
+    <string name="guide_step5_item1_title">उच्च जोखिम चिंहाकन</string>
+    <string name="guide_step5_item1_desc">उच्च जोखिम वाले लाल मामले स्वचालित रूप से समीक्षा कतार में जाते हैं।</string>
+    <string name="guide_step5_item2_title">वेवफॉर्म विश्लेषण</string>
+    <string name="guide_step5_item2_desc">सलाहकार उच्च-आवृत्ति पीएलआर ग्राफ और अनुपातों की समीक्षा करते हैं।</string>
+    <string name="guide_step5_item3_title">सत्यापन टैग</string>
+    <string name="guide_step5_item3_desc">क्लिनिकल नोट्स जोड़ें और रिपोर्ट सत्यापित करें।</string>
+    <string name="guide_step5_item4_title">रोगी डिस्पैच</string>
+    <string name="guide_step5_item4_desc">सत्यापित ट्राइएज सारांश सीधे मरीज प्रोफ़ाइल पर भेजें।</string>
+
+    <string name="guide_btn_got_it">समझ गया, डैशबोर्ड पर लौटें</string>
+    <string name="btn_got_it">समझ गया, डैशबोर्ड पर लौटें</string>
+    <string name="content_desc_overview_icon">अवलोकन आइकॉन</string>
+    <string name="content_desc_close">बंद करें</string>
+    <string name="btn_close_text">मार्गदर्शिका बंद करें</string>
+    <string name="btn_practice_scan">स्कैन अभ्यास करें</string>
+    <string name="num_1">१</string>
+    <string name="num_2">२</string>
+    <string name="num_3">३</string>
+    <string name="num_4">४</string>
+    <string name="btn_prev">पिछला</string>
+    <string name="btn_next_slide">आगे</string>
+    <string name="btn_finish_guide">समाप्त करें</string>
+    <string name="step_counter_format">चरण %1$d / %2$d</string>
+</resources>

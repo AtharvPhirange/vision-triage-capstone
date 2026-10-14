@@ -2,119 +2,146 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:padding="24dp">
+    android:background="@color/page_background"
+    android:padding="24dp"
+    tools:context=".TechnicianLoginActivity">
 
-    <!-- Top Left Back Button -->
+    <!-- Top Navigation / Back Button (48dp x 48dp minimum touch target) -->
     <ImageView
         android:id="@+id/btnBack"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:background="@drawable/bg_circle_light_blue"
-        android:padding="8dp"
+        android:clickable="true"
+        android:contentDescription="@string/content_desc_go_back"
+        android:focusable="true"
+        android:padding="12dp"
         android:src="@drawable/ic_back_arrow"
-        app:tint="#4A6572"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="#003893" />
 
-    <!-- Center Illustration Placeholder -->
-    <!-- Replace @drawable/ic_login_illustration with your actual vector art -->
+    <!-- Center Brand Illustration / Header Icon -->
     <ImageView
         android:id="@+id/imgIllustration"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="24dp"
+        android:contentDescription="@string/content_desc_tech_illustration"
         android:src="@android:drawable/ic_menu_gallery"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnBack" />
+        app:layout_constraintTop_toBottomOf="@id/btnBack"
+        app:tint="#003893" />
 
-    <!-- Title -->
+    <!-- Title Header -->
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Technician Portal"
-        android:textColor="#000000"
-        android:textSize="24sp"
+        android:text="@string/technician_portal_title"
+        android:textColor="#003893"
+        android:textSize="26sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imgIllustration" />
 
-    <!-- Subtitle -->
+    <!-- Subtitle Description -->
     <TextView
         android:id="@+id/tvSubtitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Enter your registered mobile number and PIN"
-        android:textColor="#757575"
+        android:text="@string/technician_portal_subtitle"
+        android:textColor="@color/text_secondary"
         android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-    <!-- Mobile Number Input (Matches your image exactly) -->
+    <!-- Mobile Number Outlined Input Box -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutMobile"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:hint="Mobile Number"
+        android:layout_marginTop="24dp"
+        android:hint="@string/mobile_number"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusTopStart="12dp"
         app:boxStrokeColor="#003893"
+        app:errorEnabled="true"
+        app:hintTextColor="#003893"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
         app:prefixText="+91 "
-        app:prefixTextColor="#000000"
-        app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
+        app:prefixTextColor="#003893">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etMobile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"
-            android:maxLength="10" />
+            android:maxLength="10"
+            android:minHeight="48dp"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Static Password / PIN Input -->
+    <!-- Password / PIN Outlined Input Box -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutPassword"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Technician PIN"
+        android:hint="@string/technician_pin"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusTopStart="12dp"
         app:boxStrokeColor="#003893"
         app:endIconMode="password_toggle"
+        app:endIconTint="#003893"
+        app:errorEnabled="true"
+        app:hintTextColor="#003893"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutMobile">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Bottom Full-Width Continue Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnContinue"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
         android:layout_marginBottom="16dp"
-        android:text="Continue"
+        android:minHeight="48dp"
+        android:text="@string/continue_button"
         android:textAllCaps="false"
         android:textSize="16sp"
+        android:textStyle="bold"
         app:backgroundTint="#003893"
-        app:cornerRadius="30dp"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:cornerRadius="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

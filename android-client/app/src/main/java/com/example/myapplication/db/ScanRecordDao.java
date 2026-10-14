@@ -24,6 +24,9 @@ public interface ScanRecordDao {
     @Delete
     void deleteRecord(ScanRecord record);
 
+    @Query("DELETE FROM scan_records WHERE patientName = :patientId")
+    void deleteScanRecordsByPatient(String patientId);
+
     @Query("SELECT * FROM scan_records ORDER BY scanTimestamp DESC")
     LiveData<List<ScanRecord>> getAllObservableRecords();
 

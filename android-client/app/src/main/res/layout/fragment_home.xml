@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="12dp">
+
+        <!-- Dynamically Centered Welcome Header -->
+        <TextView
+            android:id="@+id/tvWelcomeTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/dashboard_welcome_title"
+            android:textColor="#FFFFFF"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvWelcomeSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/dashboard_welcome_subtitle"
+            android:textColor="#94A3B8"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvWelcomeTitle" />
+
+        <!-- CARD 1: PATIENT PORTAL -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardPatientPortal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="3dp"
+            app:strokeColor="#E2E8F0"
+            app:strokeWidth="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvWelcomeSubtitle">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="14dp">
+
+                <TextView
+                    android:id="@+id/tvPatientPortalTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/patient_portal_title"
+                    android:textColor="#0284C7"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvPatientPortalDesc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="10dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/patient_portal_hub_desc"
+                    android:textColor="#64748B"
+                    android:textSize="11sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPatientPortalTitle" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPatientPortal"
+                    android:layout_width="0dp"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="10dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:letterSpacing="0.02"
+                    android:text="@string/patient_portal_action"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="#0284C7"
+                    app:cornerRadius="21dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPatientPortalDesc" />
+
+                <LinearLayout
+                    android:id="@+id/containerPatientChips"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btnPatientPortal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPatientHistory"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:maxLines="1"
+                        android:paddingHorizontal="4dp"
+                        android:text="@string/btn_view_scan_history"
+                        android:textAllCaps="false"
+                        android:textColor="#0284C7"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        app:backgroundTint="#F0F9FF"
+                        app:cornerRadius="18dp"
+                        app:strokeColor="#0284C7"
+                        app:strokeWidth="1.5dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnBookConsultation"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:maxLines="1"
+                        android:paddingHorizontal="4dp"
+                        android:text="@string/btn_book_consultation"
+                        android:textAllCaps="false"
+                        android:textColor="#0284C7"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        app:backgroundTint="#F0F9FF"
+                        app:cornerRadius="18dp"
+                        app:strokeColor="#0284C7"
+                        app:strokeWidth="1.5dp" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- CARD 2: TECHNICIAN PORTAL -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardTechnicianPortal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="3dp"
+            app:strokeColor="#E2E8F0"
+            app:strokeWidth="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardPatientPortal">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="14dp">
+
+                <TextView
+                    android:id="@+id/tvTechnicianPortalTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/technician_portal_title"
+                    android:textColor="#1D4ED8"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvTechnicianPortalDesc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="10dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/technician_portal_hub_desc"
+                    android:textColor="#64748B"
+                    android:textSize="11sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvTechnicianPortalTitle" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnInitiateScan"
+                    android:layout_width="0dp"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="10dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:letterSpacing="0.02"
+                    android:text="@string/btn_initiate_scan"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="#1D4ED8"
+                    app:cornerRadius="21dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvTechnicianPortalDesc" />
+
+                <LinearLayout
+                    android:id="@+id/containerTechChipsRow1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btnInitiateScan">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPatientIntake"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="3dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:maxLines="1"
+                        android:paddingHorizontal="2dp"
+                        android:text="@string/btn_patient_intake"
+                        android:textAllCaps="false"
+                        android:textColor="#1D4ED8"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        app:backgroundTint="#EFF6FF"
+                        app:cornerRadius="18dp"
+                        app:strokeColor="#1D4ED8"
+                        app:strokeWidth="1.5dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnDeviceCalibration"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_marginHorizontal="3dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:maxLines="1"
+                        android:paddingHorizontal="2dp"
+                        android:text="@string/btn_device_calibration"
+                        android:textAllCaps="false"
+                        android:textColor="#1D4ED8"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        app:backgroundTint="#EFF6FF"
+                        app:cornerRadius="18dp"
+                        app:strokeColor="#1D4ED8"
+                        app:strokeWidth="1.5dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSyncQueue"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="3dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:maxLines="1"
+                        android:paddingHorizontal="2dp"
+                        android:text="@string/btn_sync_queue"
+                        android:textAllCaps="false"
+                        android:textColor="#1D4ED8"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        app:backgroundTint="#EFF6FF"
+                        app:cornerRadius="18dp"
+                        app:strokeColor="#1D4ED8"
+                        app:strokeWidth="1.5dp" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- CARD 3: CONSULTANT PORTAL -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardConsultantPortal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="3dp"
+            app:strokeColor="#E2E8F0"
+            app:strokeWidth="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardTechnicianPortal">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="14dp">
+
+                <TextView
+                    android:id="@+id/tvConsultantPortalTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/consultant_portal_title"
+                    android:textColor="#6D28D9"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvConsultantPortalDesc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="10dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/consultant_portal_hub_desc"
+                    android:textColor="#64748B"
+                    android:textSize="11sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvConsultantPortalTitle" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnReviewQueue"
+                    android:layout_width="0dp"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="10dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:letterSpacing="0.02"
+                    android:text="@string/btn_review_queue"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="#6D28D9"
+                    app:cornerRadius="21dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvConsultantPortalDesc" />
+
+                <LinearLayout
+                    android:id="@+id/containerConsultantChips"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btnReviewQueue">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnHighRiskCases"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:maxLines="1"
+                        android:paddingHorizontal="4dp"
+                        android:text="@string/btn_high_risk_cases"
+                        android:textAllCaps="false"
+                        android:textColor="#6D28D9"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        app:backgroundTint="#FAF5FF"
+                        app:cornerRadius="18dp"
+                        app:strokeColor="#6D28D9"
+                        app:strokeWidth="1.5dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnVerifyReports"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:maxLines="1"
+                        android:paddingHorizontal="4dp"
+                        android:text="@string/btn_verify_reports"
+                        android:textAllCaps="false"
+                        android:textColor="#6D28D9"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        app:backgroundTint="#FAF5FF"
+                        app:cornerRadius="18dp"
+                        app:strokeColor="#6D28D9"
+                        app:strokeWidth="1.5dp" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

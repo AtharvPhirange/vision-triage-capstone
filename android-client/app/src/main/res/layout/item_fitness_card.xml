@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="8dp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="3dp"
+    app:strokeColor="#E2E8F0"
+    app:strokeWidth="1dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvExerciseTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#0F172A"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="20-20-20 Ocular Reset Rule" />
+
+        <TextView
+            android:id="@+id/tvExerciseDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvExerciseTitle"
+            android:layout_marginTop="4dp"
+            android:textColor="#64748B"
+            android:textSize="12sp"
+            tools:text="Rests ciliary muscles and prevents accommodation fatigue after screen exposure." />
+
+        <TextView
+            android:id="@+id/tvDurationBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvExerciseDesc"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_pill_badge"
+            android:backgroundTint="#F1F5F9"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
+            android:textColor="#475569"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            tools:text="3 Mins" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnWatchVideo"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@id/tvExerciseDesc"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="6dp"
+            android:text="@string/btn_watch_video"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:backgroundTint="#1D4ED8"
+            app:cornerRadius="20dp" />
+
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -4,6 +4,7 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ public class ScanRecordAdapter extends RecyclerView.Adapter<ScanRecordAdapter.Vi
 
     public interface OnItemClickListener {
         void onItemClick(ScanRecord record);
+        void onDeleteClick(ScanRecord record);
     }
 
     private final List<ScanRecord> recordList;
@@ -77,6 +79,15 @@ public class ScanRecordAdapter extends RecyclerView.Adapter<ScanRecordAdapter.Vi
                 }
             });
         }
+
+        // Dedicated Trash / Delete button
+        if (holder.btnDeleteScan != null) {
+            holder.btnDeleteScan.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onDeleteClick(record);
+                }
+            });
+        }
     }
 
     @Override
@@ -86,6 +97,7 @@ public class ScanRecordAdapter extends RecyclerView.Adapter<ScanRecordAdapter.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvResult, tvPdfBtn, tvTimestamp, tvBaseline, tvMinRatio, tvLatency;
+        ImageView btnDeleteScan;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -95,6 +107,7 @@ public class ScanRecordAdapter extends RecyclerView.Adapter<ScanRecordAdapter.Vi
             tvBaseline = itemView.findViewById(R.id.tvBaseline);
             tvMinRatio = itemView.findViewById(R.id.tvMinRatio);
             tvLatency = itemView.findViewById(R.id.tvLatency);
+            btnDeleteScan = itemView.findViewById(R.id.btnDeleteScan);
         }
     }
 }
