@@ -40,7 +40,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
-                app:cardBackgroundColor="#0284C7"
+                app:cardBackgroundColor="#DC2626"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="6dp"
                 app:strokeWidth="0dp">
@@ -99,39 +99,38 @@
                 android:textSize="13sp"
                 tools:text="Rests ciliary muscles and prevents accommodation fatigue after screen exposure." />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tvCategoryPill"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp">
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_pill_badge"
+                android:backgroundTint="#FEF2F2"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:textColor="#DC2626"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                tools:text="EYE STRAIN" />
 
-                <TextView
-                    android:id="@+id/tvCategoryPill"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/bg_pill_badge"
-                    android:backgroundTint="#E0F2FE"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="4dp"
-                    android:textColor="#0284C7"
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    tools:text="EYE STRAIN" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnWatchVideo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:text="@string/btn_watch_video"
-                    android:textAllCaps="false"
-                    android:textColor="#FFFFFF"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    app:backgroundTint="#0284C7"
-                    app:cornerRadius="20dp" />
-            </RelativeLayout>
+            <!-- Single Full-Width YouTube Action Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnWatchYouTube"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/btn_watch_on_youtube"
+                android:textAllCaps="false"
+                android:textColor="#DC2626"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:cornerRadius="25dp"
+                app:icon="@drawable/ic_youtube_official"
+                app:iconGravity="textStart"
+                app:iconTint="@null"
+                app:strokeColor="#DC2626"
+                app:strokeWidth="1.5dp" />
 
         </LinearLayout>
 

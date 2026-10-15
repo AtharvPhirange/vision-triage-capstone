@@ -90,6 +90,23 @@
     <string name="toast_profile_updated">प्रोफ़ाइल विवरण अपडेट किया गया</string>
     <string name="toast_registration_success_login">स्टाफ पंजीकरण सफल रहा। कृपया अपनी स्टाफ आईडी और पिन का उपयोग करके लॉगिन करें।</string>
 
+    <string name="btn_watch_in_app">ऐप में देखें</string>
+    <string name="btn_watch_youtube">YouTube पर देखें</string>
+    <string name="label_staff_reg_id">मेडिकल पंजीयन / स्टाफ आईडी</string>
+    <string name="label_emergency_contact">आपातकालीन संपर्क</string>
+    <string name="dialog_select_avatar_title">प्रोफ़ाइल अवतार चुनें</string>
+    <string name="opt_choose_gallery">गैलरी से चुनें</string>
+    <string name="opt_use_google">Google खाता चित्र का उपयोग करें</string>
+    <string name="opt_reset_avatar">डिफ़ॉल्ट अवतार रीसेट करें</string>
+    <string name="toast_avatar_updated">प्रोफ़ाइल अवतार अपडेट किया गया</string>
+    <string name="toast_google_avatar_applied">गूगल प्रोफ़ाइल चित्र लागू किया गया</string>
+    <string name="toast_no_google_avatar">इस खाते के लिए कोई गूगल प्रोफ़ाइल चित्र नहीं मिला</string>
+    <string name="title_edit_profile">प्रोफ़ाइल संपादित करें</string>
+    <string name="label_specialization">भूमिका / विशेषज्ञता</string>
+    <string name="label_department">विभाग / इकाई</string>
+    <string name="label_emergency_phone">आपातकालीन संपर्क नंबर</string>
+    <string name="btn_watch_on_youtube">YouTube पर देखें</string>
+
     <string name="menu_guide_subtitle_modern">इंटरएक्टिव वर्कफ़्लो, पीएलआर स्केल और ट्राइएज गाइड</string>
     <string name="menu_issue_subtitle_modern">स्कैन आर्टिफ़ैक्ट्स, चमक संबंधी समस्याएं और लॉग जमा करें</string>
     <string name="menu_pairing_subtitle_modern">कैमरा एफपीएस, सेंसर और बीएलई हार्डवेयर अंशांकित करें</string>
@@ -100,6 +117,8 @@
 
     <string name="badge_clinical_insight">क्लिनिकल नेत्र विज्ञान अंतर्दृष्टि</string>
     <string name="tip_title">आज का क्लिनिकल सुझाव</string>
+    <string name="btn_shuffle_tip">अन्य सुझाव</string>
+    <string name="btn_dismiss_tip">समझ गया</string>
     <string name="btn_another_tip">अन्य सुझाव</string>
     <string name="btn_got_it_tip">समझ गया</string>
 
@@ -111,9 +130,18 @@
         <item>मोतियाबिंद के खतरे से बचने के लिए बाहर जाते समय हमेशा UV400 प्रमाणित धूप का चश्मा पहनें।</item>
     </string-array>
 
+    <string-array name="clinical_eye_tips_detailed">
+        <item>मैकुलर पिगमेंट घनत्व की सुरक्षा के लिए ल्यूटिन और ज़ेक्सैंथिन से भरपूर हरी पत्तेदार सब्जियां शामिल करें।</item>
+        <item>20-20-20 नियम अपनाएं: हर 20 मिनट में, 20 सेकंड के लिए 20 फीट दूर किसी वस्तु को देखें।</item>
+        <item>आंखों के आंसुओं के वाष्पीकरण को रोकने के लिए स्क्रीन को आंखों के स्तर से 15-20 डिग्री नीचे रखें।</item>
+        <item>स्क्रीन देखते समय पुतली के तनाव से बचने के लिए कमरे में उचित रोशनी सुनिश्चित करें।</item>
+        <item>मोतियाबिंद के खतरे से बचने के लिए बाहर जाते समय हमेशा UV400 प्रमाणित धूप का चश्मा पहनें।</item>
+    </string-array>
+
     <string name="nav_home">होम</string>
     <string name="nav_discover">खोजें</string>
     <string name="nav_fitness">फिटनेस</string>
+    <string name="nav_guide">मार्गदर्शिका</string>
     <string name="nav_my_health">मेरा स्वास्थ्य</string>
 
     <string name="discover_title">निकटतम नेत्र देखभाल केंद्र</string>
@@ -123,9 +151,6 @@
     <string name="fitness_title">नेत्र स्वास्थ्य एवं व्यायाम</string>
     <string name="fitness_subtitle">क्लिनिकल व्यायामों से डिजिटल आंखों के तनाव से बचें</string>
     <string name="btn_watch_video">वीडियो देखें</string>
-
-    <string name="btn_shuffle_tip">अन्य सुझाव</string>
-    <string name="btn_dismiss_tip">समझ गया</string>
 
     <string name="report_issue_title">निदान समस्या की रिपोर्ट करें</string>
     <string name="btn_submit_report">रिपोर्ट जमा करें</string>

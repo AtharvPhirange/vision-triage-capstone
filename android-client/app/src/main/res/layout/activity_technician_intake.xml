@@ -97,29 +97,29 @@
                     android:layout_marginBottom="12dp"/>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.VisionTriage.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    android:layout_marginBottom="10dp">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etPatientId"
+                        style="@style/Widget.VisionTriage.TextInputEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/label_patient_id"
-                        android:textColor="#1E293B"/>
+                        android:hint="@string/label_patient_id" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.VisionTriage.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    android:layout_marginBottom="10dp">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etFullName"
+                        style="@style/Widget.VisionTriage.TextInputEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/label_full_name"
-                        android:textColor="#1E293B"/>
+                        android:hint="@string/label_full_name" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
@@ -128,32 +128,32 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.VisionTriage.TextInputLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginEnd="6dp"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                        android:layout_marginEnd="6dp">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etAge"
+                            style="@style/Widget.VisionTriage.TextInputEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/label_age"
-                            android:inputType="number"
-                            android:textColor="#1E293B"/>
+                            android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.VisionTriage.TextInputLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginStart="6dp"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                        android:layout_marginStart="6dp">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etGender"
+                            style="@style/Widget.VisionTriage.TextInputEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/label_gender"
-                            android:textColor="#1E293B"/>
+                            android:hint="@string/label_gender" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -264,32 +264,32 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.VisionTriage.TextInputLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginEnd="6dp"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                        android:layout_marginEnd="6dp">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etHeartRate"
+                            style="@style/Widget.VisionTriage.TextInputEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/hint_heart_rate"
-                            android:inputType="number"
-                            android:textColor="#1E293B"/>
+                            android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.VisionTriage.TextInputLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginStart="6dp"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                        android:layout_marginStart="6dp">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etBp"
+                            style="@style/Widget.VisionTriage.TextInputEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/hint_bp"
-                            android:textColor="#1E293B"/>
+                            android:hint="@string/hint_bp" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </LinearLayout>

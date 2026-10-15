@@ -90,6 +90,16 @@
     <string name="toast_profile_updated">Detalles del Perfil Actualizados</string>
     <string name="toast_registration_success_login">Registro de personal exitoso. Inicie sesión con su ID y PIN.</string>
 
+    <string name="btn_watch_in_app">Ver en la App</string>
+    <string name="btn_watch_youtube">Ver en YouTube</string>
+    <string name="label_staff_reg_id">Registro Médico / ID de Personal</string>
+    <string name="label_emergency_contact">Contacto de Emergencia</string>
+    <string name="dialog_select_avatar_title">Seleccionar Avatar de Perfil</string>
+    <string name="opt_choose_gallery">Elegir de la Galería</string>
+    <string name="opt_use_google">Usar Foto de Cuenta de Google</string>
+    <string name="opt_reset_avatar">Restablecer Avatar Predeterminado</string>
+    <string name="toast_avatar_updated">Avatar de perfil actualizado</string>
+
     <string name="menu_guide_subtitle_modern">Flujos interactivos, escalas PLR y guías de triaje</string>
     <string name="menu_issue_subtitle_modern">Envíe artefactos de escaneo, problemas de brillo y registros</string>
     <string name="menu_pairing_subtitle_modern">Calibre FPS de cámara, sensor y hardware BLE</string>
@@ -100,10 +110,18 @@
 
     <string name="badge_clinical_insight">CONSEJO OFTALMOLÓGICO CLÍNICO</string>
     <string name="tip_title">Consejo Clínico de Hoy</string>
-    <string name="btn_another_tip">Otro Consejo</string>
-    <string name="btn_got_it_tip">Entendido</string>
+    <string name="btn_shuffle_tip">Otro Consejo</string>
+    <string name="btn_dismiss_tip">Entendido</string>
 
     <string-array name="clinical_eye_tips">
+        <item>Consuma vegetales de hoja verde ricos en luteína y zeaxantina para proteger el pigmento macular.</item>
+        <item>Siga la regla 20-20-20: cada 20 minutos, mire a 20 pies de distancia durante 20 segundos.</item>
+        <item>Coloque las pantallas 15-20 grados por debajo del nivel de los ojos para evitar la resequedad ocular.</item>
+        <item>Asegure una iluminación ambiental de alto contraste para evitar el esfuerzo pupilar al leer.</item>
+        <item>Utilice gafas con protección UV400 para prevenir el desarrollo temprano de cataratas.</item>
+    </string-array>
+
+    <string-array name="clinical_eye_tips_detailed">
         <item>Consuma vegetales de hoja verde ricos en luteína y zeaxantina para proteger el pigmento macular.</item>
         <item>Siga la regla 20-20-20: cada 20 minutos, mire a 20 pies de distancia durante 20 segundos.</item>
         <item>Coloque las pantallas 15-20 grados por debajo del nivel de los ojos para evitar la resequedad ocular.</item>
@@ -114,6 +132,7 @@
     <string name="nav_home">Inicio</string>
     <string name="nav_discover">Descubrir</string>
     <string name="nav_fitness">Bienestar</string>
+    <string name="nav_guide">Guía</string>
     <string name="nav_my_health">Mi Salud</string>
 
     <string name="discover_title">Centros de Atención Oftalmológica</string>
@@ -123,9 +142,6 @@
     <string name="fitness_title">Salud Ocular y Ejercicios Visuales</string>
     <string name="fitness_subtitle">Prevenga la fatiga visual digital con ejercicios clínicos</string>
     <string name="btn_watch_video">Ver Video</string>
-
-    <string name="btn_shuffle_tip">Otro Consejo</string>
-    <string name="btn_dismiss_tip">Entendido</string>
 
     <string name="report_issue_title">Informar Problema de Diagnóstico</string>
     <string name="btn_submit_report">Enviar Informe</string>
@@ -149,6 +165,7 @@
     <string name="btn_offline_field_mode">Continuar en Modo Fuera de Línea</string>
     <string name="toast_auth_success">Autenticación Exitosa</string>
     <string name="toast_auth_failed">Error de autenticación. Intente de nuevo.</string>
+    <string name="default_web_client_id">849201938201-vt-app.apps.googleusercontent.com</string>
 
     <string name="intake_title">Ingreso de Paciente Técnico</string>
     <string name="intake_subtitle">Registre síntomas clínicos y signos vitales</string>
@@ -242,7 +259,7 @@
     <string name="guide_step3_item2_title">Estimulación Lumínica</string>
     <string name="guide_step3_item2_desc">Emite pulso de luz controlado para observar la velocidad de constricción.</string>
     <string name="guide_step3_item3_title">Rastreo de Recuperación</string>
-    <string name="guide_step3_item3_desc">Mide velocidad de redilatación y curvas de latencia.</string>
+    <string name="guide_step3_item3_desc">Mide velocidad de redilatation y curvas de latencia.</string>
     <string name="guide_step3_item4_title">Verificación de Calidad</string>
     <string name="guide_step3_item4_desc">Guarda el registro cuando alcanza el umbral de 95%+ de confianza.</string>
 

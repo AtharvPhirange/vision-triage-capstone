@@ -17,6 +17,8 @@ public class SessionManager {
     private static final String KEY_USER_EMAIL = "user_email";
     private static final String KEY_USER_ROLE = "user_role";
     private static final String KEY_OFFLINE_STAFF_ID = "offline_staff_id";
+    private static final String KEY_USER_PHOTO_URI = "user_photo_uri";
+    private static final String KEY_GOOGLE_PHOTO_URL = "google_photo_url";
 
     private static SharedPreferences getEncryptedPrefs(Context context) {
         try {
@@ -83,6 +85,38 @@ public class SessionManager {
     public static String getAuthProvider(Context context) {
         if (context == null) return "GOOGLE";
         return getEncryptedPrefs(context).getString(KEY_AUTH_PROVIDER, "GOOGLE");
+    }
+
+    public static void saveGooglePhotoUrl(Context context, String url) {
+        if (context == null) return;
+        getEncryptedPrefs(context).edit()
+                .putString(KEY_GOOGLE_PHOTO_URL, url)
+                .apply();
+    }
+
+    public static String getGooglePhotoUrl(Context context) {
+        if (context == null) return null;
+        return getEncryptedPrefs(context).getString(KEY_GOOGLE_PHOTO_URL, null);
+    }
+
+    public static void setUserPhotoUri(Context context, String uriStr) {
+        if (context == null) return;
+        getEncryptedPrefs(context).edit()
+                .putString(KEY_USER_PHOTO_URI, uriStr)
+                .apply();
+    }
+
+    public static String getUserPhotoUri(Context context) {
+        if (context == null) return null;
+        return getEncryptedPrefs(context).getString(KEY_USER_PHOTO_URI, null);
+    }
+
+    public static void saveUserProfilePhoto(Context context, String uriOrUrl) {
+        setUserPhotoUri(context, uriOrUrl);
+    }
+
+    public static String getUserProfilePhoto(Context context) {
+        return getUserPhotoUri(context);
     }
 
     public static void clearSessionAndLogout(Context context) {

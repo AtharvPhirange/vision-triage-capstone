@@ -2,10 +2,15 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.MyApplication" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="textInputStyle">@style/Widget.VisionTriage.TextInputLayout</item>
     </style>
 
     <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />
+
+    <!-- System Splash Screen Theme -->
+    <style name="Theme.VisionTriage.Splash" parent="Theme.MyApplication">
+        <item name="android:windowBackground">#0A192F</item>
+    </style>
 
     <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
         <item name="cornerSize">50%</item>
@@ -16,5 +21,31 @@
         <item name="cornerSizeTopRight">20dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+    <!-- High Contrast Clinical TextInputLayout Style -->
+    <style name="Widget.VisionTriage.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxBackgroundColor">#F8FAFC</item>
+        <item name="boxStrokeColor">@color/selector_input_stroke</item>
+        <item name="boxStrokeWidth">1.5dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="boxCornerRadiusTopStart">14dp</item>
+        <item name="boxCornerRadiusTopEnd">14dp</item>
+        <item name="boxCornerRadiusBottomStart">14dp</item>
+        <item name="boxCornerRadiusBottomEnd">14dp</item>
+        <!-- Solid 100% Opacity Hint & Placeholder Colors -->
+        <item name="android:textColorHint">#475569</item>
+        <item name="hintTextColor">#0284C7</item>
+        <item name="placeholderTextColor">#64748B</item>
+        <item name="hintAnimationEnabled">true</item>
+    </style>
+
+    <!-- High Contrast TextInputEditText Style -->
+    <style name="Widget.VisionTriage.TextInputEditText" parent="Widget.MaterialComponents.TextInputEditText.OutlinedBox">
+        <item name="android:textColor">#0F172A</item>
+        <item name="android:textColorHint">#64748B</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:padding">14dp</item>
     </style>
 </resources>

@@ -5,25 +5,37 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Shader;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import androidx.annotation.Nullable;
+import java.util.Locale;
 
 public class PlrWaveformView extends View {
 
     private Paint gridPaint;
     private Paint linePaint;
+    private Paint fillPaint;
     private Paint dotPaint;
     private Paint flashLinePaint;
     private Paint labelPaint;
+    private Paint phasePaint;
+    private Paint scrubberPaint;
+    private Paint tooltipBgPaint;
+    private Paint tooltipTextPaint;
 
-    private float baselineRatio = 0.45f;
-    private float minRatio = 0.28f;
+    private float baselineMm = 5.20f;
+    private float minMm = 3.10f;
     private float animatedProgress = 1.0f; // 0.0 to 1.0
     private ValueAnimator playbackAnimator;
+
+    private float touchX = -1f;
+    private boolean isTouching = false;
 
     public PlrWaveformView(Context context) {
         super(context);
@@ -38,32 +50,54 @@ public class PlrWaveformView extends View {
     private void init() {
         gridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         gridPaint.setColor(Color.parseColor("#E2E8F0"));
-        gridPaint.setStrokeWidth(1f);
+        gridPaint.setStrokeWidth(1.5f);
         gridPaint.setStyle(Paint.Style.STROKE);
 
         linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        linePaint.setColor(Color.parseColor("#003893"));
-        linePaint.setStrokeWidth(3f);
+        linePaint.setColor(Color.parseColor("#0284C7"));
+        linePaint.setStrokeWidth(4.5f);
         linePaint.setStyle(Paint.Style.STROKE);
 
+        fillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        fillPaint.setStyle(Paint.Style.FILL);
+
         dotPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        dotPaint.setColor(Color.parseColor("#003893"));
+        dotPaint.setColor(Color.parseColor("#0284C7"));
         dotPaint.setStyle(Paint.Style.FILL);
 
         flashLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         flashLinePaint.setColor(Color.parseColor("#D97706"));
-        flashLinePaint.setStrokeWidth(1.5f);
+        flashLinePaint.setStrokeWidth(2f);
         flashLinePaint.setStyle(Paint.Style.STROKE);
-        flashLinePaint.setPathEffect(new DashPathEffect(new float[]{6f, 6f}, 0));
+        flashLinePaint.setPathEffect(new DashPathEffect(new float[]{8f, 6f}, 0));
 
         labelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         labelPaint.setColor(Color.parseColor("#64748B"));
         labelPaint.setTextSize(22f);
+
+        phasePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        phasePaint.setStyle(Paint.Style.FILL);
+
+        scrubberPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        scrubberPaint.setColor(Color.parseColor("#0F172A"));
+        scrubberPaint.setStrokeWidth(2.5f);
+
+        tooltipBgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        tooltipBgPaint.setColor(Color.parseColor("#0F172A"));
+        tooltipBgPaint.setStyle(Paint.Style.FILL);
+
+        tooltipTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        tooltipTextPaint.setColor(Color.WHITE);
+        tooltipTextPaint.setTextSize(22f);
     }
 
-    public void setWaveformMetrics(float baseRatio, float minConstrictedRatio) {
-        this.baselineRatio = Math.max(0.1f, Math.min(0.8f, baseRatio));
-        this.minRatio = Math.max(0.05f, Math.min(this.baselineRatio, minConstrictedRatio));
+    public void setWaveformMetrics(float baseMmVal, float minMmVal) {
+        // Convert normalized ratios < 1.0 to physiological mm (e.g. 0.15 * 28 = 4.20 mm)
+        float baseConverted = baseMmVal <= 1.0f ? baseMmVal * 28.0f : baseMmVal;
+        float minConverted = minMmVal <= 1.0f ? minMmVal * 28.0f : minMmVal;
+
+        this.baselineMm = Math.max(2.0f, Math.min(8.0f, baseConverted));
+        this.minMm = Math.max(1.0f, Math.min(this.baselineMm - 0.4f, minConverted));
         invalidate();
     }
 
@@ -72,7 +106,7 @@ public class PlrWaveformView extends View {
             playbackAnimator.cancel();
         }
         playbackAnimator = ValueAnimator.ofFloat(0.0f, 1.0f);
-        playbackAnimator.setDuration(4000); // 4 seconds playback
+        playbackAnimator.setDuration(5000); // 5.0 seconds playback
         playbackAnimator.setInterpolator(new LinearInterpolator());
         playbackAnimator.addUpdateListener(animation -> {
             animatedProgress = (float) animation.getAnimatedValue();
@@ -82,82 +116,156 @@ public class PlrWaveformView extends View {
     }
 
     @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_MOVE:
+                touchX = event.getX();
+                isTouching = true;
+                invalidate();
+                return true;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                isTouching = false;
+                invalidate();
+                return true;
+        }
+        return super.onTouchEvent(event);
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        float paddingLeft = 50f;
-        float paddingRight = getWidth() - 30f;
-        float paddingTop = 30f;
-        float paddingBottom = getHeight() - 50f;
+        float density = getResources().getDisplayMetrics().density;
+        float padLeft = 58f * density;
+        float padRight = 24f * density;
+        float padTop = 32f * density;
+        float padBottom = 32f * density;
 
-        float width = paddingRight - paddingLeft;
-        float height = paddingBottom - paddingTop;
+        float chartLeft = padLeft;
+        float chartRight = getWidth() - padRight;
+        float chartTop = padTop;
+        float chartBottom = getHeight() - padBottom;
 
-        // Draw Canvas Background Box
-        canvas.drawRect(paddingLeft, paddingTop, paddingRight, paddingBottom, gridPaint);
+        float chartWidth = chartRight - chartLeft;
+        float chartHeight = chartBottom - chartTop;
 
-        // Draw Y-Axis Gridlines
-        int ySteps = 4;
-        for (int i = 0; i <= ySteps; i++) {
-            float y = paddingBottom - (height / ySteps) * i;
-            canvas.drawLine(paddingLeft, y, paddingRight, y, gridPaint);
-            float val = 0.1f * i;
-            labelPaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.drawText(String.format("%.1f", val), paddingLeft - 8f, y + 6f, labelPaint);
-        }
+        if (chartWidth <= 0 || chartHeight <= 0) return;
 
-        // Draw X-Axis Gridlines (0s to 8s)
-        int xSteps = 8;
-        for (int i = 0; i <= xSteps; i++) {
-            float x = paddingLeft + (width / xSteps) * i;
-            canvas.drawLine(x, paddingTop, x, paddingBottom, gridPaint);
-            labelPaint.setTextAlign(Paint.Align.CENTER);
-            canvas.drawText(i + "s", x, paddingBottom + 28f, labelPaint);
-        }
+        // Auto-scale Y-axis range with 35% top/bottom vertical breathing room
+        float rawMin = this.minMm;
+        float rawMax = this.baselineMm;
+        float span = Math.max(0.6f, rawMax - rawMin);
+        float yMinScale = Math.max(0.5f, rawMin - (span * 0.35f));
+        float yMaxScale = rawMax + (span * 0.35f);
 
-        // Draw Flash Trigger Line (t = 1.0s)
-        float flashX = paddingLeft + (width / 8f) * 1.0f;
-        canvas.drawLine(flashX, paddingTop, flashX, paddingBottom, flashLinePaint);
-        labelPaint.setTextAlign(Paint.Align.LEFT);
-        canvas.drawText("Flash Trigger (1s)", flashX + 6f, paddingTop + 20f, labelPaint);
+        // Lock Canvas Clipping inside grid plane
+        int saveCount = canvas.save();
+        canvas.clipRect(chartLeft, chartTop, chartRight, chartBottom);
 
-        // Map 8-Second Curve
-        float minY = paddingBottom - (baselineRatio / 0.5f) * height;
-        float valleyY = paddingBottom - (minRatio / 0.5f) * height;
+        // 3 Shaded Clinical Phase Backgrounds across 5 seconds
+        float xFlash = chartLeft + (chartWidth / 5.0f) * 1.0f; // 1.0s
+        float xMin = chartLeft + (chartWidth / 5.0f) * 2.5f;   // 2.5s
 
-        float x0 = paddingLeft;
-        float y0 = minY;
+        // Phase 1: Baseline (0s - 1s)
+        phasePaint.setColor(Color.parseColor("#080284C7"));
+        canvas.drawRect(chartLeft, chartTop, xFlash, chartBottom, phasePaint);
 
-        float xFlash = paddingLeft + (width / 8f) * 1.0f;
-        float yFlash = minY;
+        // Phase 2: Constriction (1s - 2.5s)
+        phasePaint.setColor(Color.parseColor("#12FEF3C7"));
+        canvas.drawRect(xFlash, chartTop, xMin, chartBottom, phasePaint);
 
-        float xValley = paddingLeft + (width / 8f) * 2.5f;
-        float yValley = valleyY;
+        // Phase 3: Recovery (2.5s - 5s)
+        phasePaint.setColor(Color.parseColor("#08059669"));
+        canvas.drawRect(xMin, chartTop, chartRight, chartBottom, phasePaint);
 
-        float xEnd = paddingLeft + (width / 8f) * 8.0f;
-        float yEnd = minY - (minY - valleyY) * 0.3f;
+        // Flash Trigger Vertical Line (1.0s)
+        canvas.drawLine(xFlash, chartTop, xFlash, chartBottom, flashLinePaint);
 
+        // Compute Curve Y Positions
+        float yBaseline = valueToY(baselineMm, yMinScale, yMaxScale, chartTop, chartBottom);
+        float yMin = valueToY(minMm, yMinScale, yMaxScale, chartTop, chartBottom);
+        float yEnd = valueToY(baselineMm - (baselineMm - minMm) * 0.35f, yMinScale, yMaxScale, chartTop, chartBottom);
+
+        // Path
         Path path = new Path();
-        path.moveTo(x0, y0);
-        path.lineTo(xFlash, yFlash);
-        path.cubicTo(xFlash + width * 0.05f, yFlash, xValley - width * 0.05f, yValley, xValley, yValley);
-        path.cubicTo(xValley + width * 0.2f, yValley, xEnd - width * 0.2f, yEnd, xEnd, yEnd);
+        path.moveTo(chartLeft, yBaseline);
+        path.lineTo(xFlash, yBaseline);
+        path.cubicTo(xFlash + chartWidth * 0.08f, yBaseline, xMin - chartWidth * 0.08f, yMin, xMin, yMin);
+        path.cubicTo(xMin + chartWidth * 0.2f, yMin, chartRight - chartWidth * 0.1f, yEnd, chartRight, yEnd);
 
+        // Fill Path
+        Path fillPath = new Path(path);
+        fillPath.lineTo(chartRight, chartBottom);
+        fillPath.lineTo(chartLeft, chartBottom);
+        fillPath.close();
+
+        fillPaint.setShader(new LinearGradient(0, chartTop, 0, chartBottom,
+                Color.parseColor("#440284C7"), Color.parseColor("#000284C7"), Shader.TileMode.CLAMP));
+        canvas.drawPath(fillPath, fillPaint);
         canvas.drawPath(path, linePaint);
 
-        // Draw Animated Scrubber Dot
-        float currentX = paddingLeft + animatedProgress * width;
-        float currentY;
-        if (currentX <= xFlash) {
-            currentY = yFlash;
-        } else if (currentX <= xValley) {
-            float t = (currentX - xFlash) / (xValley - xFlash);
-            currentY = yFlash + t * (yValley - yFlash);
-        } else {
-            float t = (currentX - xValley) / (xEnd - xValley);
-            currentY = yValley + t * (yEnd - yValley);
+        canvas.restoreToCount(saveCount);
+
+        // Draw Canvas Outline Box
+        canvas.drawRect(chartLeft, chartTop, chartRight, chartBottom, gridPaint);
+
+        // Y-Axis mm Scale Labels (Right-aligned inside padLeft)
+        int ySteps = 4;
+        labelPaint.setTextAlign(Paint.Align.RIGHT);
+        for (int i = 0; i <= ySteps; i++) {
+            float mm = yMinScale + (yMaxScale - yMinScale) * (i / (float) ySteps);
+            float y = chartBottom - (chartHeight / ySteps) * i;
+            canvas.drawLine(chartLeft, y, chartRight, y, gridPaint);
+            canvas.drawText(String.format(Locale.getDefault(), "%.1f mm", mm), chartLeft - 8f, y + 6f, labelPaint);
         }
 
-        canvas.drawCircle(currentX, currentY, 8f, dotPaint);
+        // X-Axis Timeline (0s to 5s)
+        int xSteps = 5;
+        labelPaint.setTextAlign(Paint.Align.CENTER);
+        for (int i = 0; i <= xSteps; i++) {
+            float x = chartLeft + (chartWidth / xSteps) * i;
+            canvas.drawLine(x, chartTop, x, chartBottom, gridPaint);
+            canvas.drawText(i + "s", x, chartBottom + 26f, labelPaint);
+        }
+
+        labelPaint.setTextAlign(Paint.Align.LEFT);
+        canvas.drawText("Flash (1.0s)", xFlash + 8f, chartTop + 22f, labelPaint);
+
+        // Active Scrubber Progress
+        float activeX = isTouching ? Math.max(chartLeft, Math.min(chartRight, touchX)) : (chartLeft + animatedProgress * chartWidth);
+        float activeT = (activeX - chartLeft) / chartWidth * 5.0f; // in seconds
+        float activeY;
+
+        if (activeX <= xFlash) {
+            activeY = yBaseline;
+        } else if (activeX <= xMin) {
+            float t = (activeX - xFlash) / (xMin - xFlash);
+            activeY = yBaseline + t * (yMin - yBaseline);
+        } else {
+            float t = (activeX - xMin) / (chartRight - xMin);
+            activeY = yMin + t * (yEnd - yMin);
+        }
+
+        // Draw Scrubber Line & Dot
+        canvas.drawLine(activeX, chartTop, activeX, chartBottom, scrubberPaint);
+        canvas.drawCircle(activeX, activeY, 10f, dotPaint);
+
+        // Draw Scrubber Tooltip Pill (Clamped inside chart left/right)
+        float activeMm = yMaxScale - ((activeY - chartTop) / chartHeight) * (yMaxScale - yMinScale);
+        String tooltipText = String.format(Locale.getDefault(), "%.1fs | %.2f mm", activeT, activeMm);
+        float tooltipW = tooltipTextPaint.measureText(tooltipText) + 24f;
+        float tooltipX = Math.max(chartLeft + tooltipW / 2, Math.min(chartRight - tooltipW / 2, activeX));
+
+        canvas.drawRoundRect(tooltipX - tooltipW / 2, chartTop - 26f, tooltipX + tooltipW / 2, chartTop + 6f, 10f, 10f, tooltipBgPaint);
+        tooltipTextPaint.setTextAlign(Paint.Align.CENTER);
+        canvas.drawText(tooltipText, tooltipX, chartTop - 4f, tooltipTextPaint);
+    }
+
+    private float valueToY(float val, float yMin, float yMax, float chartTop, float chartBottom) {
+        float normalized = (val - yMin) / Math.max(0.0001f, (yMax - yMin));
+        float y = chartBottom - (normalized * (chartBottom - chartTop));
+        return Math.max(chartTop + 2f, Math.min(chartBottom - 2f, y));
     }
 }

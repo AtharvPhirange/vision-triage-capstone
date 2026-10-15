@@ -51,6 +51,7 @@ public class PlrAnalysisActivity extends AppCompatActivity {
         TextView tvBaselineVal = findViewById(R.id.tvBaselineVal);
         TextView tvMinVal = findViewById(R.id.tvMinVal);
         TextView tvLatencyVal = findViewById(R.id.tvLatencyVal);
+        TextView tvWaveformExplanation = findViewById(R.id.tvWaveformExplanation);
 
         plrWaveformView = findViewById(R.id.plrWaveformView);
         MaterialButton btnPlayAnimation = findViewById(R.id.btnPlayAnimation);
@@ -64,14 +65,23 @@ public class PlrAnalysisActivity extends AppCompatActivity {
 
         // Retrieve passed parameters
         double baseVal = getIntent() != null ? getIntent().getDoubleExtra("BASELINE_SIZE", 5.20) : 5.20;
-        double minVal = getIntent() != null ? getIntent().getDoubleExtra("MIN_SIZE", 0.12) : 0.12;
-        long latencyMs = getIntent() != null ? getIntent().getLongExtra("LATENCY_MS", 0) : 0;
-        String triageResult = getIntent() != null && getIntent().hasExtra("TRIAGE_RESULT") ? getIntent().getStringExtra("TRIAGE_RESULT") : "UNRESPONSIVE";
+        double minVal = getIntent() != null ? getIntent().getDoubleExtra("MIN_SIZE", 3.10) : 3.10;
+        long latencyMs = getIntent() != null ? getIntent().getLongExtra("LATENCY_MS", 280) : 280;
+        String triageResult = getIntent() != null && getIntent().hasExtra("TRIAGE_RESULT") ? getIntent().getStringExtra("TRIAGE_RESULT") : "NORMAL";
 
         if (tvBaselineVal != null) tvBaselineVal.setText(String.format(Locale.getDefault(), "%.2f mm", baseVal));
         if (tvMinVal != null) tvMinVal.setText(String.format(Locale.getDefault(), "%.2f", minVal));
         if (tvLatencyVal != null) tvLatencyVal.setText(latencyMs + " ms");
         if (tvAiVerdictBadge != null) tvAiVerdictBadge.setText(triageResult);
+
+        if (tvWaveformExplanation != null) {
+            String explanation = String.format(Locale.getDefault(),
+                    "1. Baseline Phase (0s–1.0s): Resting pupil diameter recorded at %.2f mm under uniform ambient light.\n" +
+                    "2. Constriction Phase (1.0s–2.5s): Flash trigger at 1.0s initiated reflex constriction down to %.2f mm peak with latency of %d ms. Verdict classified as %s.\n" +
+                    "3. Recovery Phase (2.5s–5.0s): Sympathetic autonomic re-dilation slope demonstrates physiological recovery.",
+                    baseVal, minVal, latencyMs, triageResult);
+            tvWaveformExplanation.setText(explanation);
+        }
 
         if (plrWaveformView != null) {
             plrWaveformView.setWaveformMetrics((float) baseVal, (float) minVal);

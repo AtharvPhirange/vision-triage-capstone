@@ -1,28 +1,28 @@
 package com.example.myapplication;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.db.AppDatabase;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
 
 public class UserProfileBottomSheet extends BottomSheetDialogFragment {
 
     private TextView tvSheetRoleBadge, tvSheetUserName, tvSheetUserEmail, tvSheetAuthProvider;
+    private ImageView imgSheetAvatar;
 
     @Nullable
     @Override
@@ -36,6 +36,7 @@ public class UserProfileBottomSheet extends BottomSheetDialogFragment {
 
         Context context = requireContext();
 
+        imgSheetAvatar = view.findViewById(R.id.imgSheetAvatar);
         tvSheetRoleBadge = view.findViewById(R.id.tvSheetRoleBadge);
         tvSheetUserName = view.findViewById(R.id.tvSheetUserName);
         tvSheetUserEmail = view.findViewById(R.id.tvSheetUserEmail);
@@ -67,7 +68,10 @@ public class UserProfileBottomSheet extends BottomSheetDialogFragment {
         }).start();
 
         if (btnEditProfile != null) {
-            btnEditProfile.setOnClickListener(v -> showEditProfileDialog(context));
+            btnEditProfile.setOnClickListener(v -> {
+                dismiss();
+                startActivity(new Intent(context, EditProfileActivity.class));
+            });
         }
 
         if (btnSignOut != null) {
@@ -91,41 +95,17 @@ public class UserProfileBottomSheet extends BottomSheetDialogFragment {
         if (tvSheetUserName != null) tvSheetUserName.setText(SessionManager.getUserName(context));
         if (tvSheetUserEmail != null) tvSheetUserEmail.setText(SessionManager.getUserEmail(context));
         if (tvSheetAuthProvider != null) tvSheetAuthProvider.setText("Auth: " + SessionManager.getAuthProvider(context));
-    }
 
-    private void showEditProfileDialog(Context context) {
-        Dialog dialog = new Dialog(context);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_edit_profile);
-
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        String photoUri = SessionManager.getUserPhotoUri(context);
+        if (imgSheetAvatar != null && photoUri != null) {
+            Glide.with(context)
+                    .load(Uri.parse(photoUri))
+                    .placeholder(R.drawable.ic_account_circle)
+                    .error(R.drawable.ic_account_circle)
+                    .circleCrop()
+                    .into(imgSheetAvatar);
+        } else if (imgSheetAvatar != null) {
+            imgSheetAvatar.setImageResource(R.drawable.ic_account_circle);
         }
-
-        TextInputEditText etEditName = dialog.findViewById(R.id.etEditName);
-        TextInputEditText etEditPhone = dialog.findViewById(R.id.etEditPhone);
-        TextInputEditText etEditFacility = dialog.findViewById(R.id.etEditFacility);
-        MaterialButton btnSaveProfile = dialog.findViewById(R.id.btnSaveProfile);
-        Button btnCancelEdit = dialog.findViewById(R.id.btnCancelEdit);
-
-        if (etEditName != null) etEditName.setText(SessionManager.getUserName(context));
-
-        if (btnSaveProfile != null) {
-            btnSaveProfile.setOnClickListener(v -> {
-                String newName = etEditName != null && etEditName.getText() != null ? etEditName.getText().toString().trim() : "";
-                if (!newName.isEmpty()) {
-                    SessionManager.createGoogleSession(context, newName, SessionManager.getUserEmail(context), SessionManager.getUserRole(context));
-                    Toast.makeText(context, R.string.toast_profile_updated, Toast.LENGTH_SHORT).show();
-                    refreshProfileUI(context);
-                    dialog.dismiss();
-                }
-            });
-        }
-
-        if (btnCancelEdit != null) {
-            btnCancelEdit.setOnClickListener(v -> dialog.dismiss());
-        }
-
-        dialog.show();
     }
 }

@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.text.TextUtils;
@@ -126,6 +127,12 @@ public class LoginActivity extends AppCompatActivity {
                 GoogleIdTokenCredential googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.getData());
                 String email = googleIdTokenCredential.getId();
                 String name = googleIdTokenCredential.getDisplayName() != null ? googleIdTokenCredential.getDisplayName() : "Dr. A. Sharma";
+
+                Uri photoUri = googleIdTokenCredential.getProfilePictureUri();
+                if (photoUri != null) {
+                    SessionManager.saveGooglePhotoUrl(this, photoUri.toString());
+                    SessionManager.setUserPhotoUri(this, photoUri.toString());
+                }
 
                 String role = determineRoleFromEmail(email);
                 SessionManager.createGoogleSession(this, name, email, role);

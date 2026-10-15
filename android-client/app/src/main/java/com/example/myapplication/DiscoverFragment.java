@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -53,9 +54,21 @@ public class DiscoverFragment extends Fragment {
         }
 
         List<ClinicItem> clinics = new ArrayList<>();
-        clinics.add(new ClinicItem("District Ophthalmic Hospital", "Tarabai Park, Kolhapur, MH 416003", 16.7110, 74.2480));
-        clinics.add(new ClinicItem("Vision Retina Institute", "Rajaram Puri, Kolhapur, MH 416008", 16.6980, 74.2390));
-        clinics.add(new ClinicItem("Apex Eye Super Speciality Hospital", "Station Road, Kolhapur, MH 416001", 16.7020, 74.2510));
+        clinics.add(new ClinicItem("Gokul Shirgaon Ophthalmic Center", "Gokul Shirgaon MIDC, MH 416234", 16.6340, 74.2750));
+        clinics.add(new ClinicItem("Shiroli Netralaya & Laser Vision Care", "Shiroli Highway, Kolhapur, MH 416122", 16.7520, 74.2810));
+        clinics.add(new ClinicItem("Sanjeevan Netralaya & Retinal Center", "Peth Vadgaon, Kolhapur, MH 416112", 16.8280, 74.3015));
+        clinics.add(new ClinicItem("Drishti Eye & Micro-Surgery Clinic", "Kagal City, Kolhapur, MH 416216", 16.5780, 74.3150));
+        clinics.add(new ClinicItem("Panhala Community Ophthalmic Hospital", "Panhala Fort Road, MH 416201", 16.8120, 74.1180));
+        clinics.add(new ClinicItem("Lions Eye Hospital & Corneal Clinic", "Hatkanangale, Kolhapur, MH 416109", 16.7510, 74.4420));
+
+        // Sort clinics in ascending distance order
+        Collections.sort(clinics, (c1, c2) -> {
+            float[] r1 = new float[1];
+            float[] r2 = new float[1];
+            Location.distanceBetween(currentLat, currentLon, c1.lat, c1.lon, r1);
+            Location.distanceBetween(currentLat, currentLon, c2.lat, c2.lon, r2);
+            return Float.compare(r1[0], r2[0]);
+        });
 
         if (rvClinics != null) {
             rvClinics.setAdapter(new ClinicAdapter(clinics, currentLat, currentLon, clinic -> {
@@ -105,10 +118,14 @@ public class DiscoverFragment extends Fragment {
 
                 float[] results = new float[1];
                 Location.distanceBetween(userLat, userLon, clinic.lat, clinic.lon, results);
-                float distKm = results[0] / 1000f;
+                float distMeters = results[0];
+
+                String distText = (distMeters < 1000)
+                        ? Math.round(distMeters) + " m away"
+                        : String.format(Locale.getDefault(), "%.1f km away", distMeters / 1000f);
 
                 if (holder.tvClinicDistance != null) {
-                    holder.tvClinicDistance.setText(String.format(Locale.getDefault(), "%.1f km away", distKm));
+                    holder.tvClinicDistance.setText(distText);
                 }
 
                 if (holder.btnGetDirections != null) {

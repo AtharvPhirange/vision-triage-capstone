@@ -46,6 +46,19 @@
             android:name=".HomeActivity"
             android:exported="false" />
 
+        <!-- Edit Profile Activity -->
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Crash-Proof Video Player Activity -->
+        <activity
+            android:name=".VideoPlayerActivity"
+            android:exported="false"
+            android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+            android:hardwareAccelerated="true" />
+
         <!-- Bottom Navigation & Utility Activities -->
         <activity
             android:name=".DiscoverClinicsActivity"

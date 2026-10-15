@@ -117,6 +117,23 @@
     <string name="toast_profile_updated">Profile Details Updated</string>
     <string name="toast_registration_success_login">Staff registration successful. Please log in using your Staff ID and PIN.</string>
 
+    <string name="btn_watch_in_app">Watch In-App</string>
+    <string name="btn_watch_youtube">Watch on YouTube</string>
+    <string name="label_staff_reg_id">Medical Reg. / Staff ID</string>
+    <string name="label_emergency_contact">Emergency Contact</string>
+    <string name="dialog_select_avatar_title">Select Profile Avatar</string>
+    <string name="opt_choose_gallery">Choose from Gallery</string>
+    <string name="opt_use_google">Use Google Account Picture</string>
+    <string name="opt_reset_avatar">Reset Default Avatar</string>
+    <string name="toast_avatar_updated">Profile avatar updated</string>
+    <string name="toast_google_avatar_applied">Google profile picture applied</string>
+    <string name="toast_no_google_avatar">No Google profile picture found for this account</string>
+    <string name="title_edit_profile">Edit Profile</string>
+    <string name="label_specialization">Role / Specialization</string>
+    <string name="label_department">Department / Unit</string>
+    <string name="label_emergency_phone">Emergency Contact Number</string>
+    <string name="btn_watch_on_youtube">Watch on YouTube</string>
+
     <string name="menu_guide_subtitle_modern">Interactive workflows, PLR scales &amp; triage guides</string>
     <string name="menu_issue_subtitle_modern">Submit scan artifacts, glare issues &amp; logs</string>
     <string name="menu_pairing_subtitle_modern">Calibrate camera FPS, sensor &amp; BLE hardware</string>
@@ -128,6 +145,7 @@
     <string name="nav_home">Home</string>
     <string name="nav_discover">Discover</string>
     <string name="nav_fitness">Fitness</string>
+    <string name="nav_guide">Guide</string>
     <string name="nav_my_health">My Health</string>
 
     <string name="discover_title">Nearby Eye Care Centers</string>
@@ -151,6 +169,14 @@
         <item>Keep digital screens at eye level or slightly below (15-20 degrees) to decrease tear film evaporation.</item>
         <item>Ensure high-contrast ambient lighting to avoid pupillary strain while reading or viewing displays.</item>
         <item>Always wear UV400-certified protective eyewear during daylight hours to guard against cataracts.</item>
+    </string-array>
+
+    <string-array name="clinical_eye_tips_detailed">
+        <item>Incorporate dark leafy greens rich in lutein and zeaxanthin (such as spinach, kale, and broccoli) into your daily diet. These carotenoids filter high-energy blue wavelengths and protect retinal pigment epithelium cells against oxidative stress.</item>
+        <item>Practice the 20-20-20 rule during digital screen use: Every 20 minutes, shift your gaze to an object at least 20 feet away for at least 20 seconds. This relaxes ciliary muscle accommodation and reduces digital visual fatigue.</item>
+        <item>Position digital displays 15 to 20 degrees below eye level from the center of the screen. This positioning decreases interpalpebral fissure width and minimizes corneal tear film evaporation.</item>
+        <item>Ensure high-contrast ambient illumination without direct screen reflections or harsh glare. Proper room lighting prevents excessive pupil constriction and decreases asthenopic symptoms during prolonged reading.</item>
+        <item>Always wear UV400-certified protective eyewear during daylight hours. Cumulative UV-A and UV-B exposure significantly accelerates nuclear cataract formation and pterygium growth.</item>
     </string-array>
 
     <string name="report_issue_title">Report Diagnostic Issue</string>

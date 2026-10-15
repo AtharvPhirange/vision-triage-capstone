@@ -67,64 +67,48 @@
     <!-- Mobile Number Outlined Input Box -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutMobile"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.VisionTriage.TextInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:hint="@string/mobile_number"
-        app:boxCornerRadiusBottomEnd="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusTopStart="12dp"
-        app:boxStrokeColor="#003893"
         app:errorEnabled="true"
-        app:hintTextColor="#003893"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
         app:prefixText="+91 "
-        app:prefixTextColor="#003893">
+        app:prefixTextColor="#0284C7">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etMobile"
+            style="@style/Widget.VisionTriage.TextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"
-            android:maxLength="10"
-            android:minHeight="48dp"
-            android:textColor="@color/text_primary"
-            android:textSize="16sp" />
+            android:maxLength="10" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Password / PIN Outlined Input Box -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutPassword"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.VisionTriage.TextInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="@string/technician_pin"
-        app:boxCornerRadiusBottomEnd="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusTopStart="12dp"
-        app:boxStrokeColor="#003893"
         app:endIconMode="password_toggle"
-        app:endIconTint="#003893"
+        app:endIconTint="#0284C7"
         app:errorEnabled="true"
-        app:hintTextColor="#003893"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutMobile">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPassword"
+            style="@style/Widget.VisionTriage.TextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:minHeight="48dp"
-            android:textColor="@color/text_primary"
-            android:textSize="16sp" />
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Bottom Full-Width Continue Button -->

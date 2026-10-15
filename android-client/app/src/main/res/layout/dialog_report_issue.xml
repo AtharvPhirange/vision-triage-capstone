@@ -26,18 +26,18 @@
         android:layout_marginBottom="16dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.VisionTriage.TextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        android:layout_marginBottom="12dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etIssueDescription"
+            style="@style/Widget.VisionTriage.TextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Describe the optical scan artifact or issue..."
-            android:minLines="3"
-            android:textColor="#1E293B" />
+            android:minLines="3" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <CheckBox

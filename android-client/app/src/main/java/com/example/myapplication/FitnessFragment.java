@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -56,19 +57,19 @@ public class FitnessFragment extends Fragment {
         }
 
         List<FitnessItem> items = new ArrayList<>();
-        items.add(new FitnessItem("11gKlyS4mTo", "20-20-20 Ocular Reset Rule", "Rests ciliary muscles and prevents accommodation fatigue after screen exposure.", "3 Mins", "EYE STRAIN"));
-        items.add(new FitnessItem("480_cKxIeOo", "Convergence & Focus Accommodation", "Pen-to-nose tracking exercise to improve binocular alignment.", "5 Mins", "ACCOMMODATION"));
-        items.add(new FitnessItem("wX0k4oP7QhA", "Palming & Ocular Circulation", "Gentle darkness recovery to soothe dry, overworked eyes.", "4 Mins", "OCULAR CIRCULATION"));
-        items.add(new FitnessItem("9XgNfH4P_8Y", "Blink Rate & Dry Eye Prevention", "Promotes uniform tear film distribution and prevents corneal dry spots.", "2 Mins", "DRY EYE"));
-        items.add(new FitnessItem("480_cKxIeOo", "Pencil Push-Ups Binocular Tracking", "Strengthens extraocular muscles and improves vergence facility.", "4 Mins", "BINOCULAR"));
-        items.add(new FitnessItem("11gKlyS4mTo", "Smooth Pursuit Figure Eight Movement", "Enhances saccadic tracking precision and relaxes eye strains.", "3 Mins", "MOTILITY"));
+        items.add(new FitnessItem("7GLxMPIYGTc", "20-20-20 Rule & Digital Eye Strain Reset", "Rests ciliary muscles and prevents accommodation fatigue after screen exposure.", "3 Mins", "EYE STRAIN"));
+        items.add(new FitnessItem("iVb4vUp70zY", "7 Easy Eye Exercises to Improve Vision & Mobility", "Enhances extraocular muscle coordination and ocular flexibility.", "5 Mins", "MOBILITY"));
+        items.add(new FitnessItem("MHswoR5R-N0", "Near-to-Far Accommodation & Convergence Drills", "Pen-to-nose tracking exercise to improve binocular alignment.", "4 Mins", "ACCOMMODATION"));
+        items.add(new FitnessItem("YSUF2cxQBpU", "Saccadic Eye Drills & Rapid Tracking", "Promotes uniform tear film distribution and prevents corneal dry spots.", "3 Mins", "COORDINATION"));
+        items.add(new FitnessItem("BQYACIVMvJc", "Palming Acupressure & Natural Tear Film Stimulation", "Soothes overworked eyes and restores lacrimal fluid circulation.", "4 Mins", "RECOVERY"));
+        items.add(new FitnessItem("W05FV785NY4", "Ocular Muscle Relaxation & Dark Therapy", "Deep sensory darkness rest for strained ocular nerves.", "3 Mins", "SENSORY REST"));
 
         if (rvFitnessCards != null) {
-            rvFitnessCards.setAdapter(new FitnessAdapter(items, item -> openYouTubeVideo(requireContext(), item.videoId)));
+            rvFitnessCards.setAdapter(new FitnessAdapter(items, item -> watchYoutubeExternal(requireContext(), item.videoId)));
         }
     }
 
-    public static void openYouTubeVideo(Context context, String videoId) {
+    private static void watchYoutubeExternal(Context context, String videoId) {
         if (context == null || videoId == null || videoId.trim().isEmpty()) return;
         Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + videoId));
         Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=" + videoId));
@@ -115,6 +116,7 @@ public class FitnessFragment extends Fragment {
                 if (holder.ivVideoThumbnail != null) {
                     Glide.with(holder.itemView.getContext())
                             .load(thumbnailUrl)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.bg_thumbnail_placeholder)
                             .error(R.drawable.bg_thumbnail_fallback)
                             .centerCrop()
@@ -131,8 +133,8 @@ public class FitnessFragment extends Fragment {
                     });
                 }
 
-                if (holder.btnWatchVideo != null) {
-                    holder.btnWatchVideo.setOnClickListener(v -> {
+                if (holder.btnWatchYouTube != null) {
+                    holder.btnWatchYouTube.setOnClickListener(v -> {
                         if (listener != null) listener.onFitnessClick(item);
                     });
                 }
@@ -148,7 +150,7 @@ public class FitnessFragment extends Fragment {
             View frameThumbnail;
             ImageView ivVideoThumbnail;
             TextView tvVideoTitle, tvVideoDescription, tvDurationTag, tvCategoryPill;
-            MaterialButton btnWatchVideo;
+            MaterialButton btnWatchYouTube;
 
             ViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -158,7 +160,7 @@ public class FitnessFragment extends Fragment {
                 tvVideoDescription = itemView.findViewById(R.id.tvVideoDescription);
                 tvDurationTag = itemView.findViewById(R.id.tvDurationTag);
                 tvCategoryPill = itemView.findViewById(R.id.tvCategoryPill);
-                btnWatchVideo = itemView.findViewById(R.id.btnWatchVideo);
+                btnWatchYouTube = itemView.findViewById(R.id.btnWatchYouTube);
             }
         }
     }

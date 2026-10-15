@@ -90,6 +90,23 @@
     <string name="toast_profile_updated">प्रोफाइल तपशील अद्यतनित केले</string>
     <string name="toast_registration_success_login">स्टाफ नोंदणी यशस्वी. कृपया तुमचा स्टाफ आयडी आणि पिन वापरून लॉगिन करा.</string>
 
+    <string name="btn_watch_in_app">ॲपमध्ये पहा</string>
+    <string name="btn_watch_youtube">YouTube वर पहा</string>
+    <string name="label_staff_reg_id">वैद्यकीय नोंदणी / स्टाफ आयडी</string>
+    <string name="label_emergency_contact">आणीबाणी संपर्क</string>
+    <string name="dialog_select_avatar_title">प्रोफाइल फोटो निवडा</string>
+    <string name="opt_choose_gallery">गॅलरीमधून निवडा</string>
+    <string name="opt_use_google">Google खाते फोटो वापरा</string>
+    <string name="opt_reset_avatar">मूलभूत फोटो रीसेट करा</string>
+    <string name="toast_avatar_updated">प्रोफाइल फोटो अद्यतनित केला</string>
+    <string name="toast_google_avatar_applied">गूगल प्रोफाइल फोटो लागू केला</string>
+    <string name="toast_no_google_avatar">या खात्यासाठी गूगल प्रोफाइल फोटो आढळला नाही</string>
+    <string name="title_edit_profile">प्रोफाइल संपादित करा</string>
+    <string name="label_specialization">भूमिका / विशेषीकरण</string>
+    <string name="label_department">विभाग / युनिट</string>
+    <string name="label_emergency_phone">आणीबाणी संपर्क क्रमांक</string>
+    <string name="btn_watch_on_youtube">YouTube वर पहा</string>
+
     <string name="menu_guide_subtitle_modern">इंटरॲक्टिव्ह वर्कफ्लो, पीएलआर स्केल आणि ट्रायज मार्गदर्शक</string>
     <string name="menu_issue_subtitle_modern">स्कॅन आर्टिफॅक्ट्स, ग्लॅअर समस्या आणि लॉग सबमिट करा</string>
     <string name="menu_pairing_subtitle_modern">कॅमेरा एफपीएस, सेन्सर आणि बीएलई हार्डवेअर कॅलिब्रेट करा</string>
@@ -100,6 +117,8 @@
 
     <string name="badge_clinical_insight">क्लिनिकल नेत्ररोग अंतर्दृष्टी</string>
     <string name="tip_title">आजचा क्लिनिकल सल्ला</string>
+    <string name="btn_shuffle_tip">दुसरा सल्ला</string>
+    <string name="btn_dismiss_tip">समजले</string>
     <string name="btn_another_tip">दुसरा सल्ला</string>
     <string name="btn_got_it_tip">समजले</string>
 
@@ -111,9 +130,18 @@
         <item>मोतीबिंदूचा धोका टाळण्यासाठी उन्हात जाताना नेहमी UV400 प्रमाणित गॉगल वापरा.</item>
     </string-array>
 
+    <string-array name="clinical_eye_tips_detailed">
+        <item>मॅक्युला संरक्षणासाठी ल्युटीन आणि झेक्सॅन्थिनयुक्त गडद हिरव्या पालेभाज्यांचा आहारात समावेश करा.</item>
+        <item>20-20-20 नियम वापरा: दर 20 मिनिटांनी, 20 सेकंदांसाठी 20 फूट अंतरावरील वस्तूवर लक्ष केंद्रित करा.</item>
+        <item>डोळ्यांतील ओलावा टिकवण्यासाठी स्क्रीन डोळ्यांच्या पातळीपेक्षा 15-20 अंश खाली ठेवा.</item>
+        <item>वाचताना किंवा स्क्रीन वापरताना बाहुलीवर ताण येऊ नये म्हणून पुरेश्या प्रकाशाची व्यवस्था करा.</item>
+        <item>मोतीबिंदूचा धोका टाळण्यासाठी उन्हात जाताना नेहमी UV400 प्रमाणित गॉगल वापरा.</item>
+    </string-array>
+
     <string name="nav_home">होम</string>
     <string name="nav_discover">शोधा</string>
     <string name="nav_fitness">फिटनेस</string>
+    <string name="nav_guide">मार्गदर्शक</string>
     <string name="nav_my_health">माझे आरोग्य</string>
 
     <string name="discover_title">जवळचे नेत्र काळजी केंद्र</string>
@@ -123,9 +151,6 @@
     <string name="fitness_title">नेत्र आरोग्य आणि व्यायाम</string>
     <string name="fitness_subtitle">क्लिनिकल व्यायामाद्वारे डिजिटल डोळ्यांचा ताण टाळा</string>
     <string name="btn_watch_video">व्हिडिओ पहा</string>
-
-    <string name="btn_shuffle_tip">दुसरा सल्ला</string>
-    <string name="btn_dismiss_tip">समजले</string>
 
     <string name="report_issue_title">निदान समस्येची नोंद करा</string>
     <string name="btn_submit_report">अहवाल सबमिट करा</string>
@@ -213,16 +238,16 @@
     <string name="guide_step1_badge">टप्पा 1 - विहंगावलोकन</string>
     <string name="guide_step1_title">ॲप विहंगावलोकन आणि पोर्टल्स</string>
     <string name="guide_step1_desc">व्हिजन ट्रायज रुग्ण, तंत्रज्ञ आणि सल्लागारांना एकाच पाइपलाइनमध्ये जोडते. समर्पित वैशिष्ट्यांमध्ये प्रवेश करण्यासाठी डॅशबोर्डवरून तुमची भूमिका निवडा.</string>
-    <string name="guide_step1_bullet1">• भूमिका पाइपलाइन (रुग्ण / तंत्रज्ञ / डॉक्टर)</string>
-    <string name="guide_step1_bullet2">• स्थानिक HIPAA आणि ABDM सुरक्षा</string>
+    <string name="guide_step1_bullet1">&#8226; भूमिका पाइपलाइन (रुग्ण / तंत्रज्ञ / डॉक्टर)</string>
+    <string name="guide_step1_bullet2">&#8226; स्थानिक HIPAA आणि ABDM सुरक्षा</string>
     <string name="guide_step1_item4_title">सुरक्षित आणि स्थानिक डेटा</string>
     <string name="guide_step1_item4_desc">तुमचा आरोग्य डेटा तुमच्या स्पष्ट संमतीशिवाय कधीही डिव्हाइसबाहेर जात नाही.</string>
 
     <string name="guide_step2_badge">टप्पा 2</string>
     <string name="guide_step2_title">स्कॅन कसे करावे</string>
     <string name="guide_step2_desc">कॅमेरा रुग्णाच्या डोळ्यापासून 25-30 सेमी अंतरावर ठेवा. एकसमान प्रकाश व्यवस्था सुनिश्चित करा आणि प्रकाश उत्तेजित करण्यापूर्वी बाहुलीच्या मध्यभागावर लक्ष केंद्रित करा.</string>
-    <string name="guide_step2_bullet1">• 25–30 सेमी लक्ष्य लॉक</string>
-    <string name="guide_step2_bullet2">• बाहुली केंद्र अलाइनमेंट</string>
+    <string name="guide_step2_bullet1">&#8226; 25&#8211;30 सेमी लक्ष्य लॉक</string>
+    <string name="guide_step2_bullet2">&#8226; बाहुली केंद्र अलाइनमेंट</string>
     <string name="guide_step2_item1_title">अंतर लॉक</string>
     <string name="guide_step2_item1_desc">रुग्णाच्या डोळ्यापासून २५-३० सेमीचे स्थिर अंतर ठेवा.</string>
     <string name="guide_step2_item2_title">लक्ष्य संरेखण</string>
@@ -235,8 +260,8 @@
     <string name="guide_step3_badge">टप्पा 3</string>
     <string name="guide_step3_title">पीएलआर कॅप्चर करा</string>
     <string name="guide_step3_desc">5-सेकंदांचा स्वयंचलित प्यूपिलरी लाइट रिफ्लेक्स स्कॅन चालवा. AI विश्वासार्हता स्कोअर 95%+ येईपर्यंत हात स्थिर ठेवा.</string>
-    <string name="guide_step3_bullet1">• 5 से स्वयंचलित रिफ्लेक्स स्कॅन</string>
-    <string name="guide_step3_bullet2">• 95%+ AI विश्वासार्हता</string>
+    <string name="guide_step3_bullet1">&#8226; 5 से स्वयंचलित रिफ्लेक्स स्कॅन</string>
+    <string name="guide_step3_bullet2">&#8226; 95%+ AI विश्वासार्हता</string>
     <string name="guide_step3_item1_title">बेसलाइन नोंद</string>
     <string name="guide_step3_item1_desc">पहिल्या १-सेकंदात बाहुलीचा व्यास नोंदवतो.</string>
     <string name="guide_step3_item2_title">प्रकाश उत्तेजना</string>
@@ -269,7 +294,7 @@
     <string name="guide_step5_item1_desc">उच्च धोक्याची लाल प्रकरणे आपोआप पुनरावलोकन रांगेत जातात.</string>
     <string name="guide_step5_item2_title">वेव्हफॉर्म विश्लेषण</string>
     <string name="guide_step5_item2_desc">सल्लागार उच्च-वारंवारता पीएलआर आलेख आणि गुणोत्तर तपासतात.</string>
-    <string name="guide_step5_item3_title">पडताळणी टॅग</string>
+    <string name="guide_step5_item3_title">सत्यापन टैग</string>
     <string name="guide_step5_item3_desc">वैद्यकीय नोंदी जोडा आणि अहवाल सत्यापित करा.</string>
     <string name="guide_step5_item4_title">रुग्ण पाठवणी</string>
     <string name="guide_step5_item4_desc">सत्यापित सारांश थेट रुग्ण प्रोफाइलवर पाठवा.</string>

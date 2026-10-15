@@ -60,34 +60,25 @@
             android:layout_height="wrap_content"
             android:text="Email"
             android:textStyle="bold"
-            android:textColor="#424242"
+            android:textColor="#0F172A"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"
             android:paddingStart="4dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.VisionTriage.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             app:startIconDrawable="@android:drawable/ic_dialog_email"
-            app:startIconTint="#757575"
-            app:hintEnabled="false"
-            app:boxBackgroundColor="#F5F5F5"
-            app:boxStrokeWidth="0dp"
-            app:boxCornerRadiusTopStart="24dp"
-            app:boxCornerRadiusTopEnd="24dp"
-            app:boxCornerRadiusBottomStart="24dp"
-            app:boxCornerRadiusBottomEnd="24dp">
+            app:startIconTint="#0284C7">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmail"
+                style="@style/Widget.VisionTriage.TextInputEditText"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:textColor="#000000"
-                android:textColorHint="#9E9E9E"
-                android:textSize="14sp"
-                android:padding="0dp"
                 android:hint="Enter your email or phone number" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -97,35 +88,26 @@
             android:layout_height="wrap_content"
             android:text="Password"
             android:textStyle="bold"
-            android:textColor="#424242"
+            android:textColor="#0F172A"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"
             android:paddingStart="4dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.VisionTriage.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:startIconDrawable="@android:drawable/ic_secure"
-            app:startIconTint="#757575"
+            app:startIconTint="#0284C7"
             app:passwordToggleEnabled="true"
-            app:passwordToggleTint="#757575"
-            app:hintEnabled="false"
-            app:boxBackgroundColor="#F5F5F5"
-            app:boxStrokeWidth="0dp"
-            app:boxCornerRadiusTopStart="24dp"
-            app:boxCornerRadiusTopEnd="24dp"
-            app:boxCornerRadiusBottomStart="24dp"
-            app:boxCornerRadiusBottomEnd="24dp">
+            app:passwordToggleTint="#0284C7">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
+                style="@style/Widget.VisionTriage.TextInputEditText"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:textColor="#000000"
-                android:textColorHint="#9E9E9E"
-                android:textSize="14sp"
-                android:padding="0dp"
                 android:hint="Enter your password" />
         </com.google.android.material.textfield.TextInputLayout>
 
