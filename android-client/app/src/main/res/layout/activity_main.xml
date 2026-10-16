@@ -14,6 +14,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/controlPanel"/>
 
+    <!-- Transparent Overlay Back Button -->
+    <ImageButton
+        android:id="@+id/btnScannerBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/content_desc_go_back"
+        android:elevation="12dp"
+        android:padding="8dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_back_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="#FFFFFF" />
+
     <!-- Top Status Overlay Banner -->
     <LinearLayout
         android:layout_width="match_parent"

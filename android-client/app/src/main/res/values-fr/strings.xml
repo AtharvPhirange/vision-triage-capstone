@@ -152,6 +152,20 @@
     <string name="fitness_subtitle">Prévenez la fatigue visuelle numérique avec des exercices cliniques</string>
     <string name="btn_watch_video">Regarder la Vidéo</string>
 
+    <!-- Fitness Item Titles &amp; Descriptions -->
+    <string name="fitness_title_1">Règle 20-20-20 &amp; Réinitialisation de la Fatigue</string>
+    <string name="fitness_desc_1">Repose les muscles ciliaires et prévient la fatigue d\'accommodation.</string>
+    <string name="fitness_title_2">7 Exercices Oculaires Faciles pour Améliorer la Vision</string>
+    <string name="fitness_desc_2">Améliore la coordination des muscles extra-oculaires et la flexibilité.</string>
+    <string name="fitness_title_3">Exercices d\'Accommodation et de Convergence</string>
+    <string name="fitness_desc_3">Exercice de suivi stylo-nez pour améliorer l\'alignement binoculaire.</string>
+    <string name="fitness_title_4">Exercices Saccadiques &amp; Suivi Rapide</string>
+    <string name="fitness_desc_4">Favorise la distribution uniforme du film lacrymal.</string>
+    <string name="fitness_title_5">Acupression Palmaire &amp; Stimulation Lacrymale</string>
+    <string name="fitness_desc_5">Aapaise les yeux fatigués et restaure la circulation du fluide lacrymal.</string>
+    <string name="fitness_title_6">Relaxation Musculaire Oculaire &amp; Thérapie Sombre</string>
+    <string name="fitness_desc_6">Repos sensoriel profond dans l\'obscurité pour les nerfs oculaires.</string>
+
     <string name="report_issue_title">Signaler un Problème de Diagnostic</string>
     <string name="btn_submit_report">Envoyer le Rapport</string>
 

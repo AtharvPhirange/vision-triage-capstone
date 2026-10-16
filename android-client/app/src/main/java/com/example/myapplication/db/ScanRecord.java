@@ -1,6 +1,7 @@
 package com.example.myapplication.db;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -17,6 +18,25 @@ public class ScanRecord {
     private long constrictionLatencyMs;
     private String triageResult;
     private boolean isSynced;
+    private String scanSource; // "PATIENT" or "TECHNICIAN"
+
+    @ColumnInfo(name = "consultantReviewStatus")
+    private String consultantReviewStatus = "PENDING"; // "PENDING", "CONCURRED", "OVERRIDDEN"
+
+    @ColumnInfo(name = "finalClinicalVerdict")
+    private String finalClinicalVerdict; // "NORMAL", "SLUGGISH", "UNRESPONSIVE"
+
+    @ColumnInfo(name = "specialistNotes")
+    private String specialistNotes = "";
+
+    @ColumnInfo(name = "specialistSignOff")
+    private String specialistSignOff = "Dr. A. Sharma (Reg #MMC-84920)";
+
+    @ColumnInfo(name = "triageDisposition")
+    private String triageDisposition; // "URGENT_TRAUMA", "TELE_OPHTHALMOLOGY", "ROUTINE_DISCHARGE"
+
+    @ColumnInfo(name = "reviewedTimestamp")
+    private long reviewedTimestamp = 0L;
 
     public ScanRecord(@NonNull String scanId, String patientName, long scanTimestamp,
                       double baselinePupilSize, double minimumPupilSize,
@@ -29,6 +49,7 @@ public class ScanRecord {
         this.constrictionLatencyMs = constrictionLatencyMs;
         this.triageResult = triageResult;
         this.isSynced = isSynced;
+        this.scanSource = "PATIENT";
     }
 
     @NonNull
@@ -55,4 +76,25 @@ public class ScanRecord {
 
     public boolean isSynced() { return isSynced; }
     public void setSynced(boolean synced) { this.isSynced = synced; }
+
+    public String getScanSource() { return scanSource; }
+    public void setScanSource(String scanSource) { this.scanSource = scanSource; }
+
+    public String getConsultantReviewStatus() { return consultantReviewStatus; }
+    public void setConsultantReviewStatus(String consultantReviewStatus) { this.consultantReviewStatus = consultantReviewStatus; }
+
+    public String getFinalClinicalVerdict() { return finalClinicalVerdict; }
+    public void setFinalClinicalVerdict(String finalClinicalVerdict) { this.finalClinicalVerdict = finalClinicalVerdict; }
+
+    public String getSpecialistNotes() { return specialistNotes; }
+    public void setSpecialistNotes(String specialistNotes) { this.specialistNotes = specialistNotes; }
+
+    public String getSpecialistSignOff() { return specialistSignOff; }
+    public void setSpecialistSignOff(String specialistSignOff) { this.specialistSignOff = specialistSignOff; }
+
+    public String getTriageDisposition() { return triageDisposition; }
+    public void setTriageDisposition(String triageDisposition) { this.triageDisposition = triageDisposition; }
+
+    public long getReviewedTimestamp() { return reviewedTimestamp; }
+    public void setReviewedTimestamp(long reviewedTimestamp) { this.reviewedTimestamp = reviewedTimestamp; }
 }

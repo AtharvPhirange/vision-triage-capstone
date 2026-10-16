@@ -29,8 +29,11 @@ public class PlrWaveformView extends View {
     private Paint tooltipBgPaint;
     private Paint tooltipTextPaint;
 
-    private float baselineMm = 5.20f;
-    private float minMm = 3.10f;
+    private float baselineMm = 4.50f;
+    private float minMm = 2.90f;
+    private int latencyMs = 240;
+    private String verdict = "NORMAL";
+
     private float animatedProgress = 1.0f; // 0.0 to 1.0
     private ValueAnimator playbackAnimator;
 
@@ -92,12 +95,18 @@ public class PlrWaveformView extends View {
     }
 
     public void setWaveformMetrics(float baseMmVal, float minMmVal) {
+        setWaveformMetrics(baseMmVal, minMmVal, 240, "NORMAL");
+    }
+
+    public void setWaveformMetrics(float baseMmVal, float minMmVal, int latencyMs, String verdict) {
         // Convert normalized ratios < 1.0 to physiological mm (e.g. 0.15 * 28 = 4.20 mm)
         float baseConverted = baseMmVal <= 1.0f ? baseMmVal * 28.0f : baseMmVal;
         float minConverted = minMmVal <= 1.0f ? minMmVal * 28.0f : minMmVal;
 
         this.baselineMm = Math.max(2.0f, Math.min(8.0f, baseConverted));
-        this.minMm = Math.max(1.0f, Math.min(this.baselineMm - 0.4f, minConverted));
+        this.minMm = Math.max(1.0f, Math.min(this.baselineMm - 0.2f, minConverted));
+        this.latencyMs = latencyMs > 0 ? latencyMs : 240;
+        this.verdict = verdict != null ? verdict : "NORMAL";
         invalidate();
     }
 
@@ -164,21 +173,23 @@ public class PlrWaveformView extends View {
         int saveCount = canvas.save();
         canvas.clipRect(chartLeft, chartTop, chartRight, chartBottom);
 
-        // 3 Shaded Clinical Phase Backgrounds across 5 seconds
+        // 1. Light Stimulus Pulse Shaded Region (1.0s to 2.0s)
+        float stimLeft = chartLeft + (chartWidth / 5.0f) * 1.0f;
+        float stimRight = chartLeft + (chartWidth / 5.0f) * 2.0f;
+        phasePaint.setColor(Color.parseColor("#40FEF3C7")); // Soft Yellow
+        canvas.drawRect(stimLeft, chartTop, stimRight, chartBottom, phasePaint);
+
+        // 2. Normative Baseline Envelope (Shaded Green Region around baseline)
+        float normTop = valueToY(baselineMm + 0.25f, yMinScale, yMaxScale, chartTop, chartBottom);
+        float normBottom = valueToY(baselineMm - 0.25f, yMinScale, yMaxScale, chartTop, chartBottom);
+        phasePaint.setColor(Color.parseColor("#2622C55E")); // Soft Green
+        canvas.drawRect(chartLeft, normTop, chartRight, normBottom, phasePaint);
+
+        // 3. Shaded Clinical Phase Backgrounds across 5 seconds
         float xFlash = chartLeft + (chartWidth / 5.0f) * 1.0f; // 1.0s
+        float latencySec = latencyMs / 1000.0f;
+        float xConstrictionStart = chartLeft + (chartWidth / 5.0f) * (1.0f + latencySec);
         float xMin = chartLeft + (chartWidth / 5.0f) * 2.5f;   // 2.5s
-
-        // Phase 1: Baseline (0s - 1s)
-        phasePaint.setColor(Color.parseColor("#080284C7"));
-        canvas.drawRect(chartLeft, chartTop, xFlash, chartBottom, phasePaint);
-
-        // Phase 2: Constriction (1s - 2.5s)
-        phasePaint.setColor(Color.parseColor("#12FEF3C7"));
-        canvas.drawRect(xFlash, chartTop, xMin, chartBottom, phasePaint);
-
-        // Phase 3: Recovery (2.5s - 5s)
-        phasePaint.setColor(Color.parseColor("#08059669"));
-        canvas.drawRect(xMin, chartTop, chartRight, chartBottom, phasePaint);
 
         // Flash Trigger Vertical Line (1.0s)
         canvas.drawLine(xFlash, chartTop, xFlash, chartBottom, flashLinePaint);
@@ -191,9 +202,14 @@ public class PlrWaveformView extends View {
         // Path
         Path path = new Path();
         path.moveTo(chartLeft, yBaseline);
-        path.lineTo(xFlash, yBaseline);
-        path.cubicTo(xFlash + chartWidth * 0.08f, yBaseline, xMin - chartWidth * 0.08f, yMin, xMin, yMin);
-        path.cubicTo(xMin + chartWidth * 0.2f, yMin, chartRight - chartWidth * 0.1f, yEnd, chartRight, yEnd);
+        path.lineTo(xConstrictionStart, yBaseline);
+
+        if ("UNRESPONSIVE".equalsIgnoreCase(verdict)) {
+            path.lineTo(chartRight, yBaseline);
+        } else {
+            path.cubicTo(xConstrictionStart + chartWidth * 0.08f, yBaseline, xMin - chartWidth * 0.08f, yMin, xMin, yMin);
+            path.cubicTo(xMin + chartWidth * 0.2f, yMin, chartRight - chartWidth * 0.1f, yEnd, chartRight, yEnd);
+        }
 
         // Fill Path
         Path fillPath = new Path(path);
@@ -206,6 +222,29 @@ public class PlrWaveformView extends View {
         canvas.drawPath(fillPath, fillPaint);
         canvas.drawPath(path, linePaint);
 
+        // Discrete Kinematic Marker Nodes at 0s, 1s, 2s, 3s, 4s, 5s
+        float[] sampleTimes = new float[]{0.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f};
+        for (float st : sampleTimes) {
+            float sx = chartLeft + (chartWidth / 5.0f) * st;
+            float sy;
+            if (sx <= xConstrictionStart || "UNRESPONSIVE".equalsIgnoreCase(verdict)) {
+                sy = yBaseline;
+            } else if (sx <= xMin) {
+                float t = (sx - xConstrictionStart) / (xMin - xConstrictionStart);
+                sy = yBaseline + t * (yMin - yBaseline);
+            } else {
+                float t = (sx - xMin) / (chartRight - xMin);
+                sy = yMin + t * (yEnd - yMin);
+            }
+
+            canvas.drawCircle(sx, sy, 5f, dotPaint);
+
+            float nodeMm = yMaxScale - ((sy - chartTop) / chartHeight) * (yMaxScale - yMinScale);
+            labelPaint.setTextAlign(Paint.Align.CENTER);
+            labelPaint.setTextSize(18f);
+            canvas.drawText(String.format(Locale.getDefault(), "%.2f", nodeMm), sx, sy - 8f, labelPaint);
+        }
+
         canvas.restoreToCount(saveCount);
 
         // Draw Canvas Outline Box
@@ -214,6 +253,7 @@ public class PlrWaveformView extends View {
         // Y-Axis mm Scale Labels (Right-aligned inside padLeft)
         int ySteps = 4;
         labelPaint.setTextAlign(Paint.Align.RIGHT);
+        labelPaint.setTextSize(22f);
         for (int i = 0; i <= ySteps; i++) {
             float mm = yMinScale + (yMaxScale - yMinScale) * (i / (float) ySteps);
             float y = chartBottom - (chartHeight / ySteps) * i;
@@ -238,10 +278,10 @@ public class PlrWaveformView extends View {
         float activeT = (activeX - chartLeft) / chartWidth * 5.0f; // in seconds
         float activeY;
 
-        if (activeX <= xFlash) {
+        if (activeX <= xConstrictionStart || "UNRESPONSIVE".equalsIgnoreCase(verdict)) {
             activeY = yBaseline;
         } else if (activeX <= xMin) {
-            float t = (activeX - xFlash) / (xMin - xFlash);
+            float t = (activeX - xConstrictionStart) / (xMin - xConstrictionStart);
             activeY = yBaseline + t * (yMin - yBaseline);
         } else {
             float t = (activeX - xMin) / (chartRight - xMin);

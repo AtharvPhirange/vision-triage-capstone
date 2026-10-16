@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class ScanHistoryActivity extends AppCompatActivity {
+public class ScanHistoryActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private ScanRecordAdapter adapter;

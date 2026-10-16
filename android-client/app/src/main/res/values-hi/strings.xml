@@ -152,6 +152,20 @@
     <string name="fitness_subtitle">क्लिनिकल व्यायामों से डिजिटल आंखों के तनाव से बचें</string>
     <string name="btn_watch_video">वीडियो देखें</string>
 
+    <!-- Fitness Item Titles &amp; Descriptions -->
+    <string name="fitness_title_1">20-20-20 नियम और डिजिटल आई स्ट्रेन रिसेट</string>
+    <string name="fitness_desc_1">स्क्रीन देखने के बाद सिलियरी मांसपेशियों को आराम देता है और थकान रोकता है।</string>
+    <string name="fitness_title_2">दृष्टि और गतिशीलता में सुधार के लिए 7 आसान नेत्र व्यायाम</string>
+    <string name="fitness_desc_2">अतिरिक्त मांसपेशियों के समन्वय और लचीलेपन को बढ़ाता है।</string>
+    <string name="fitness_title_3">निकट से दूर आवास और अभिसरण अभ्यास</string>
+    <string name="fitness_desc_3">द्विनेत्री संरेखण में सुधार के लिए पेन-टू-नोज़ ट्रैकिंग व्यायाम।</string>
+    <string name="fitness_title_4">सैकैडिक आई ड्रिल और रैपिड ट्रैकिंग</string>
+    <string name="fitness_desc_4">समान आंसू फिल्म वितरण को बढ़ावा देता है और शुष्क धब्बों को रोकता है।</string>
+    <string name="fitness_title_5">पामिंग एक्यूप्रेशर और प्राकृतिक आंसू फिल्म उत्तेजना</string>
+    <string name="fitness_desc_5">थकी हुई आंखों को शांत करता है और अश्रु द्रव परिसंचरण को बहाल करता है।</string>
+    <string name="fitness_title_6">ओकुलर स्नायु विश्राम और डार्क थेरेपी</string>
+    <string name="fitness_desc_6">तनावग्रस्त तंत्रिकाओं के लिए गहरा संवेदी अंधकार विश्राम।</string>
+
     <string name="report_issue_title">निदान समस्या की रिपोर्ट करें</string>
     <string name="btn_submit_report">रिपोर्ट जमा करें</string>
 

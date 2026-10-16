@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.Constraints;
@@ -25,18 +24,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class SyncQueueActivity extends AppCompatActivity {
+public class SyncQueueActivity extends BaseActivity {
 
     private TextView tvPendingCount, tvEmptyQueue;
     private RecyclerView rvSyncQueue;
     private SyncQueueAdapter adapter;
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        String currentLang = LocaleHelper.getSelectedLanguage(newBase);
-        LocaleHelper.setLocale(newBase, currentLang);
-        super.attachBaseContext(newBase);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

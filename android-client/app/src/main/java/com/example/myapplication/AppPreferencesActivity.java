@@ -1,18 +1,9 @@
 package com.example.myapplication;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.widget.ImageView;
-import androidx.appcompat.app.AppCompatActivity;
 
-public class AppPreferencesActivity extends AppCompatActivity {
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        String currentLang = LocaleHelper.getSelectedLanguage(newBase);
-        LocaleHelper.setLocale(newBase, currentLang);
-        super.attachBaseContext(newBase);
-    }
+public class AppPreferencesActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

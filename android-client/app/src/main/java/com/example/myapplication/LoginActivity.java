@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.credentials.Credential;
 import androidx.credentials.CredentialManager;
@@ -31,7 +29,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.example.myapplication.db.AppDatabase;
 import com.example.myapplication.db.OfflineStaff;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     private static final String TAG = "LoginActivity";
 
@@ -42,19 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     private CredentialManager credentialManager;
 
     @Override
-    protected void attachBaseContext(Context newBase) {
-        String currentLang = LocaleHelper.getSelectedLanguage(newBase);
-        LocaleHelper.setLocale(newBase, currentLang);
-        super.attachBaseContext(newBase);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        String currentLang = LocaleHelper.getSelectedLanguage(this);
-        LocaleHelper.setLocale(this, currentLang);
-
         setContentView(R.layout.activity_login);
 
         if (getSupportActionBar() != null) {

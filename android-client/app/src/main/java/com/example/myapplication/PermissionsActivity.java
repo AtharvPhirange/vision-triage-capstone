@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -9,11 +8,14 @@ import android.os.Bundle;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import com.google.android.material.button.MaterialButton;
 
-public class PermissionsActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class PermissionsActivity extends BaseActivity {
 
     private final ActivityResultLauncher<String[]> permissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
@@ -22,18 +24,8 @@ public class PermissionsActivity extends AppCompatActivity {
             });
 
     @Override
-    protected void attachBaseContext(Context newBase) {
-        String currentLang = LocaleHelper.getSelectedLanguage(newBase);
-        LocaleHelper.setLocale(newBase, currentLang);
-        super.attachBaseContext(newBase);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        String currentLang = LocaleHelper.getSelectedLanguage(this);
-        LocaleHelper.setLocale(this, currentLang);
 
         setContentView(R.layout.activity_permissions);
 
@@ -60,20 +52,14 @@ public class PermissionsActivity extends AppCompatActivity {
     }
 
     private void requestPermissions() {
+        List<String> perms = new ArrayList<>(Arrays.asList(Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            permissionLauncher.launch(new String[]{
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.READ_MEDIA_IMAGES
-            });
+            perms.add(Manifest.permission.READ_MEDIA_IMAGES);
+            perms.add(Manifest.permission.READ_MEDIA_VIDEO);
         } else {
-            permissionLauncher.launch(new String[]{
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-            });
+            perms.add(Manifest.permission.READ_EXTERNAL_STORAGE);
         }
+        permissionLauncher.launch(perms.toArray(new String[0]));
     }
 
     private void proceedToHome() {

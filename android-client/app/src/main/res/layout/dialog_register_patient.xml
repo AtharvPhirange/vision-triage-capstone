@@ -11,7 +11,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="480dp"
+        android:layout_height="520dp"
         android:fillViewport="true">
 
         <LinearLayout
@@ -42,6 +42,7 @@
                 android:layout_marginBottom="4dp"/>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilPatientId"
                 style="@style/Widget.VisionTriage.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,8 +53,14 @@
                     style="@style/Widget.VisionTriage.TextInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="PAT-8998"
-                    android:inputType="text" />
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="Patient UHID (System Generated)"
+                    android:inputType="none"
+                    android:textColor="#334155"
+                    android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- 2. Full Name Section -->
@@ -81,7 +88,34 @@
                     android:inputType="textPersonName" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- 3. Age Section -->
+            <!-- Date of Birth Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date of Birth"
+                android:textStyle="bold"
+                android:textColor="#0F172A"
+                android:textSize="12sp"
+                android:layout_marginBottom="4dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilDob"
+                style="@style/Widget.VisionTriage.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etDob"
+                    style="@style/Widget.VisionTriage.TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="DD/MM/YYYY" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- 3. Age Section (Auto-Calculated) -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -102,9 +136,11 @@
                     style="@style/Widget.VisionTriage.TextInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter age"
-                    android:maxLength="3"
-                    android:inputType="number" />
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:hint="Auto-calculated from DOB"
+                    android:inputType="number"
+                    android:maxLength="3" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- 4. Gender Selection -->
@@ -150,7 +186,7 @@
                     android:textColor="#0F172A" />
             </RadioGroup>
 
-            <!-- 5. Contact Phone Number -->
+            <!-- 5. Contact Phone Number & OTP Verification Section -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -160,21 +196,95 @@
                 android:textSize="12sp"
                 android:layout_marginBottom="4dp"/>
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.VisionTriage.TextInputLayout"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
                 android:layout_marginBottom="12dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPhone"
-                    style="@style/Widget.VisionTriage.TextInputEditText"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.VisionTriage.TextInputLayout"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:hint="10-digit phone number"
-                    android:maxLength="10"
-                    android:inputType="phone" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_weight="1">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPhone"
+                        style="@style/Widget.VisionTriage.TextInputEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="10-digit phone number"
+                        android:maxLength="10"
+                        android:inputType="phone" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSendOtp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_marginStart="8dp"
+                    android:text="Send OTP"
+                    android:textAllCaps="false"
+                    android:textColor="#0284C7"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="12dp"
+                    app:strokeColor="#0284C7"
+                    app:strokeWidth="1.5dp" />
+            </LinearLayout>
+
+            <!-- OTP Input Container (Initially GONE) -->
+            <LinearLayout
+                android:id="@+id/layoutOtpVerification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.VisionTriage.TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etOtpCode"
+                        style="@style/Widget.VisionTriage.TextInputEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="6-digit OTP code"
+                        android:maxLength="6"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnVerifyOtp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_marginStart="8dp"
+                    android:text="Verify"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="#0284C7"
+                    app:cornerRadius="12dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvOtpStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="✓ Phone Number Verified"
+                android:textColor="#16A34A"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <!-- 6. Aadhaar / National ID -->
             <TextView

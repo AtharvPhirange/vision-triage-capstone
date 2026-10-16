@@ -4,12 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-public class TechnicianLoginActivity extends AppCompatActivity {
+public class TechnicianLoginActivity extends BaseActivity {
 
     private TextInputLayout layoutMobile;
     private TextInputLayout layoutPassword;

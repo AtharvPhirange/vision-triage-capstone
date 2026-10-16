@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.db.AppDatabase;
@@ -24,17 +23,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ConsultantPriorityQueueActivity extends AppCompatActivity {
+public class ConsultantPriorityQueueActivity extends BaseActivity {
 
     private RecyclerView rvConsultantQueue;
     private QueueAdapter adapter;
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        String currentLang = LocaleHelper.getSelectedLanguage(newBase);
-        LocaleHelper.setLocale(newBase, currentLang);
-        super.attachBaseContext(newBase);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

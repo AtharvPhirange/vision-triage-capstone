@@ -1,12 +1,10 @@
 package com.example.myapplication;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -14,17 +12,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.example.myapplication.db.AppDatabase;
 import com.example.myapplication.db.Patient;
 
-public class TechnicianIntakeActivity extends AppCompatActivity {
+public class TechnicianIntakeActivity extends BaseActivity {
 
     private TextInputEditText etPatientId, etFullName, etAge, etGender, etHeartRate, etBp;
     private ChipGroup chipGroupSymptoms;
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        String currentLang = LocaleHelper.getSelectedLanguage(newBase);
-        LocaleHelper.setLocale(newBase, currentLang);
-        super.attachBaseContext(newBase);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

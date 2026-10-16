@@ -45,14 +45,14 @@ public class PdfExportUtil {
         Canvas canvas = page.getCanvas();
 
         // Dynamic Patient Demographics Handling
-        String nameStr = (patientName != null && !patientName.trim().isEmpty() && !"Unknown Patient".equalsIgnoreCase(patientName.trim()))
-                ? patientName.trim() : "Sai Kumar";
+        String nameStr = (patientName != null && !patientName.trim().isEmpty() && !"Unknown Patient".equalsIgnoreCase(patientName.trim()) && !"Sai Kumar".equalsIgnoreCase(patientName.trim()))
+                ? patientName.trim() : "Unregistered Patient";
         String ageStr = (age != null && !age.trim().isEmpty() && !"Unknown".equalsIgnoreCase(age.trim()) && !"0".equals(age.trim()))
-                ? age.trim() : "34";
+                ? age.trim() : "N/A";
         String genderStr = (gender != null && !gender.trim().isEmpty() && !"N/A".equalsIgnoreCase(gender.trim()))
-                ? gender.trim() : "Male";
+                ? gender.trim() : "N/A";
         String idStr = (patientId != null && !patientId.trim().isEmpty())
-                ? patientId.trim() : "PAT-9105";
+                ? patientId.trim() : "PAT-UNKNOWN";
 
         // 1. Setup Paints & Brand Colors (#003893 Navy)
         Paint navyHeaderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);

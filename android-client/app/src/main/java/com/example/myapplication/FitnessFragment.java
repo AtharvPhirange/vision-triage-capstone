@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,20 +26,35 @@ import java.util.List;
 
 public class FitnessFragment extends Fragment {
 
-    public static class FitnessItem {
-        String videoId;
-        String title;
-        String desc;
-        String duration;
-        String category;
+    public static class EyeFitnessItem {
+        private final String videoId;
+        private final @StringRes int titleResId;
+        private final @StringRes int descResId;
+        private final String channelName;
+        private final String viewCount;
+        private final String duration;
+        private final String tag;
+        private final String thumbnailUrl;
 
-        FitnessItem(String videoId, String title, String desc, String duration, String category) {
+        public EyeFitnessItem(String videoId, @StringRes int titleResId, @StringRes int descResId, String channelName, String viewCount, String duration, String tag) {
             this.videoId = videoId;
-            this.title = title;
-            this.desc = desc;
+            this.titleResId = titleResId;
+            this.descResId = descResId;
+            this.channelName = channelName;
+            this.viewCount = viewCount;
             this.duration = duration;
-            this.category = category;
+            this.tag = tag;
+            this.thumbnailUrl = "https://img.youtube.com/vi/" + videoId + "/hqdefault.jpg";
         }
+
+        public String getVideoId() { return videoId; }
+        public int getTitleResId() { return titleResId; }
+        public int getDescResId() { return descResId; }
+        public String getChannelName() { return channelName; }
+        public String getViewCount() { return viewCount; }
+        public String getDuration() { return duration; }
+        public String getTag() { return tag; }
+        public String getThumbnailUrl() { return thumbnailUrl; }
     }
 
     @Nullable
@@ -56,16 +72,15 @@ public class FitnessFragment extends Fragment {
             rvFitnessCards.setLayoutManager(new LinearLayoutManager(requireContext()));
         }
 
-        List<FitnessItem> items = new ArrayList<>();
-        items.add(new FitnessItem("7GLxMPIYGTc", "20-20-20 Rule & Digital Eye Strain Reset", "Rests ciliary muscles and prevents accommodation fatigue after screen exposure.", "3 Mins", "EYE STRAIN"));
-        items.add(new FitnessItem("iVb4vUp70zY", "7 Easy Eye Exercises to Improve Vision & Mobility", "Enhances extraocular muscle coordination and ocular flexibility.", "5 Mins", "MOBILITY"));
-        items.add(new FitnessItem("MHswoR5R-N0", "Near-to-Far Accommodation & Convergence Drills", "Pen-to-nose tracking exercise to improve binocular alignment.", "4 Mins", "ACCOMMODATION"));
-        items.add(new FitnessItem("YSUF2cxQBpU", "Saccadic Eye Drills & Rapid Tracking", "Promotes uniform tear film distribution and prevents corneal dry spots.", "3 Mins", "COORDINATION"));
-        items.add(new FitnessItem("BQYACIVMvJc", "Palming Acupressure & Natural Tear Film Stimulation", "Soothes overworked eyes and restores lacrimal fluid circulation.", "4 Mins", "RECOVERY"));
-        items.add(new FitnessItem("W05FV785NY4", "Ocular Muscle Relaxation & Dark Therapy", "Deep sensory darkness rest for strained ocular nerves.", "3 Mins", "SENSORY REST"));
+        List<EyeFitnessItem> items = new ArrayList<>();
+        items.add(new EyeFitnessItem("_LBb9DMqCFc", R.string.fitness_title_2, R.string.fitness_desc_2, "By BRIGHT SIDE", "👁 27M views", "11 Mins", "MOBILITY & FOCUS"));
+        items.add(new EyeFitnessItem("0jf9YPGKlbg", R.string.fitness_title_1, R.string.fitness_desc_1, "By Dr. Alan Mandell", "👁 2.8M views", "5 Mins", "DIGITAL STRAIN"));
+        items.add(new EyeFitnessItem("YTvgqIGffW4", R.string.fitness_title_3, R.string.fitness_desc_3, "By ZEISS Vision Care", "👁 1.9M views", "3 Mins", "EYE STRAIN"));
+        items.add(new EyeFitnessItem("5c2PZl84qK4", R.string.fitness_title_4, R.string.fitness_desc_4, "By Natural Vision", "👁 1.2M views", "6 Mins", "ACCOMMODATION"));
+        items.add(new EyeFitnessItem("RoIYAoAalmI", R.string.fitness_title_5, R.string.fitness_desc_5, "By UC Health", "👁 950K views", "2 Mins", "YOGA & RELAX"));
 
         if (rvFitnessCards != null) {
-            rvFitnessCards.setAdapter(new FitnessAdapter(items, item -> watchYoutubeExternal(requireContext(), item.videoId)));
+            rvFitnessCards.setAdapter(new FitnessAdapter(items, item -> watchYoutubeExternal(requireContext(), item.getVideoId())));
         }
     }
 
@@ -84,14 +99,14 @@ public class FitnessFragment extends Fragment {
 
     // --- Inner Fitness Adapter ---
     private static class FitnessAdapter extends RecyclerView.Adapter<FitnessAdapter.ViewHolder> {
-        private final List<FitnessItem> items;
+        private final List<EyeFitnessItem> items;
         private final OnFitnessClickListener listener;
 
         interface OnFitnessClickListener {
-            void onFitnessClick(FitnessItem item);
+            void onFitnessClick(EyeFitnessItem item);
         }
 
-        FitnessAdapter(List<FitnessItem> items, OnFitnessClickListener listener) {
+        FitnessAdapter(List<EyeFitnessItem> items, OnFitnessClickListener listener) {
             this.items = items;
             this.listener = listener;
         }
@@ -105,17 +120,19 @@ public class FitnessFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            FitnessItem item = items.get(position);
+            EyeFitnessItem item = items.get(position);
             if (item != null) {
-                if (holder.tvVideoTitle != null) holder.tvVideoTitle.setText(item.title);
-                if (holder.tvVideoDescription != null) holder.tvVideoDescription.setText(item.desc);
-                if (holder.tvDurationTag != null) holder.tvDurationTag.setText(item.duration);
-                if (holder.tvCategoryPill != null) holder.tvCategoryPill.setText(item.category);
+                Context strictContext = holder.itemView.getContext();
+                if (holder.tvVideoTitle != null) holder.tvVideoTitle.setText(strictContext.getString(item.getTitleResId()));
+                if (holder.tvChannelName != null) holder.tvChannelName.setText(item.getChannelName());
+                if (holder.tvVideoDescription != null) holder.tvVideoDescription.setText(strictContext.getString(item.getDescResId()));
+                if (holder.tvViewCount != null) holder.tvViewCount.setText(item.getViewCount());
+                if (holder.tvDurationTag != null) holder.tvDurationTag.setText(item.getDuration());
+                if (holder.tvCategoryPill != null) holder.tvCategoryPill.setText(item.getTag());
 
-                String thumbnailUrl = "https://img.youtube.com/vi/" + item.videoId + "/hqdefault.jpg";
                 if (holder.ivVideoThumbnail != null) {
-                    Glide.with(holder.itemView.getContext())
-                            .load(thumbnailUrl)
+                    Glide.with(strictContext)
+                            .load(item.getThumbnailUrl())
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.bg_thumbnail_placeholder)
                             .error(R.drawable.bg_thumbnail_fallback)
@@ -149,7 +166,7 @@ public class FitnessFragment extends Fragment {
         static class ViewHolder extends RecyclerView.ViewHolder {
             View frameThumbnail;
             ImageView ivVideoThumbnail;
-            TextView tvVideoTitle, tvVideoDescription, tvDurationTag, tvCategoryPill;
+            TextView tvVideoTitle, tvChannelName, tvVideoDescription, tvViewCount, tvDurationTag, tvCategoryPill;
             MaterialButton btnWatchYouTube;
 
             ViewHolder(@NonNull View itemView) {
@@ -157,7 +174,9 @@ public class FitnessFragment extends Fragment {
                 frameThumbnail = itemView.findViewById(R.id.frameThumbnail);
                 ivVideoThumbnail = itemView.findViewById(R.id.ivVideoThumbnail);
                 tvVideoTitle = itemView.findViewById(R.id.tvVideoTitle);
+                tvChannelName = itemView.findViewById(R.id.tvChannelName);
                 tvVideoDescription = itemView.findViewById(R.id.tvVideoDescription);
+                tvViewCount = itemView.findViewById(R.id.tvViewCount);
                 tvDurationTag = itemView.findViewById(R.id.tvDurationTag);
                 tvCategoryPill = itemView.findViewById(R.id.tvCategoryPill);
                 btnWatchYouTube = itemView.findViewById(R.id.btnWatchYouTube);

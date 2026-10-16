@@ -54,6 +54,22 @@
                     app:tint="#FFFFFF" />
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Top-Left View Count Badge -->
+            <TextView
+                android:id="@+id/tvViewCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_margin="12dp"
+                android:background="@drawable/bg_pill_badge"
+                android:backgroundTint="#CC0284C7"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                tools:text="👁 27M views" />
+
             <!-- Bottom-Right Duration Tag Overlay -->
             <TextView
                 android:id="@+id/tvDurationTag"
@@ -68,7 +84,7 @@
                 android:textColor="#FFFFFF"
                 android:textSize="11sp"
                 android:textStyle="bold"
-                tools:text="3 Mins" />
+                tools:text="11 Mins" />
         </FrameLayout>
 
         <!-- Bottom Content & Action Section -->
@@ -85,7 +101,17 @@
                 android:textColor="#0F172A"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                tools:text="20-20-20 Ocular Reset Rule" />
+                tools:text="10 Simple Eye Exercises to Practice at Home" />
+
+            <TextView
+                android:id="@+id/tvChannelName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="#0284C7"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="By BRIGHT SIDE" />
 
             <TextView
                 android:id="@+id/tvVideoDescription"
@@ -111,7 +137,7 @@
                 android:textColor="#DC2626"
                 android:textSize="11sp"
                 android:textStyle="bold"
-                tools:text="EYE STRAIN" />
+                tools:text="MOBILITY &amp; FOCUS" />
 
             <!-- Single Full-Width YouTube Action Button -->
             <com.google.android.material.button.MaterialButton

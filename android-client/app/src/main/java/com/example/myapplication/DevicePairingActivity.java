@@ -8,18 +8,9 @@ import android.os.Looper;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.material.button.MaterialButton;
 
-public class DevicePairingActivity extends AppCompatActivity {
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        String currentLang = LocaleHelper.getSelectedLanguage(newBase);
-        LocaleHelper.setLocale(newBase, currentLang);
-        super.attachBaseContext(newBase);
-    }
+public class DevicePairingActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

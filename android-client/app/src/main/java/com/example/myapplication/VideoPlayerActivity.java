@@ -3,12 +3,11 @@ package com.example.myapplication;
 import android.os.Bundle;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
-public class VideoPlayerActivity extends AppCompatActivity {
+public class VideoPlayerActivity extends BaseActivity {
 
     public static final String EXTRA_VIDEO_ID = "extra_video_id";
     public static final String EXTRA_VIDEO_TITLE = "extra_video_title";

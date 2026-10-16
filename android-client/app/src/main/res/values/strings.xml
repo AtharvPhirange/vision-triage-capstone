@@ -156,6 +156,20 @@
     <string name="fitness_subtitle">Prevent digital eye strain &amp; CVS with clinical exercises</string>
     <string name="btn_watch_video">Watch Video</string>
 
+    <!-- Fitness Item Titles &amp; Descriptions for Dynamic Locale Resolution -->
+    <string name="fitness_title_1">20-20-20 Rule &amp; Digital Eye Strain Reset</string>
+    <string name="fitness_desc_1">Rests ciliary muscles and prevents accommodation fatigue after screen exposure.</string>
+    <string name="fitness_title_2">7 Easy Eye Exercises to Improve Vision &amp; Mobility</string>
+    <string name="fitness_desc_2">Enhances extraocular muscle coordination and ocular flexibility.</string>
+    <string name="fitness_title_3">Near-to-Far Accommodation &amp; Convergence Drills</string>
+    <string name="fitness_desc_3">Pen-to-nose tracking exercise to improve binocular alignment.</string>
+    <string name="fitness_title_4">Saccadic Eye Drills &amp; Rapid Tracking</string>
+    <string name="fitness_desc_4">Promotes uniform tear film distribution and prevents corneal dry spots.</string>
+    <string name="fitness_title_5">Palming Acupressure &amp; Natural Tear Film Stimulation</string>
+    <string name="fitness_desc_5">Soothes overworked eyes and restores lacrimal fluid circulation.</string>
+    <string name="fitness_title_6">Ocular Muscle Relaxation &amp; Dark Therapy</string>
+    <string name="fitness_desc_6">Deep sensory darkness rest for strained ocular nerves.</string>
+
     <string name="badge_clinical_insight">CLINICAL OPHTHALMOLOGY INSIGHT</string>
     <string name="tip_title">Today\'s Clinical Insight</string>
     <string name="btn_shuffle_tip">Another Tip</string>

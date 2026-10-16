@@ -143,6 +143,20 @@
     <string name="fitness_subtitle">Prevenga la fatiga visual digital con ejercicios clínicos</string>
     <string name="btn_watch_video">Ver Video</string>
 
+    <!-- Fitness Item Titles &amp; Descriptions -->
+    <string name="fitness_title_1">Regla 20-20-20 y Reinicio de Fatiga Visual</string>
+    <string name="fitness_desc_1">Descansa los músculos ciliares y previene la fatiga acomodativa.</string>
+    <string name="fitness_title_2">7 Ejercicios Visuales Fáciles para Mejorar la Visión</string>
+    <string name="fitness_desc_2">Mejora la coordinación de los músculos extraoculares y la flexibilidad.</string>
+    <string name="fitness_title_3">Ejercicios de Acomodación y Convergencia</string>
+    <string name="fitness_desc_3">Ejercicio de seguimiento para mejorar la alineación binocular.</string>
+    <string name="fitness_title_4">Ejercicios Sacádicos y Rastreo Rápido</string>
+    <string name="fitness_desc_4">Promueve la distribución uniforme de la película lagrimal.</string>
+    <string name="fitness_title_5">Acupresión Palmar y Estimulación Lagrimal</string>
+    <string name="fitness_desc_5">Calma los ojos cansados y restaura la circulación del fluido lagrimal.</string>
+    <string name="fitness_title_6">Relajación Muscular Ocular y Terapia de Oscuridad</string>
+    <string name="fitness_desc_6">Descanso sensorial profundo en la oscuridad para nervios oculares.</string>
+
     <string name="report_issue_title">Informar Problema de Diagnóstico</string>
     <string name="btn_submit_report">Enviar Informe</string>
 
@@ -165,7 +179,6 @@
     <string name="btn_offline_field_mode">Continuar en Modo Fuera de Línea</string>
     <string name="toast_auth_success">Autenticación Exitosa</string>
     <string name="toast_auth_failed">Error de autenticación. Intente de nuevo.</string>
-    <string name="default_web_client_id">849201938201-vt-app.apps.googleusercontent.com</string>
 
     <string name="intake_title">Ingreso de Paciente Técnico</string>
     <string name="intake_subtitle">Registre síntomas clínicos y signos vitales</string>

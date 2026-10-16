@@ -152,6 +152,20 @@
     <string name="fitness_subtitle">क्लिनिकल व्यायामाद्वारे डिजिटल डोळ्यांचा ताण टाळा</string>
     <string name="btn_watch_video">व्हिडिओ पहा</string>
 
+    <!-- Fitness Item Titles &amp; Descriptions -->
+    <string name="fitness_title_1">20-20-20 नियम आणि डिजिटल डोळ्यांचा ताण रिसेट</string>
+    <string name="fitness_desc_1">स्क्रीन वापरानंतर स्नायूंना आराम देतो आणि डोळ्यांचा ताण टाळतो.</string>
+    <string name="fitness_title_2">दृष्टी आणि हालचाल सुधारण्यासाठी 7 सोपे डोळ्यांचे व्यायाम</string>
+    <string name="fitness_desc_2">डोळ्यांच्या स्नायूंचे समन्वय आणि लवचिकता वाढवतो.</string>
+    <string name="fitness_title_3">जवळून लांब लक्ष केंद्रित करण्याचे व्यायाम</string>
+    <string name="fitness_desc_3">द्विनेत्री संरेखण सुधारण्यासाठी पेन-टू-नोझ ट्रॅकिंग व्यायाम.</string>
+    <string name="fitness_title_4">सॅकॅडिक डोळ्यांचे व्यायाम आणि रॅपिड ट्रॅकिंग</string>
+    <string name="fitness_desc_4">आंसू फिल्मचे समान वितरण वाढवतो आणि कोरडेपणा टाळतो.</string>
+    <string name="fitness_title_5">पामिंग ॲक्युप्रेशर आणि नैसर्गिक आंसू उत्तेजना</string>
+    <string name="fitness_desc_5">थकलेल्या डोळ्यांना आराम देतो आणि द्रवाचे अभिसरण पूर्ववत करतो.</string>
+    <string name="fitness_title_6">डोळ्यांच्या स्नायूंचा आराम आणि डार्क थेरपी</string>
+    <string name="fitness_desc_6">ताणलेल्या मज्जातंतूंसाठी खोल संवेदनात्मक अंधार विश्रांती.</string>
+
     <string name="report_issue_title">निदान समस्येची नोंद करा</string>
     <string name="btn_submit_report">अहवाल सबमिट करा</string>
 

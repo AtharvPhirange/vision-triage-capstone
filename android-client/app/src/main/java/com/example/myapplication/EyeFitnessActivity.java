@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,7 +20,7 @@ import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EyeFitnessActivity extends AppCompatActivity {
+public class EyeFitnessActivity extends BaseActivity {
 
     private static class FitnessItem {
         String title;
@@ -35,13 +34,6 @@ public class EyeFitnessActivity extends AppCompatActivity {
             this.duration = duration;
             this.videoUrl = videoUrl;
         }
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        String currentLang = LocaleHelper.getSelectedLanguage(newBase);
-        LocaleHelper.setLocale(newBase, currentLang);
-        super.attachBaseContext(newBase);
     }
 
     @Override
