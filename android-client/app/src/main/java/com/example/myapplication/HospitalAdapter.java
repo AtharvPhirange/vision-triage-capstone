@@ -47,7 +47,19 @@ public class HospitalAdapter extends RecyclerView.Adapter<HospitalAdapter.ViewHo
 
         if (holder.tvName != null) holder.tvName.setText(hospital.getName());
         if (holder.tvAddress != null) holder.tvAddress.setText(hospital.getAddress());
-        if (holder.tvDistance != null) holder.tvDistance.setText(hospital.getFormattedDistance());
+
+        if (holder.tvDistance != null) {
+            if (hospital.getDistanceKm() < 1.0f) {
+                int meters = Math.round(hospital.getDistanceKm() * 1000f);
+                holder.tvDistance.setText(context.getString(R.string.distance_meters_away, meters));
+            } else {
+                holder.tvDistance.setText(context.getString(R.string.distance_km_away, hospital.getDistanceKm()));
+            }
+        }
+
+        if (holder.btnDirections != null) {
+            holder.btnDirections.setText(context.getString(R.string.btn_get_directions));
+        }
 
         // Labeled Google Maps Navigation: Opens Google Maps showing Clinic Name instead of coordinates
         View.OnClickListener launchNav = v -> {

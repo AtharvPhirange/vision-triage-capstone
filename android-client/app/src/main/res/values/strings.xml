@@ -152,6 +152,15 @@
     <string name="discover_subtitle">Real-time GPS distance calculation &amp; Google Maps navigation</string>
     <string name="btn_get_directions">Get Directions</string>
 
+    <!-- Common Multilingual Formatting Placeholders -->
+    <string name="distance_km_away">%1$.1f km away</string>
+    <string name="distance_meters_away">%1$d m away</string>
+    <string name="views_count">%1$s views</string>
+    <string name="mins_duration">%1$s Mins</string>
+    <string name="watch_on_youtube">Watch on YouTube</string>
+    <string name="discover_subtitle_near">Showing verified eye centers near %1$s (within 25 km)</string>
+    <string name="discover_empty">No eye care centers found within 25 km of your current location.</string>
+
     <string name="fitness_title">Ocular Health &amp; Eye Exercises</string>
     <string name="fitness_subtitle">Prevent digital eye strain &amp; CVS with clinical exercises</string>
     <string name="btn_watch_video">Watch Video</string>

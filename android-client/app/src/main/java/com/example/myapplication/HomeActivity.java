@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -23,6 +24,11 @@ public class HomeActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private ImageView imgNavHome, imgNavDiscover, imgNavFitness, imgNavGuide, imgNavMyHealth;
     private TextView tvNavHome, tvNavDiscover, tvNavFitness, tvNavGuide, tvNavMyHealth;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,7 +206,7 @@ public class HomeActivity extends AppCompatActivity {
     private void showLanguageSelectionDialog() {
         String[] languages = {"English", "हिन्दी (Hindi)", "मराठी (Marathi)", "Español (Spanish)", "Français (French)"};
         String[] codes = {"en", "hi", "mr", "es", "fr"};
-        String current = LocaleHelper.getSelectedLanguage(this);
+        String current = LocaleHelper.getLanguage(this);
         int selectedIndex = 0;
         for (int i = 0; i < codes.length; i++) {
             if (codes[i].equalsIgnoreCase(current)) {

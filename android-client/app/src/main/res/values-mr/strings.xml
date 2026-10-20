@@ -148,6 +148,15 @@
     <string name="discover_subtitle">रिअल-टाइम जीपीएस अंतर गणना आणि गूगल मॅप्स नेव्हिगेशन</string>
     <string name="btn_get_directions">दिशा मिळवा</string>
 
+    <!-- Common Multilingual Formatting Placeholders -->
+    <string name="distance_km_away">%1$.1f किमी अंतरावर</string>
+    <string name="distance_meters_away">%1$d मीटर अंतरावर</string>
+    <string name="views_count">%1$s वेळा पाहिले</string>
+    <string name="mins_duration">%1$s मिनिटे</string>
+    <string name="watch_on_youtube">यूट्यूब वर पहा</string>
+    <string name="discover_subtitle_near">%1$s जवळील पडताळणी केलेली नेत्र रुग्णालये (25 किमी अंतरात)</string>
+    <string name="discover_empty">तुमच्या सध्याच्या स्थानापासून 25 किमी अंतरावर कोणतीही नेत्र रुग्णालये आढळली नाहीत.</string>
+
     <string name="fitness_title">नेत्र आरोग्य आणि व्यायाम</string>
     <string name="fitness_subtitle">क्लिनिकल व्यायामाद्वारे डिजिटल डोळ्यांचा ताण टाळा</string>
     <string name="btn_watch_video">व्हिडिओ पहा</string>
@@ -160,7 +169,7 @@
     <string name="fitness_title_3">जवळून लांब लक्ष केंद्रित करण्याचे व्यायाम</string>
     <string name="fitness_desc_3">द्विनेत्री संरेखण सुधारण्यासाठी पेन-टू-नोझ ट्रॅकिंग व्यायाम.</string>
     <string name="fitness_title_4">सॅकॅडिक डोळ्यांचे व्यायाम आणि रॅपिड ट्रॅकिंग</string>
-    <string name="fitness_desc_4">आंसू फिल्मचे समान वितरण वाढवतो आणि कोरडेपणा टाळतो.</string>
+    <string name="fitness_desc_4">आसू फिल्मचे समान वितरण वाढवतो आणि कोरडेपणा टाळतो.</string>
     <string name="fitness_title_5">पामिंग ॲक्युप्रेशर आणि नैसर्गिक आंसू उत्तेजना</string>
     <string name="fitness_desc_5">थकलेल्या डोळ्यांना आराम देतो आणि द्रवाचे अभिसरण पूर्ववत करतो.</string>
     <string name="fitness_title_6">डोळ्यांच्या स्नायूंचा आराम आणि डार्क थेरपी</string>

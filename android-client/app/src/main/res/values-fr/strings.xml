@@ -99,13 +99,6 @@
     <string name="opt_use_google">Utiliser la Photo du Compte Google</string>
     <string name="opt_reset_avatar">Réinitialiser l\'Avatar</string>
     <string name="toast_avatar_updated">Avatar de profil mis à jour</string>
-    <string name="toast_google_avatar_applied">Photo de profil Google appliquée</string>
-    <string name="toast_no_google_avatar">Aucune photo de profil Google trouvée pour ce compte</string>
-    <string name="title_edit_profile">Modifier le Profil</string>
-    <string name="label_specialization">Rôle / Spécialisation</string>
-    <string name="label_department">Service / Unité</string>
-    <string name="label_emergency_phone">Numéro de Contact d\'Urgence</string>
-    <string name="btn_watch_on_youtube">Regarder sur YouTube</string>
 
     <string name="menu_guide_subtitle_modern">Procédures interactives, échelles PLR et guides de tri</string>
     <string name="menu_issue_subtitle_modern">Envoyer des artefacts d\'examen, reflets et journaux</string>
@@ -119,8 +112,6 @@
     <string name="tip_title">Conseil Clinique du Jour</string>
     <string name="btn_shuffle_tip">Un Autre Conseil</string>
     <string name="btn_dismiss_tip">Compris</string>
-    <string name="btn_another_tip">Un Autre Conseil</string>
-    <string name="btn_got_it_tip">Compris</string>
 
     <string-array name="clinical_eye_tips">
         <item>Incorporez des légumes feuillus riches en lutéine et zéaxanthine pour protéger la densité pigmentaire maculaire.</item>
@@ -147,6 +138,15 @@
     <string name="discover_title">Centres de Soins Oculaires Proches</string>
     <string name="discover_subtitle">Calcul de distance GPS en temps réel et navigation</string>
     <string name="btn_get_directions">Obtenir l\'Itinéraire</string>
+
+    <!-- Common Multilingual Formatting Placeholders -->
+    <string name="distance_km_away">à %1$.1f km</string>
+    <string name="distance_meters_away">à %1$d m</string>
+    <string name="views_count">%1$s vues</string>
+    <string name="mins_duration">%1$s min</string>
+    <string name="watch_on_youtube">Regarder sur YouTube</string>
+    <string name="discover_subtitle_near">Centres ophtalmiques vérifiés près de %1$s (moins de 25 km)</string>
+    <string name="discover_empty">Aucun centre ophtalmique trouvé à moins de 25 km de votre position.</string>
 
     <string name="fitness_title">Santé Oculaire et Exercices Visuels</string>
     <string name="fitness_subtitle">Prévenez la fatigue visuelle numérique avec des exercices cliniques</string>
@@ -266,52 +266,17 @@
     <string name="guide_step2_item1_desc">Maintenez un écart constant de 25-30 cm de l\'œil du patient.</string>
     <string name="guide_step2_item2_title">Cible Précise</string>
     <string name="guide_step2_item2_desc">Alignez le réticule précisément au centre de la pupille.</string>
-    <string name="guide_step2_item3_title">Contrôle de l\'Éclairage</string>
-    <string name="guide_step2_item3_desc">Assurez un éclairage ambiant uniforme sans reflets.</string>
-    <string name="guide_step2_item4_title">Verrouillage de Détection</string>
-    <string name="guide_step2_item4_desc">Assurez-vous que la confiance IA reste supérieure à 95%.</string>
-
     <string name="guide_step3_badge">ÉTAPE 3</string>
     <string name="guide_step3_title">Capturer le PLR</string>
     <string name="guide_step3_desc">Exécutez le balayage automatisé de 5 secondes. Gardez les mains stables jusqu\'à dépasser 95% de confiance IA.</string>
-    <string name="guide_step3_bullet1">• Balayage Automatisé de 5s</string>
-    <string name="guide_step3_bullet2">• Seuil de Confiance IA 95%+</string>
-    <string name="guide_step3_item1_title">Enregistrement Initial</string>
-    <string name="guide_step3_item1_desc">Capture le diamètre pupillaire au repos pendant la première seconde.</string>
-    <string name="guide_step3_item2_title">Stimulation Lumineuse</string>
-    <string name="guide_step3_item2_desc">Émet une impulsion lumineuse contrôlée pour observer la vitesse de constriction.</string>
-    <string name="guide_step3_item3_title">Suivi de Récupération</string>
-    <string name="guide_step3_item3_desc">Mesure la vitesse de redilatation et les courbes de latence.</string>
-    <string name="guide_step3_item4_title">Vérification de Qualité</string>
-    <string name="guide_step3_item4_desc">Enregistre lorsque la confiance atteint le seuil de 95%+.</string>
 
     <string name="guide_step4_badge">ÉTAPE 4</string>
     <string name="guide_step4_title">Vérifier le Statut</string>
     <string name="guide_step4_desc">Classification immédiate : Vert (Normal), Ambre (Observation) ou Rouge (Urgent). Consultez les graphiques dans l\'historique.</string>
-    <string name="guide_step4_bullet1">• Classification de Risque Tricolore</string>
-    <string name="guide_step4_bullet2">• Graphiques de Latence Cinématique</string>
-    <string name="guide_step4_item1_title">Vert (Normal)</string>
-    <string name="guide_step4_item1_desc">Réponse pupillaire symétrique avec vitesse normale.</string>
-    <string name="guide_step4_item2_title">Ambre (Observation)</string>
-    <string name="guide_step4_item2_desc">Réflexe lent ou légere métrie nécessitant un suivi.</string>
-    <string name="guide_step4_item3_title">Rouge (Urgent)</string>
-    <string name="guide_step4_item3_desc">Pupille fixe, dilatée ou aréactive nécessitant une escalade.</string>
-    <string name="guide_step4_item4_title">Graphiques de Latence</string>
-    <string name="guide_step4_item4_desc">Accédez aux formes d\'onde PLR dans l\'Historique Médical.</string>
 
     <string name="guide_step5_badge">ÉTAPE 5</string>
     <string name="guide_step5_title">Examen Consultant</string>
     <string name="guide_step5_desc">Escalader les cas à haut risque directement vers la file du consultant en un tap pour vérification télé-ophtalmologique.</string>
-    <string name="guide_step5_bullet1">• Escalade en 1 Clic</string>
-    <string name="guide_step5_bullet2">• Vérification Télé-Ophtalmologique</string>
-    <string name="guide_step5_item1_title">Signaler Haut Risque</string>
-    <string name="guide_step5_item1_desc">Les cas rouges entrent automatiquement dans la file d\'examen.</string>
-    <string name="guide_step5_item2_title">Analyse de Forme d\'Onde</string>
-    <string name="guide_step5_item2_desc">Les consultants examinent les graphiques PLR haute fréquence.</string>
-    <string name="guide_step5_item3_title">Valider le Diagnostic</string>
-    <string name="guide_step5_item3_desc">Ajoutez des notes cliniques et signez le rapport.</string>
-    <string name="guide_step5_item4_title">Transmission au Patient</string>
-    <string name="guide_step5_item4_desc">Envoyez le résumé du tri directement au profil du patient.</string>
 
     <string name="guide_btn_got_it">Compris, Retour au Tableau de Bord</string>
     <string name="btn_got_it">Compris, Retour au Tableau de Bord</string>
