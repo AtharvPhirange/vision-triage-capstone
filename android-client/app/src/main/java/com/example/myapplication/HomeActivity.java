@@ -10,8 +10,10 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
+
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -33,7 +35,7 @@ public class HomeActivity extends AppCompatActivity {
 
         ImageView btnSettings = findViewById(R.id.btnSettings);
         ImageView btnLanguage = findViewById(R.id.btnLanguage);
-        ImageView btnNotification = findViewById(R.id.btnNotification);
+        View btnQuickScanner = findViewById(R.id.btnQuickScanner);
         ImageView btnUserProfile = findViewById(R.id.btnUserProfile);
 
         // Load custom photo into top bar avatar if present
@@ -101,8 +103,12 @@ public class HomeActivity extends AppCompatActivity {
             btnLanguage.setOnClickListener(v -> showLanguageSelectionDialog());
         }
 
-        if (btnNotification != null) {
-            btnNotification.setOnClickListener(v -> Toast.makeText(this, "No new notifications", Toast.LENGTH_SHORT).show());
+        if (btnQuickScanner != null) {
+            btnQuickScanner.setContentDescription("Scan Peer Clinical QR Code");
+            btnQuickScanner.setOnClickListener(v -> {
+                Intent qrScannerIntent = new Intent(this, QrReportScannerActivity.class);
+                startActivity(qrScannerIntent);
+            });
         }
 
         // Floating Bottom Dock Tab Listeners -> Slide ViewPager2

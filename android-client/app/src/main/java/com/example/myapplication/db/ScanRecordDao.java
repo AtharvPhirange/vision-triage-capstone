@@ -33,6 +33,9 @@ public interface ScanRecordDao {
     @Query("SELECT * FROM scan_records WHERE patientName = :patientId ORDER BY scanTimestamp DESC")
     LiveData<List<ScanRecord>> getObservableRecordsByPatient(String patientId);
 
+    @Query("SELECT * FROM scan_records WHERE patientName = :patientId ORDER BY scanTimestamp DESC LIMIT 1")
+    ScanRecord getLatestScanForPatient(String patientId);
+
     @Query("SELECT * FROM scan_records WHERE isSynced = 0")
     List<ScanRecord> getUnsyncedRecords();
 
