@@ -72,6 +72,9 @@ dependencies {
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
     implementation("com.airbnb.android:lottie:6.4.0")
 
+    // Location Services
+    implementation("com.google.android.gms:play-services-location:21.1.0")
+
     // In-App YouTube Player
     implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
 

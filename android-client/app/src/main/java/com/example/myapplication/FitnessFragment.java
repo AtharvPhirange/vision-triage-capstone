@@ -22,7 +22,7 @@ public class FitnessFragment extends Fragment {
     private YouTubeFeedAdapter adapter;
     private YouTubeEyeFeedRepository repository;
     private String currentFilter = "";
-    private String nextToken = null;
+    private String nextToken = "1";
     private boolean isLoading = false;
 
     @Nullable
@@ -40,16 +40,16 @@ public class FitnessFragment extends Fragment {
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(adapter);
 
-            // Infinite Scroll Listener
+            // Silent Infinite Scroll: Loads next distinct batch without showing pull spinner
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(@NonNull RecyclerView rv, int dx, int dy) {
-                    if (dy > 0 && !isLoading && nextToken != null) {
+                    if (dy > 0 && !isLoading && nextToken != null && !nextToken.isEmpty()) {
                         int visibleCount = layoutManager.getChildCount();
                         int totalCount = layoutManager.getItemCount();
                         int firstVisible = layoutManager.findFirstVisibleItemPosition();
 
-                        if ((visibleCount + firstVisible) >= totalCount - 3) {
+                        if ((visibleCount + firstVisible) >= totalCount - 2) {
                             loadPage(false);
                         }
                     }
@@ -59,35 +59,39 @@ public class FitnessFragment extends Fragment {
 
         repository = new YouTubeEyeFeedRepository();
 
-        // Filter Chips selection
+        // Filter chips trigger fresh search
         if (chipGroup != null) {
             chipGroup.setOnCheckedStateChangeListener((group, checkedIds) -> {
                 if (checkedIds.isEmpty()) return;
                 int id = checkedIds.get(0);
                 if (id == R.id.chipAll) currentFilter = "";
-                else if (id == R.id.chipStrain) currentFilter = "20-20-20 rule digital eye strain";
-                else if (id == R.id.chipMobility) currentFilter = "eye mobility exercises eye yoga";
-                else if (id == R.id.chipDryEye) currentFilter = "dry eye relief palming";
+                else if (id == R.id.chipStrain) currentFilter = "20-20-20";
+                else if (id == R.id.chipMobility) currentFilter = "mobility";
+                else if (id == R.id.chipDryEye) currentFilter = "dry eye";
 
+                repository.clearSeenCache();
                 loadPage(true);
             });
         }
 
         if (swipeRefresh != null) {
             swipeRefresh.setColorSchemeColors(0xFFDC2626, 0xFF0284C7);
-            swipeRefresh.setOnRefreshListener(() -> loadPage(true));
+            swipeRefresh.setOnRefreshListener(() -> {
+                repository.clearSeenCache();
+                loadPage(true);
+            });
         }
 
         loadPage(true);
         return root;
     }
 
-    private void loadPage(boolean refresh) {
+    private void loadPage(boolean isRefresh) {
         if (isLoading) return;
         isLoading = true;
 
-        if (refresh) {
-            nextToken = null;
+        if (isRefresh) {
+            nextToken = "1";
             if (swipeRefresh != null) swipeRefresh.setRefreshing(true);
         }
 
@@ -95,7 +99,7 @@ public class FitnessFragment extends Fragment {
             @Override
             public void onSuccess(List<YouTubeEyeVideo> videos, String token) {
                 nextToken = token;
-                if (refresh) {
+                if (isRefresh) {
                     adapter.setVideos(videos);
                     if (swipeRefresh != null) swipeRefresh.setRefreshing(false);
                 } else {
@@ -106,7 +110,7 @@ public class FitnessFragment extends Fragment {
 
             @Override
             public void onError(Exception e) {
-                if (refresh && swipeRefresh != null) swipeRefresh.setRefreshing(false);
+                if (isRefresh && swipeRefresh != null) swipeRefresh.setRefreshing(false);
                 isLoading = false;
             }
         });
